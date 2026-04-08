@@ -1,16 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
     <!--
-    * @copyright   Copyright (C) 2026 Björn Rudner
-    * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
+    @copyright   Copyright (C) 2026 Björn Rudner
+    @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
         <!-- ***************** Classes ***************** -->
         <class id="PowerConnection" _delta="must_exist">
+            <fields>
+                <field id="phase_type" xsi:type="AttributeEnum" _delta="define">
+                    <sql>phase_type</sql>
+                    <values>
+                        <value id="1ph">
+                            <code>1ph</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="3ph">
+                            <code>3ph</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="dc">
+                            <code>dc</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="nominal_voltage" xsi:type="AttributeString" _delta="define">
+                    <sql>nominal_voltage</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="nominal_frequency" xsi:type="AttributeEnum" _delta="define">
+                    <sql>nominal_frequency</sql>
+                    <values>
+                        <value id="50">
+                            <code>50</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="60">
+                            <code>60</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="50_60">
+                            <code>50_60</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="max_current_ampere" xsi:type="AttributeString" _delta="define">
+                    <sql>max_current_ampere</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>58</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>58</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
         </class>
         <class id="PowerSource" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>58</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>58</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>55</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>56</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>57</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>25</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>26</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
         </class>
         <class id="PDU" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>75</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>76</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>77</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>78</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>65</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>66</rank>
+                        </item>
+                        <item id="nominal_frequency" _delta="define">
+                            <rank>67</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>68</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>75</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>76</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>77</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="phase_type" _delta="define">
+                            <rank>45</rank>
+                        </item>
+                        <item id="nominal_voltage" _delta="define">
+                            <rank>46</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
         </class>
     </classes>
 </itop_design>
