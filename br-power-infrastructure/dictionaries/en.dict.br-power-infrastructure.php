@@ -32,4 +32,9 @@ Dict::Add('EN US', 'English', 'English', array(
 
     'Class:PowerConnection/Attribute:max_current_ampere' => 'Maximum current (A)',
     'Class:PowerConnection/Attribute:max_current_ampere+' => 'Maximum supported or rated current of the power connection.',
+
+    'Class:PowerConnection/Attribute:last_maintenance_date' => 'Last maintenance date',
+    'Class:PowerConnection/Attribute:last_maintenance_date+' => 'Date of the last maintenance activity for this power connection.',
+    'Class:PowerConnection/Attribute:next_maintenance_date' => 'Next maintenance date',
+    'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Planned date of the next maintenance activity for this power connection.',
 ));

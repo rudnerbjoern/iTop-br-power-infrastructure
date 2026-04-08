@@ -32,4 +32,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
     'Class:PowerConnection/Attribute:max_current_ampere' => 'Maximalstrom (A)',
     'Class:PowerConnection/Attribute:max_current_ampere+' => 'Maximal unterstützter oder ausgelegter Strom der Stromverbindung.',
+
+    'Class:PowerConnection/Attribute:last_maintenance_date' => 'Datum letzte Wartung',
+    'Class:PowerConnection/Attribute:last_maintenance_date+' => 'Datum der letzten Wartung dieser Stromverbindung.',
+    'Class:PowerConnection/Attribute:next_maintenance_date' => 'Datum nächste Wartung',
+    'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Geplantes Datum der nächsten Wartung dieser Stromverbindung.',
 ));

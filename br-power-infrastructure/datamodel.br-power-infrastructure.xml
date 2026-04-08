@@ -68,6 +68,16 @@
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="last_maintenance_date" xsi:type="AttributeDate" _delta="define">
+                    <sql>last_maintenance_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="next_maintenance_date" xsi:type="AttributeDate" _delta="define">
+                    <sql>next_maintenance_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
             </fields>
             <presentation>
                 <details>
@@ -83,6 +93,12 @@
                         </item>
                         <item id="max_current_ampere" _delta="define">
                             <rank>58</rank>
+                        </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>125</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>126</rank>
                         </item>
                     </items>
                 </details>
@@ -100,6 +116,12 @@
                         <item id="max_current_ampere" _delta="define">
                             <rank>58</rank>
                         </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>125</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>126</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
@@ -112,6 +134,9 @@
                         </item>
                         <item id="max_current_ampere" _delta="define">
                             <rank>57</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>125</rank>
                         </item>
                     </items>
                 </list>
@@ -133,6 +158,12 @@
                         <item id="max_current_ampere" _delta="define">
                             <rank>58</rank>
                         </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>125</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>126</rank>
+                        </item>
                     </items>
                 </details>
                 <search>
@@ -149,6 +180,12 @@
                         <item id="max_current_ampere" _delta="define">
                             <rank>58</rank>
                         </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>125</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>126</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
@@ -161,6 +198,9 @@
                         </item>
                         <item id="max_current_ampere" _delta="define">
                             <rank>57</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>125</rank>
                         </item>
                     </items>
                 </list>
@@ -192,6 +232,12 @@
                         <item id="max_current_ampere" _delta="define">
                             <rank>78</rank>
                         </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>145</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>146</rank>
+                        </item>
                     </items>
                 </details>
                 <search>
@@ -208,6 +254,12 @@
                         <item id="max_current_ampere" _delta="define">
                             <rank>68</rank>
                         </item>
+                        <item id="last_maintenance_date" _delta="define">
+                            <rank>135</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>136</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
@@ -220,6 +272,9 @@
                         </item>
                         <item id="max_current_ampere" _delta="define">
                             <rank>77</rank>
+                        </item>
+                        <item id="next_maintenance_date" _delta="define">
+                            <rank>145</rank>
                         </item>
                     </items>
                 </list>
