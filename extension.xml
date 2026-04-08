@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension format="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/extension.xsd">
     <extension_code>
-        <![CDATA[br-TODO]]>
+        <![CDATA[br-power-infrastructure]]>
     </extension_code>
     <company>
         <![CDATA[]]>
@@ -10,16 +10,18 @@
         <![CDATA[Björn Rudner]]>
     </author>
     <label>
-        <![CDATA[Datamodel: TODO]]>
+        <![CDATA[Datamodel: Power Infrastructure]]>
     </label>
     <description>
-        <![CDATA[TODO]]>
+        <![CDATA[An iTop extension for modeling and managing power infrastructure components in the CMDB.]]>
     </description>
     <version>0.0.1</version>
-    <release_date>2025-06-01</release_date>
-    <version_description />
-    <itop_version_min>3.2.0</itop_version_min>
-    <status>stable</status>
+    <release_date>2026-04-08</release_date>
+    <version_description>
+        <![CDATA[Initial version of the power infrastructure extension.]]>
+    </version_description>
+    <itop_version_min>3.2.2</itop_version_min>
+    <status>beta</status>
     <mandatory>false</mandatory>
-    <more_info_url>https://github.com/rudnerbjoern/iTop-br-TODO/blob/main/README.md</more_info_url>
+    <more_info_url>https://github.com/rudnerbjoern/iTop-br-power-infrastructure/blob/main/README.md</more_info_url>
 </extension>
