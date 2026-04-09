@@ -974,4 +974,24 @@
             </presentation>
         </class>
     </classes>
+    <menus>
+        <menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
+            <definition>
+                <cells>
+                    <cell id="0">
+                        <dashlets>
+                            <dashlet id="98.1" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>UPS</class>
+                            </dashlet>
+                            <dashlet id="98.2" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>UPSBattery</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                </cells>
+            </definition>
+        </menu>
+    </menus>
 </itop_design>
