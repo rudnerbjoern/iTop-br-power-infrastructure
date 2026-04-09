@@ -497,23 +497,122 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="phase_type" _delta="define">
-                            <rank>55</rank>
+                        <item id="name" _delta="delete" />
+                        <item id="org_id" _delta="delete" />
+                        <item id="status" _delta="delete" />
+                        <item id="business_criticity" _delta="delete" />
+                        <item id="location_id" _delta="delete" />
+                        <item id="brand_id" _delta="delete" />
+                        <item id="model_id" _delta="delete" />
+                        <item id="serialnumber" _delta="delete" />
+                        <item id="asset_number" _delta="delete" />
+                        <item id="move2production" _delta="delete" />
+                        <item id="purchase_date" _delta="delete" />
+                        <item id="end_of_warranty" _delta="delete" />
+                        <item id="description" _delta="delete" />
+                        <item id="pdus_list" _delta="delete" />
+                        <item id="contacts_list" _delta="delete" />
+                        <item id="documents_list" _delta="delete" />
+                        <item id="col:col1" _delta="define">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical" _delta="define">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
-                        <item id="nominal_voltage" _delta="define">
-                            <rank>56</rank>
+                        <item id="col:col2" _delta="define">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo" _delta="define">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
-                        <item id="nominal_frequency" _delta="define">
-                            <rank>57</rank>
+                        <item id="pdus_list">
+                            <rank>110</rank>
                         </item>
-                        <item id="max_current_ampere" _delta="define">
-                            <rank>58</rank>
+                        <item id="contacts_list">
+                            <rank>120</rank>
                         </item>
-                        <item id="last_maintenance_date" _delta="define">
-                            <rank>125</rank>
-                        </item>
-                        <item id="next_maintenance_date" _delta="define">
-                            <rank>126</rank>
+                        <item id="documents_list">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -557,11 +656,22 @@
                 </list>
                 <summary>
                     <items>
+                        <item id="org_id" _delta="delete_if_exists" />
+                        <item id="location_id" _delta="delete_if_exists" />
+                        <item id="org_id" _delta="define">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id" _delta="define">
+                            <rank>20</rank>
+                        </item>
                         <item id="phase_type" _delta="define">
-                            <rank>25</rank>
+                            <rank>30</rank>
                         </item>
                         <item id="nominal_voltage" _delta="define">
-                            <rank>26</rank>
+                            <rank>40</rank>
+                        </item>
+                        <item id="max_current_ampere" _delta="define">
+                            <rank>50</rank>
                         </item>
                     </items>
                 </summary>
@@ -707,7 +817,7 @@
                                         <!-- id:  nb_cols - rank: 80 - source: datacenter-view-extended -->
                                     </items>
                                 </item>
-                                <item id="fieldset:PDU:electrical" _delta="define">
+                                <item id="fieldset:PowerSource:electrical" _delta="define">
                                     <rank>20</rank>
                                     <items>
                                         <item id="phase_type">
@@ -1472,7 +1582,7 @@
                                         </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:UPS:electrical">
+                                <item id="fieldset:PowerSource:electrical">
                                     <rank>20</rank>
                                     <items>
                                         <item id="phase_type">
@@ -1511,7 +1621,7 @@
                         <item id="col:col2">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:UPS:assetinfo">
+                                <item id="fieldset:PowerSource:assetinfo">
                                     <rank>10</rank>
                                     <items>
                                         <item id="brand_id">
@@ -1967,7 +2077,7 @@
                         <item id="col:col2">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:UPSBattery:assetinfo">
+                                <item id="fieldset:PowerSource:assetinfo">
                                     <rank>10</rank>
                                     <items>
                                         <item id="brand_id">

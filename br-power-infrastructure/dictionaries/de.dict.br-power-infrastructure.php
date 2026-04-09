@@ -48,9 +48,11 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:PowerSocket/Message:NoFreeSocketOnDatacenterDevice' => 'Der PowerSocket konnte dem DatacenterDevice nicht zugewiesen werden, da kein freier Socket verfügbar ist.',
     'Class:PowerSocket/Error:NoFreeSocketOnDatacenterDevice' => 'Kann keine Verbindung mit dem Datacenter-Gerät herstellen, kein freier Stromanschluss verfügbar.',
     'Class:PowerSocket/Error:SocketTypeMismatch' => 'Das ausgewählte DatacenterDevice erfordert einen anderen Socket-Typ.',
+    // Class: PowerSource
+    'PowerSource:electrical' => 'Elektrische Daten',
+    'PowerSource:assetinfo' => 'Asset-Daten',
     // Class: PDU
     'PDU:rackinfo' => 'Rack-Informationen',
-    'PDU:electrical' => 'Elektrische Daten',
     'Class:PDU/Attribute:capacity' => 'Kapazität',
     'Class:PDU/Attribute:capacity+' => 'Anzahl der Stromanschlüsse, die diese PDU enthält.',
     'Class:PDU/Attribute:powersocket_list' => 'Stromanschlüsse',
@@ -89,9 +91,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:PowerConnection/Attribute:next_maintenance_date' => 'Datum nächste Wartung',
     'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Geplantes Datum der nächsten Wartung dieser Stromverbindung.',
     // Class: UPS
-    'UPS:electrical' => 'Elektrische Daten',
     'UPS:upsinfo' => 'USV-Daten',
-    'UPS:assetinfo' => 'Asset-Daten',
     'Class:UPS' => 'USV',
     'Class:UPS+' => 'Unterbrechungsfreie Stromversorgung',
     'Class:UPS/Attribute:ups_topology' => 'USV-Topologie',
@@ -112,7 +112,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     // Class: UPSBattery
     'UPSBattery:upsinfo' => 'USV-Zuordnung',
     'UPSBattery:batteryinfo' => 'Batteriedaten',
-    'UPSBattery:assetinfo' => 'Asset-Daten',
     'Class:UPSBattery' => 'USV-Batterie',
     'Class:UPSBattery+' => 'Einer USV zugeordnete Batterieeinheit',
     'Class:UPSBattery/Attribute:ups_id' => 'USV',
