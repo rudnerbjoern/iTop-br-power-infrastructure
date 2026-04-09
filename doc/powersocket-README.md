@@ -1,8 +1,5 @@
 # iTop-br-powersocket
 
-Copyright (c) 2021-2026 Björn Rudner
-[![License](https://img.shields.io/github/license/rudnerbjoern/iTop-br-powersocket)](https://github.com/rudnerbjoern/iTop-br-powersocket/blob/main/LICENSE)
-
 ## Overview
 
 This extension adds the concept of individual power sockets to PDUs in iTop and allows Datacenter Devices to be connected to specific PDU sockets.
@@ -39,11 +36,11 @@ The extension ensures that:
 
 ### Power Supply
 
-![Power Supply](doc/Screenshots/PowerSupply.png)
+![Power Supply](Screenshots/PowerSupply.png)
 
 ### PDU
 
-![PDU](doc/Screenshots/PDU.png)
+![PDU](Screenshots/PDU.png)
 
 ## Conceptual Model
 
@@ -166,19 +163,3 @@ This extension enforces the following rules:
   * one Power B socket
 * Slot assignments are handled automatically
 * Inconsistent states are prevented or automatically corrected
-
-## iTop Compatibility
-
-The branch [2.7](https://github.com/rudnerbjoern/iTop-br-powersocket/tree/itop/2.7) is compatible to iTop 2.7 and iTop 3.1.
-
-The branch [main](https://github.com/rudnerbjoern/iTop-br-powersocket/tree/main) will only be compatible to iTop 3.2.
-
-Versions starting with 2.7.x are kept compatible to iTop 2.7
-
-The extension was tested on iTop 2.7.10 and 3.2.2
-
-## Attribution
-
-This Extension uses Icons from:
-
-![power connector](br-powersocket/images/powersocket.png) by Arthur Shlain from <https://thenounproject.com/browse/icons/term/power-connector/>
