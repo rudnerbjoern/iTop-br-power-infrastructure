@@ -310,6 +310,7 @@
                 </naming>
                 <style>
                     <icon>images/ups.svg</icon>
+                    <main_color>#1565C0</main_color>
                 </style>
                 <reconciliation>
                     <attributes>
@@ -624,6 +625,7 @@
                 </naming>
                 <style>
                     <icon>images/ups-battery.svg</icon>
+                    <main_color>#F9A825</main_color>
                 </style>
                 <reconciliation>
                     <attributes>
@@ -974,6 +976,7 @@
             </presentation>
         </class>
     </classes>
+    <!-- ***************** Menus ***************** -->
     <menus>
         <menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
             <definition>
@@ -994,4 +997,44 @@
             </definition>
         </menu>
     </menus>
+    <!-- ***************** User Rights ***************** -->
+    <user_rights>
+        <groups>
+            <group id="PowerDevice" _delta="define">
+                <classes>
+                    <class id="UPS" />
+                    <class id="UPSBattery" />
+                </classes>
+            </group>
+        </groups>
+        <profiles>
+            <profile id="117" _delta="if_exists">
+                <!-- SuperUser -->
+                <groups>
+                    <group id="PowerDevice" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+            <profile id="3" _delta="if_exists">
+                <!-- Configuration Manager -->
+                <groups>
+                    <group id="PowerDevice" _delta="define">
+                        <actions>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+        </profiles>
+    </user_rights>
 </itop_design>
