@@ -681,7 +681,7 @@
                                 </item>
                             </items>
                         </item>
-                        <item id="col:col2">
+                        <item id="col:col2" _delta="define">
                             <rank>20</rank>
                             <items>
                                 <item id="fieldset:PDU:rackinfo">
@@ -699,6 +699,23 @@
                                         <!-- id:  nb_cols - rank: 80 - source: datacenter-view-extended -->
                                     </items>
                                 </item>
+                                <item id="fieldset:PDU:electrical" _delta="define">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
                                 <item id="fieldset:Server:power">
                                     <rank>20</rank>
                                     <items>
@@ -711,7 +728,7 @@
                                     </items>
                                 </item>
                                 <item id="fieldset:Server:Date">
-                                    <rank>30</rank>
+                                    <rank>40</rank>
                                     <items>
                                         <item id="move2production">
                                             <rank>10</rank>
@@ -721,6 +738,12 @@
                                         </item>
                                         <item id="end_of_warranty">
                                             <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
                                         </item>
                                     </items>
                                 </item>
@@ -735,25 +758,7 @@
                             </items>
                         </item>
                         <item id="powersocket_list" _delta="define">
-                            <rank>105</rank>
-                        </item>
-                        <item id="phase_type" _delta="define">
-                            <rank>75</rank>
-                        </item>
-                        <item id="nominal_voltage" _delta="define">
-                            <rank>76</rank>
-                        </item>
-                        <item id="nominal_frequency" _delta="define">
-                            <rank>77</rank>
-                        </item>
-                        <item id="max_current_ampere" _delta="define">
-                            <rank>78</rank>
-                        </item>
-                        <item id="last_maintenance_date" _delta="define">
-                            <rank>145</rank>
-                        </item>
-                        <item id="next_maintenance_date" _delta="define">
-                            <rank>146</rank>
+                            <rank>110</rank>
                         </item>
                     </items>
                 </details>
@@ -791,7 +796,7 @@
                             <rank>77</rank>
                         </item>
                         <item id="next_maintenance_date" _delta="define">
-                            <rank>145</rank>
+                            <rank>78</rank>
                         </item>
                     </items>
                 </list>
