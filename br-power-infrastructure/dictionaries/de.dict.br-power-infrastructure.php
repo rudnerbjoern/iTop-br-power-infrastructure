@@ -67,6 +67,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
     'Class:UPS/Attribute:autonomy_time' => 'Überbrückungszeit',
     'Class:UPS/Attribute:autonomy_time+' => 'Erwartete Überbrückungszeit der USV als Zeitdauer.',
+
+    'Class:UPS/Attribute:batteries_list' => 'Batterien',
+    'Class:UPS/Attribute:batteries_list+' => 'Batterieeinheiten, die dieser USV zugeordnet sind.',
 ));
 
 //
@@ -77,15 +80,14 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'UPSBattery:upsinfo' => 'USV-Zuordnung',
     'UPSBattery:batteryinfo' => 'Batteriedaten',
     'UPSBattery:assetinfo' => 'Asset-Daten',
+
     'Class:UPSBattery' => 'USV-Batterie',
-    'Class:UPSBattery+' => 'Einer unterbrechungsfreien Stromversorgung zugeordnete Batterieeinheit',
+    'Class:UPSBattery+' => 'Einer USV zugeordnete Batterieeinheit',
 
     'Class:UPSBattery/Attribute:ups_id' => 'USV',
     'Class:UPSBattery/Attribute:ups_id+' => 'USV, zu der diese Batterieeinheit gehört.',
     'Class:UPSBattery/Attribute:ups_name' => 'USV-Name',
-
-    'Class:UPS/Attribute:batteries_list' => 'Batterien',
-    'Class:UPS/Attribute:batteries_list+' => 'Dieser USV zugeordnete Batterieeinheiten.',
+    'Class:UPSBattery/Attribute:ups_name+' => 'Name der zugeordneten USV.',
 
     'Class:UPSBattery/Attribute:battery_role' => 'Batterierolle',
     'Class:UPSBattery/Attribute:battery_role+' => 'Rolle dieser Batterieeinheit innerhalb der USV-Installation.',

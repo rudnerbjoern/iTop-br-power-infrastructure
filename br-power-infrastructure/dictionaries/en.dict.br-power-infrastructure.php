@@ -44,9 +44,9 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'UPS:electrical' => 'Electrical characteristics',
-    'UPS:upsinfo' => 'UPS characteristics',
-    'UPS:assetinfo' => 'Asset information',
+    'UPS:electrical' => 'Electrical data',
+    'UPS:upsinfo' => 'UPS data',
+    'UPS:assetinfo' => 'Asset data',
 
     'Class:UPS' => 'UPS',
     'Class:UPS+' => 'Uninterruptible power supply',
@@ -67,6 +67,9 @@ Dict::Add('EN US', 'English', 'English', array(
 
     'Class:UPS/Attribute:autonomy_time' => 'Autonomy time',
     'Class:UPS/Attribute:autonomy_time+' => 'Expected autonomy time of the UPS as a duration.',
+
+    'Class:UPS/Attribute:batteries_list' => 'Batteries',
+    'Class:UPS/Attribute:batteries_list+' => 'Battery units assigned to this UPS.',
 ));
 
 //
@@ -77,6 +80,15 @@ Dict::Add('EN US', 'English', 'English', array(
     'UPSBattery:upsinfo' => 'UPS assignment',
     'UPSBattery:batteryinfo' => 'Battery data',
     'UPSBattery:assetinfo' => 'Asset data',
+
+    'Class:UPSBattery' => 'UPS battery',
+    'Class:UPSBattery+' => 'Battery unit assigned to an uninterruptible power supply',
+
+    'Class:UPSBattery/Attribute:ups_id' => 'UPS',
+    'Class:UPSBattery/Attribute:ups_id+' => 'UPS to which this battery unit belongs.',
+    'Class:UPSBattery/Attribute:ups_name' => 'UPS name',
+    'Class:UPSBattery/Attribute:ups_name+' => 'Name of the assigned UPS.',
+
     'Class:UPSBattery/Attribute:battery_role' => 'Battery role',
     'Class:UPSBattery/Attribute:battery_role+' => 'Role of this battery unit within the UPS installation.',
     'Class:UPSBattery/Attribute:battery_role/Value:internal' => 'Internal',
