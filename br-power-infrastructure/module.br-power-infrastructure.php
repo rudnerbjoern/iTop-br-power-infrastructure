@@ -3,14 +3,14 @@
 /**
  * @copyright   Copyright (C) 2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
- * @version     2026-04-08
+ * @version     2026-04-09
  * iTop module definition file
  */
 
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure/0.0.2',
+    'br-power-infrastructure/1.0.0',
     array(
         // Identification
         //

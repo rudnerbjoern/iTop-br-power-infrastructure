@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2022-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
- * @version     2026-02-23
+ * @version     2026-04-09
  *
  * iTop module definition file
  */
@@ -21,8 +21,8 @@ SetupWebPage::AddModule(
         'dependencies' => array(
             'itop-config-mgmt/3.2.0',
             'itop-datacenter-mgmt/3.2.0',
-            'br-power-infrastructure/0.0.2',
-            'molkobain-datacenter-view/1.14.0||br-power-infrastructure/0.0.2',
+            'br-power-infrastructure/1.0.0',
+            'molkobain-datacenter-view/1.14.0||br-power-infrastructure/1.0.0',
         ),
         'mandatory' => false,
         'visible' => true,
