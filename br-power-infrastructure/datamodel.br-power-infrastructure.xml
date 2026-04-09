@@ -387,86 +387,126 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="name">
+                        <item id="col:col1">
                             <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:UPS:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:UPS:upsinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="ups_topology">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="rated_power_va">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="rated_power_watt">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="autonomy_time">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
-                        <item id="org_id">
+                        <item id="col:col2">
                             <rank>20</rank>
-                        </item>
-                        <item id="status">
-                            <rank>30</rank>
-                        </item>
-                        <item id="business_criticity">
-                            <rank>40</rank>
-                        </item>
-                        <item id="location_id">
-                            <rank>50</rank>
-                        </item>
-                        <item id="phase_type">
-                            <rank>60</rank>
-                        </item>
-                        <item id="nominal_voltage">
-                            <rank>70</rank>
-                        </item>
-                        <item id="nominal_frequency">
-                            <rank>80</rank>
-                        </item>
-                        <item id="max_current_ampere">
-                            <rank>90</rank>
-                        </item>
-                        <item id="ups_topology">
-                            <rank>100</rank>
-                        </item>
-                        <item id="rated_power_va">
-                            <rank>110</rank>
-                        </item>
-                        <item id="rated_power_watt">
-                            <rank>120</rank>
-                        </item>
-                        <item id="autonomy_time">
-                            <rank>130</rank>
-                        </item>
-                        <item id="brand_id">
-                            <rank>140</rank>
-                        </item>
-                        <item id="model_id">
-                            <rank>150</rank>
-                        </item>
-                        <item id="serialnumber">
-                            <rank>160</rank>
-                        </item>
-                        <item id="asset_number">
-                            <rank>170</rank>
-                        </item>
-                        <item id="move2production">
-                            <rank>180</rank>
-                        </item>
-                        <item id="purchase_date">
-                            <rank>190</rank>
-                        </item>
-                        <item id="end_of_warranty">
-                            <rank>200</rank>
-                        </item>
-                        <item id="last_maintenance_date">
-                            <rank>210</rank>
-                        </item>
-                        <item id="next_maintenance_date">
-                            <rank>220</rank>
-                        </item>
-                        <item id="description">
-                            <rank>230</rank>
+                            <items>
+                                <item id="fieldset:UPS:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
                         <item id="batteries_list">
-                            <rank>240</rank>
+                            <rank>110</rank>
                         </item>
                         <item id="pdus_list">
-                            <rank>250</rank>
+                            <rank>120</rank>
                         </item>
                         <item id="contacts_list">
-                            <rank>260</rank>
+                            <rank>130</rank>
                         </item>
                         <item id="documents_list">
-                            <rank>270</rank>
+                            <rank>140</rank>
                         </item>
                     </items>
                 </details>
@@ -499,43 +539,43 @@
                         <item id="max_current_ampere">
                             <rank>90</rank>
                         </item>
-                        <item id="brand_id">
+                        <item id="ups_topology">
                             <rank>100</rank>
                         </item>
-                        <item id="model_id">
+                        <item id="rated_power_va">
                             <rank>110</rank>
                         </item>
-                        <item id="serialnumber">
+                        <item id="rated_power_watt">
                             <rank>120</rank>
                         </item>
-                        <item id="asset_number">
+                        <item id="autonomy_time">
                             <rank>130</rank>
                         </item>
-                        <item id="move2production">
+                        <item id="brand_id">
                             <rank>140</rank>
                         </item>
-                        <item id="purchase_date">
+                        <item id="model_id">
                             <rank>150</rank>
                         </item>
-                        <item id="end_of_warranty">
+                        <item id="serialnumber">
                             <rank>160</rank>
                         </item>
-                        <item id="last_maintenance_date">
+                        <item id="asset_number">
                             <rank>170</rank>
                         </item>
-                        <item id="next_maintenance_date">
+                        <item id="move2production">
                             <rank>180</rank>
                         </item>
-                        <item id="ups_topology">
+                        <item id="purchase_date">
                             <rank>190</rank>
                         </item>
-                        <item id="rated_power_va">
+                        <item id="end_of_warranty">
                             <rank>200</rank>
                         </item>
-                        <item id="rated_power_watt">
+                        <item id="last_maintenance_date">
                             <rank>210</rank>
                         </item>
-                        <item id="autonomy_time">
+                        <item id="next_maintenance_date">
                             <rank>220</rank>
                         </item>
                     </items>
@@ -548,22 +588,22 @@
                         <item id="status">
                             <rank>20</rank>
                         </item>
-                        <item id="business_criticity">
+                        <item id="location_id">
                             <rank>30</rank>
                         </item>
-                        <item id="location_id">
+                        <item id="phase_type">
                             <rank>40</rank>
                         </item>
-                        <item id="phase_type">
+                        <item id="nominal_voltage">
                             <rank>50</rank>
                         </item>
-                        <item id="nominal_voltage">
+                        <item id="ups_topology">
                             <rank>60</rank>
                         </item>
-                        <item id="ups_topology">
+                        <item id="rated_power_va">
                             <rank>70</rank>
                         </item>
-                        <item id="rated_power_va">
+                        <item id="autonomy_time">
                             <rank>80</rank>
                         </item>
                         <item id="next_maintenance_date">
@@ -599,6 +639,9 @@
                         </item>
                         <item id="rated_power_va">
                             <rank>60</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>70</rank>
                         </item>
                     </items>
                 </summary>
@@ -721,26 +764,50 @@
                         <value id="ok">
                             <code>ok</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(46, 125, 50)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                         <value id="warning">
                             <code>warning</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(245, 158, 11)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                         <value id="critical">
                             <code>critical</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(198, 40, 40)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                         <value id="expired">
                             <code>expired</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(146, 64, 14)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                         <value id="replaced">
                             <code>replaced</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(21, 101, 192)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                         <value id="unknown">
                             <code>unknown</code>
                             <rank>60</rank>
+                            <style>
+                                <main_color>rgb(107, 114, 128)</main_color>
+                                <complementary_color>rgb(255, 255, 255)</complementary_color>
+                            </style>
                         </value>
                     </values>
                     <default_value>ok</default_value>
@@ -782,74 +849,114 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="name">
+                        <item id="col:col1">
                             <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:UPSBattery:upsinfo">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="ups_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="battery_role">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:UPSBattery:batteryinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="battery_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="battery_status">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="battery_voltage">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="battery_capacity_ah">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
-                        <item id="org_id">
+                        <item id="col:col2">
                             <rank>20</rank>
-                        </item>
-                        <item id="status">
-                            <rank>30</rank>
-                        </item>
-                        <item id="business_criticity">
-                            <rank>40</rank>
-                        </item>
-                        <item id="location_id">
-                            <rank>50</rank>
-                        </item>
-                        <item id="ups_id">
-                            <rank>60</rank>
-                        </item>
-                        <item id="battery_role">
-                            <rank>70</rank>
-                        </item>
-                        <item id="battery_type">
-                            <rank>80</rank>
-                        </item>
-                        <item id="battery_status">
-                            <rank>90</rank>
-                        </item>
-                        <item id="battery_voltage">
-                            <rank>100</rank>
-                        </item>
-                        <item id="battery_capacity_ah">
-                            <rank>110</rank>
-                        </item>
-                        <item id="brand_id">
-                            <rank>120</rank>
-                        </item>
-                        <item id="model_id">
-                            <rank>130</rank>
-                        </item>
-                        <item id="serialnumber">
-                            <rank>140</rank>
-                        </item>
-                        <item id="asset_number">
-                            <rank>150</rank>
-                        </item>
-                        <item id="move2production">
-                            <rank>160</rank>
-                        </item>
-                        <item id="purchase_date">
-                            <rank>170</rank>
-                        </item>
-                        <item id="end_of_warranty">
-                            <rank>180</rank>
-                        </item>
-                        <item id="last_replacement_date">
-                            <rank>190</rank>
-                        </item>
-                        <item id="next_replacement_date">
-                            <rank>200</rank>
-                        </item>
-                        <item id="description">
-                            <rank>210</rank>
+                            <items>
+                                <item id="fieldset:UPSBattery:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_replacement_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_replacement_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
                         </item>
                         <item id="contacts_list">
-                            <rank>220</rank>
+                            <rank>110</rank>
                         </item>
                         <item id="documents_list">
-                            <rank>230</rank>
+                            <rank>120</rank>
                         </item>
                     </items>
                 </details>
@@ -925,22 +1032,22 @@
                         <item id="status">
                             <rank>20</rank>
                         </item>
-                        <item id="business_criticity">
+                        <item id="location_id">
                             <rank>30</rank>
                         </item>
-                        <item id="location_id">
+                        <item id="ups_id">
                             <rank>40</rank>
                         </item>
-                        <item id="ups_id">
+                        <item id="battery_role">
                             <rank>50</rank>
                         </item>
-                        <item id="battery_role">
+                        <item id="battery_type">
                             <rank>60</rank>
                         </item>
-                        <item id="battery_type">
+                        <item id="battery_status">
                             <rank>70</rank>
                         </item>
-                        <item id="battery_status">
+                        <item id="next_replacement_date">
                             <rank>80</rank>
                         </item>
                         <item id="brand_id">
@@ -970,6 +1077,9 @@
                         </item>
                         <item id="battery_status">
                             <rank>50</rank>
+                        </item>
+                        <item id="next_replacement_date">
+                            <rank>60</rank>
                         </item>
                     </items>
                 </summary>

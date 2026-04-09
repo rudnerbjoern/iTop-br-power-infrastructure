@@ -44,6 +44,10 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'UPS:electrical' => 'Elektrische Daten',
+    'UPS:upsinfo' => 'USV-Daten',
+    'UPS:assetinfo' => 'Asset-Daten',
+
     'Class:UPS' => 'USV',
     'Class:UPS+' => 'Unterbrechungsfreie Stromversorgung',
 
@@ -70,6 +74,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'UPSBattery:upsinfo' => 'USV-Zuordnung',
+    'UPSBattery:batteryinfo' => 'Batteriedaten',
+    'UPSBattery:assetinfo' => 'Asset-Daten',
     'Class:UPSBattery' => 'USV-Batterie',
     'Class:UPSBattery+' => 'Einer unterbrechungsfreien Stromversorgung zugeordnete Batterieeinheit',
 

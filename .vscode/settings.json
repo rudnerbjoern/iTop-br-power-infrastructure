@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
         "applicationsolution",
+        "assetinfo",
         "attcode",
         "autoincrement",
         "baseinfo",
+        "batteryinfo",
         "bizmodel",
         "cmdb",
         "configmgmt",
@@ -29,6 +31,7 @@
         "providercontracts",
         "serialnumber",
         "upsbattery",
+        "upsinfo",
         "Voltampere",
         "vrla"
     ],
