@@ -48,9 +48,11 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:PowerSocket/Message:NoFreeSocketOnDatacenterDevice' => 'Could not assign the PowerSocket to the DatacenterDevice because no free socket is available.',
     'Class:PowerSocket/Error:NoFreeSocketOnDatacenterDevice' => 'Das ausgewählte DatacenterDevice verfügt über keinen freien PowerSocket.',
     'Class:PowerSocket/Error:SocketTypeMismatch' => 'The selected DatacenterDevice requires a different socket type.',
+    // Class: PowerSource
+    'PowerSource:electrical' => 'Electrical data',
+    'PowerSource:assetinfo' => 'Asset data',
     // Class: PDU
     'PDU:rackinfo' => 'Rack Information',
-    'PDU:electrical' => 'Electrical data',
     'Class:PDU/Attribute:capacity' => 'Capacity',
     'Class:PDU/Attribute:capacity+' => 'Number of power sockets that the PDU can host',
     'Class:PDU/Attribute:powersocket_list' => 'Power Sockets',
@@ -89,9 +91,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:PowerConnection/Attribute:next_maintenance_date' => 'Next maintenance date',
     'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Planned date of the next maintenance activity for this power connection.',
     // Class: UPS
-    'UPS:electrical' => 'Electrical data',
     'UPS:upsinfo' => 'UPS data',
-    'UPS:assetinfo' => 'Asset data',
     'Class:UPS' => 'UPS',
     'Class:UPS+' => 'Uninterruptible power supply',
     'Class:UPS/Attribute:ups_topology' => 'UPS topology',
@@ -112,7 +112,6 @@ Dict::Add('EN US', 'English', 'English', array(
     // Class: UPSBattery
     'UPSBattery:upsinfo' => 'UPS assignment',
     'UPSBattery:batteryinfo' => 'Battery data',
-    'UPSBattery:assetinfo' => 'Asset data',
     'Class:UPSBattery' => 'UPS battery',
     'Class:UPSBattery+' => 'Battery unit assigned to an uninterruptible power supply',
     'Class:UPSBattery/Attribute:ups_id' => 'UPS',
