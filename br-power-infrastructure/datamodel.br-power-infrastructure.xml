@@ -2273,16 +2273,6 @@
                                 <rank>10</rank>
                                 <class>UPSBattery</class>
                             </dashlet>
-                        </dashlets>
-                    </cell>
-                </cells>
-            </definition>
-        </menu>
-        <menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
-            <definition>
-                <cells>
-                    <cell id="0">
-                        <dashlets>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>PowerSocket</class>
