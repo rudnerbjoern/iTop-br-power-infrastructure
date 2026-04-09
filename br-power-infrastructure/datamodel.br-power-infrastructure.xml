@@ -679,6 +679,14 @@
                                         </item>
                                     </items>
                                 </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
                             </items>
                         </item>
                         <item id="col:col2" _delta="define">
@@ -717,7 +725,7 @@
                                     </items>
                                 </item>
                                 <item id="fieldset:Server:power">
-                                    <rank>20</rank>
+                                    <rank>30</rank>
                                     <items>
                                         <item id="powerstart_id">
                                             <rank>10</rank>
@@ -744,14 +752,6 @@
                                         </item>
                                         <item id="next_maintenance_date">
                                             <rank>50</rank>
-                                        </item>
-                                    </items>
-                                </item>
-                                <item id="fieldset:Server:otherinfo">
-                                    <rank>40</rank>
-                                    <items>
-                                        <item id="description">
-                                            <rank>10</rank>
                                         </item>
                                     </items>
                                 </item>
