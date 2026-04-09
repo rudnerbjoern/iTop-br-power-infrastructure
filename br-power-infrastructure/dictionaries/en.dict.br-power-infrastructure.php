@@ -46,7 +46,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:PowerSocket/Attribute:datacenterdevice_id' => 'Datacenter device',
     'Class:PowerSocket/Attribute:datacenterdevice_name' => 'Datacenter device name',
     'Class:PowerSocket/Message:NoFreeSocketOnDatacenterDevice' => 'Could not assign the PowerSocket to the DatacenterDevice because no free socket is available.',
-    'Class:PowerSocket/Error:NoFreeSocketOnDatacenterDevice' => 'Das ausgewählte DatacenterDevice verfügt über keinen freien PowerSocket.',
+    'Class:PowerSocket/Error:NoFreeSocketOnDatacenterDevice' => 'The selected DatacenterDevice has no free PowerSocket available.',
     'Class:PowerSocket/Error:SocketTypeMismatch' => 'The selected DatacenterDevice requires a different socket type.',
     // Class: PowerSource
     'PowerSource:electrical' => 'Electrical data',
