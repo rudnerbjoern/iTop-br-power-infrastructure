@@ -279,4 +279,4 @@ Planned or possible future enhancements may include:
 
 This extension uses icons from:
 
-![power connector](br-powersocket/images/powersocket.png) by Arthur Shlain from <https://thenounproject.com/browse/icons/term/power-connector/>
+![power connector](br-power-infrastructure/images/powersocket.png) by Arthur Shlain from <https://thenounproject.com/browse/icons/term/power-connector/>
