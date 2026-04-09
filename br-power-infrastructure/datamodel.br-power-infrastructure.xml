@@ -290,5 +290,300 @@
                 </summary>
             </presentation>
         </class>
+        <class id="UPS" _delta="define">
+            <parent>PowerSource</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>ups</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>../../images/icons/icons8-electricity.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="ups_topology" xsi:type="AttributeEnum" _delta="define">
+                    <sql>ups_topology</sql>
+                    <values>
+                        <value id="offline">
+                            <code>offline</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="line_interactive">
+                            <code>line_interactive</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="online">
+                            <code>online</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="modular">
+                            <code>modular</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>online</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="rated_power_va" xsi:type="AttributeInteger" _delta="define">
+                    <sql>rated_power_va</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="rated_power_watt" xsi:type="AttributeInteger" _delta="define">
+                    <sql>rated_power_watt</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="autonomy_time" xsi:type="AttributeDuration" _delta="define">
+                    <sql>autonomy_time</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="ups_topology">
+                            <rank>100</rank>
+                        </item>
+                        <item id="rated_power_va">
+                            <rank>110</rank>
+                        </item>
+                        <item id="rated_power_watt">
+                            <rank>120</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>130</rank>
+                        </item>
+
+
+                        <item id="brand_id">
+                            <rank>140</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>150</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>160</rank>
+                        </item>
+                        <item id="asset_number">
+                            <rank>170</rank>
+                        </item>
+                        <item id="move2production">
+                            <rank>180</rank>
+                        </item>
+                        <item id="purchase_date">
+                            <rank>190</rank>
+                        </item>
+                        <item id="end_of_warranty">
+                            <rank>200</rank>
+                        </item>
+                        <item id="last_maintenance_date">
+                            <rank>210</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>220</rank>
+                        </item>
+                        <item id="description">
+                            <rank>230</rank>
+                        </item>
+                        <item id="pdus_list">
+                            <rank>240</rank>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>250</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>260</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>100</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>120</rank>
+                        </item>
+                        <item id="asset_number">
+                            <rank>130</rank>
+                        </item>
+                        <item id="move2production">
+                            <rank>140</rank>
+                        </item>
+                        <item id="purchase_date">
+                            <rank>150</rank>
+                        </item>
+                        <item id="end_of_warranty">
+                            <rank>160</rank>
+                        </item>
+                        <item id="last_maintenance_date">
+                            <rank>170</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>180</rank>
+                        </item>
+                        <item id="ups_topology">
+                            <rank>190</rank>
+                        </item>
+                        <item id="rated_power_va">
+                            <rank>200</rank>
+                        </item>
+                        <item id="rated_power_watt">
+                            <rank>210</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>220</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>30</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>60</rank>
+                        </item>
+                        <item id="ups_topology">
+                            <rank>70</rank>
+                        </item>
+                        <item id="rated_power_va">
+                            <rank>80</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>90</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>100</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>120</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="ups_topology">
+                            <rank>50</rank>
+                        </item>
+                        <item id="rated_power_va">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
     </classes>
 </itop_design>

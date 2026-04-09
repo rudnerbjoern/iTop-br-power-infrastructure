@@ -38,3 +38,29 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:PowerConnection/Attribute:next_maintenance_date' => 'Next maintenance date',
     'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Planned date of the next maintenance activity for this power connection.',
 ));
+
+//
+// Class: UPS
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:UPS' => 'UPS',
+    'Class:UPS+' => 'Uninterruptible power supply',
+
+    'Class:UPS/Attribute:ups_topology' => 'UPS topology',
+    'Class:UPS/Attribute:ups_topology+' => 'Topology of the UPS system.',
+    'Class:UPS/Attribute:ups_topology/Value:offline' => 'Offline',
+    'Class:UPS/Attribute:ups_topology/Value:line_interactive' => 'Line-interactive',
+    'Class:UPS/Attribute:ups_topology/Value:online' => 'Online',
+    'Class:UPS/Attribute:ups_topology/Value:modular' => 'Modular',
+    'Class:UPS/Attribute:ups_topology/Value:other' => 'Other',
+
+    'Class:UPS/Attribute:rated_power_va' => 'Rated power (VA)',
+    'Class:UPS/Attribute:rated_power_va+' => 'Rated apparent power of the UPS in volt-amperes.',
+
+    'Class:UPS/Attribute:rated_power_watt' => 'Rated power (W)',
+    'Class:UPS/Attribute:rated_power_watt+' => 'Rated active power of the UPS in watts.',
+
+    'Class:UPS/Attribute:autonomy_time' => 'Autonomy time',
+    'Class:UPS/Attribute:autonomy_time+' => 'Expected autonomy time of the UPS as a duration.',
+));

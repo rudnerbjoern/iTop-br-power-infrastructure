@@ -38,3 +38,29 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:PowerConnection/Attribute:next_maintenance_date' => 'Datum nächste Wartung',
     'Class:PowerConnection/Attribute:next_maintenance_date+' => 'Geplantes Datum der nächsten Wartung dieser Stromverbindung.',
 ));
+
+//
+// Class: UPS
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:UPS' => 'USV',
+    'Class:UPS+' => 'Unterbrechungsfreie Stromversorgung',
+
+    'Class:UPS/Attribute:ups_topology' => 'USV-Topologie',
+    'Class:UPS/Attribute:ups_topology+' => 'Topologie des USV-Systems.',
+    'Class:UPS/Attribute:ups_topology/Value:offline' => 'Offline',
+    'Class:UPS/Attribute:ups_topology/Value:line_interactive' => 'Line-Interactive',
+    'Class:UPS/Attribute:ups_topology/Value:online' => 'Online',
+    'Class:UPS/Attribute:ups_topology/Value:modular' => 'Modular',
+    'Class:UPS/Attribute:ups_topology/Value:other' => 'Sonstige',
+
+    'Class:UPS/Attribute:rated_power_va' => 'Nennleistung (VA)',
+    'Class:UPS/Attribute:rated_power_va+' => 'Nennscheinleistung der USV in Voltampere.',
+
+    'Class:UPS/Attribute:rated_power_watt' => 'Nennleistung (W)',
+    'Class:UPS/Attribute:rated_power_watt+' => 'Nennwirkleistung der USV in Watt.',
+
+    'Class:UPS/Attribute:autonomy_time' => 'Überbrückungszeit',
+    'Class:UPS/Attribute:autonomy_time+' => 'Erwartete Überbrückungszeit der USV als Zeitdauer.',
+));
