@@ -9,7 +9,7 @@ Copyright (c) 2026 Björn Rudner
 
 The extension focuses on structured modeling of electrical power supply components and their relationships in environments such as data centers, server rooms, technical facilities, and other infrastructure areas where reliable documentation of power dependencies is required.
 
-It extends the native iTop power model and introduces additional classes and attributes for documenting technical, operational, and maintenance-related information.
+It extends the native iTop power model and introduces additional classes, attributes, and synchronization logic for documenting technical, operational, and maintenance-related information.
 
 ## Features
 
@@ -21,6 +21,12 @@ It extends the native iTop power model and introduces additional classes and att
 - Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
 - Adds UPS-specific documentation fields such as topology, rated power, and autonomy time
 - Adds battery-specific documentation fields such as battery role, battery type, battery status, replacement dates, voltage, and capacity
+- Introduces the `PowerSocket` class to model individual PDU outlets
+- Extends `PDU` with dedicated power socket handling
+- Allows `DatacenterDevice` objects to be connected to specific PDU sockets
+- Provides automatic synchronization logic between `PowerSocket`, `PDU`, and `DatacenterDevice`
+- Supports automatic slot assignment for Power A / Power B connections
+- Includes consistency checks and rollback logic for invalid assignments
 - Provides a structured foundation for future extensions covering additional power infrastructure components such as generators
 
 ## Data Model
@@ -30,11 +36,13 @@ The extension currently builds on the following native iTop classes:
 - `PowerConnection`
 - `PowerSource`
 - `PDU`
+- `DatacenterDevice`
 
 The extension currently introduces the following additional classes:
 
 - `UPS`
 - `UPSBattery`
+- `PowerSocket`
 
 ### Extended native classes
 
@@ -55,7 +63,11 @@ Presentation enhancements for inherited generic power-related attributes.
 
 #### `PDU`
 
-Presentation enhancements for inherited generic power-related attributes.
+Presentation enhancements for inherited generic power-related attributes and support for individual power sockets.
+
+#### `DatacenterDevice`
+
+Extended to support dedicated Power A / Power B socket assignments.
 
 ### New classes
 
@@ -90,6 +102,16 @@ Current battery-specific attributes include:
 - `last_replacement_date`
 - `next_replacement_date`
 
+#### `PowerSocket`
+
+A `PowerSocket` represents an individual physical outlet on a PDU.
+
+Each socket:
+
+- belongs to exactly one `PDU`
+- may be connected to exactly one `DatacenterDevice`
+- can be assigned to either Power A or Power B on the connected device
+
 ## Relations
 
 The current data model supports relationships such as:
@@ -97,7 +119,104 @@ The current data model supports relationships such as:
 - `PowerSource` feeding `PDU`
 - `UPS` acting as a specialized `PowerSource`
 - `UPS` owning one or more `UPSBattery` objects
+- `PDU` owning one or more `PowerSocket` objects
+- `PowerSocket` being linked to a `DatacenterDevice`
 - chained power infrastructure dependencies through the native iTop power model
+
+## PowerSocket Logic
+
+The integrated PowerSocket functionality provides synchronization logic between:
+
+- `PowerSocket`
+- `PDU`
+- `DatacenterDevice`
+
+Each `DatacenterDevice` can be connected to:
+
+- one Power A socket
+- one Power B socket
+
+The extension ensures that:
+
+- no more than two sockets are assigned to a single `DatacenterDevice`
+- slots are automatically assigned (A first, then B)
+- connections stay consistent when objects are updated or deleted
+- invalid assignments are rejected or rolled back
+
+## How to Use
+
+### UPS and UPSBattery
+
+Use the `UPS` class to document dedicated uninterruptible power supplies and the `UPSBattery` class to document associated battery units.
+
+Typical usage includes:
+
+- documenting UPS-specific electrical and technical data
+- assigning one or more battery units to a UPS
+- documenting replacement cycles and battery status
+
+### PowerSockets
+
+#### Creating PowerSockets
+
+PowerSockets represent physical outlets on a PDU.
+
+1. Open the PDU object in iTop.
+2. Scroll to the PowerSockets list.
+3. Add one or more PowerSockets.
+4. Give each socket a meaningful name, for example `Outlet 1`, `A01`, or `Rack-3-Port-5`.
+
+Each `PowerSocket` belongs to exactly one `PDU`.
+
+#### Connecting a PowerSocket to a DatacenterDevice
+
+You can connect a `PowerSocket` to a `DatacenterDevice` in two ways.
+
+##### Option A: From the PowerSocket side
+
+1. Open a `PowerSocket`.
+2. Set the `Datacenter Device` field.
+3. Save.
+
+The system will automatically:
+
+- assign the socket to slot Power A or Power B
+- set the corresponding PDU reference on the device
+
+##### Option B: From the DatacenterDevice side
+
+1. Open a `DatacenterDevice` such as a server, storage system, or switch.
+2. Select a `PowerSocket` in:
+   - `Power A socket`, or
+   - `Power B socket`
+3. Save.
+
+The system will automatically:
+
+- link the `PowerSocket` back to the `DatacenterDevice`
+- keep both sides consistent
+
+#### Automatic Slot Assignment
+
+Each `DatacenterDevice` can have:
+
+- one Power A socket
+- one Power B socket
+
+When connecting a `PowerSocket`:
+
+1. Slot A is used first
+2. Slot B is used if A is already occupied
+3. If both slots are occupied, the assignment is rejected
+
+#### Deleting a PowerSocket
+
+When a `PowerSocket` is deleted:
+
+- the slot reference on the `DatacenterDevice` is automatically cleared
+- Power A / Power B fields are reset if they pointed to this socket
+
+This prevents broken references and dangling assignments.
 
 ## Installation
 
@@ -109,6 +228,8 @@ The current data model supports relationships such as:
 
 3. Run the iTop setup or upgrade process.
 
+4. Apply the data model changes and complete the update.
+
 ## Status
 
 This extension is currently in an early beta stage.
@@ -118,7 +239,9 @@ The current implementation focuses on:
 - extending the generic native power infrastructure model
 - introducing a dedicated UPS class
 - introducing a dedicated UPS battery class
+- introducing PowerSocket support for PDUs
 - establishing relations between UPS systems and their battery units
+- providing synchronized socket handling for `DatacenterDevice`
 - preparing the module structure for future power infrastructure extensions
 
 ## iTop Compatibility
@@ -140,9 +263,20 @@ Planned or possible future enhancements may include:
 - more detailed power source modeling
 - improved monitoring and operational metadata
 - further refinement of power infrastructure relations
+- additional power distribution and socket-level modeling improvements
+
+## Screenshots
+
+### Power Supply
+
+![Power Supply](doc/Screenshots/PowerSupply.png)
+
+### PDU
+
+![PDU](doc/Screenshots/PDU.png)
 
 ## Attribution
 
-This Extension uses Icons from:
+This extension uses icons from:
 
 ![power connector](br-powersocket/images/powersocket.png) by Arthur Shlain from <https://thenounproject.com/browse/icons/term/power-connector/>
