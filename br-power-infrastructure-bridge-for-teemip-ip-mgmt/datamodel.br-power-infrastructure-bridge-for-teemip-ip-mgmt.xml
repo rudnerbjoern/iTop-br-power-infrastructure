@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
+    <classes>
+        <class id="PDU" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="macaddress" _delta="delete" />
+                        <item id="ipaddress_id" _delta="delete" />
+                        <item id="col:col1" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:moreinfo" _delta="must_exist">
+                                    <items>
+                                        <item id="macaddress" _delta="define">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="ipaddress_id" _delta="define">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+            </presentation>
+        </class>
+    </classes>
+</itop_design>

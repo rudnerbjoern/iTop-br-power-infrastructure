@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
+    <classes>
+        <class id="PDU" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="position_p" _delta="delete" />
+                        <item id="zero_u" _delta="delete" />
+                        <item id="position_h" _delta="delete" />
+                        <item id="nb_cols" _delta="delete" />
+                        <item id="weight" _delta="delete" />
+                        <item id="col:col1" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:moreinfo" _delta="must_exist">
+                                    <items>
+                                        <item id="weight" _delta="define">
+                                            <rank>90</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:PDU:rackinfo" _delta="must_exist">
+                                    <items>
+                                        <!-- id:  rack_id - rank: 10 -->
+                                        <!-- id:  enclosure_id - rank: 20 -->
+                                        <item id="position_p" _delta="define">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="zero_u" _delta="define">
+                                            <rank>40</rank>
+                                        </item>
+                                        <!-- id:  position_v - rank: 50 -->
+                                        <item id="position_h" _delta="define">
+                                            <rank>60</rank>
+                                        </item>
+                                        <!-- id:  nb_u - rank: 70 -->
+                                        <item id="nb_cols" _delta="define">
+                                            <rank>80</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+            </presentation>
+        </class>
+    </classes>
+</itop_design>

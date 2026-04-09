@@ -140,3 +140,9 @@ Planned or possible future enhancements may include:
 - more detailed power source modeling
 - improved monitoring and operational metadata
 - further refinement of power infrastructure relations
+
+## Attribution
+
+This Extension uses Icons from:
+
+![power connector](br-powersocket/images/powersocket.png) by Arthur Shlain from <https://thenounproject.com/browse/icons/term/power-connector/>

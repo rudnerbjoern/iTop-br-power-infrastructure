@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
+    <classes>
+        <class id="PDU" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="enclosure_id" _delta="delete" />
+                        <item id="position_v" _delta="delete" />
+                        <item id="nb_u" _delta="delete" />
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:PDU:rackinfo" _delta="must_exist">
+                                    <items>
+                                        <!-- id:  rack_id - rank: 10 -->
+                                        <item id="enclosure_id" _delta="define">
+                                            <rank>20</rank>
+                                        </item>
+                                        <!-- id:  position_p - rank: 30 -->
+                                        <!-- id:  zero_u - rank: 40 -->
+                                        <item id="position_v" _delta="define">
+                                            <rank>50</rank>
+                                        </item>
+                                        <!-- id:  position_h - rank: 60 -->
+                                        <item id="nb_u" _delta="define">
+                                            <rank>70</rank>
+                                        </item>
+                                        <!-- id:  nb_cols - rank: 80 -->
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+            </presentation>
+        </class>
+    </classes>
+</itop_design>
