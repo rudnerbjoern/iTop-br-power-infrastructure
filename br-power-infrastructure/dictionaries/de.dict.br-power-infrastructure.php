@@ -64,3 +64,57 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:UPS/Attribute:autonomy_time' => 'Überbrückungszeit',
     'Class:UPS/Attribute:autonomy_time+' => 'Erwartete Überbrückungszeit der USV als Zeitdauer.',
 ));
+
+//
+// Class: UPSBattery
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:UPSBattery' => 'USV-Batterie',
+    'Class:UPSBattery+' => 'Einer unterbrechungsfreien Stromversorgung zugeordnete Batterieeinheit',
+
+    'Class:UPSBattery/Attribute:ups_id' => 'USV',
+    'Class:UPSBattery/Attribute:ups_id+' => 'USV, zu der diese Batterieeinheit gehört.',
+    'Class:UPSBattery/Attribute:ups_name' => 'USV-Name',
+
+    'Class:UPS/Attribute:batteries_list' => 'Batterien',
+    'Class:UPS/Attribute:batteries_list+' => 'Dieser USV zugeordnete Batterieeinheiten.',
+
+    'Class:UPSBattery/Attribute:battery_role' => 'Batterierolle',
+    'Class:UPSBattery/Attribute:battery_role+' => 'Rolle dieser Batterieeinheit innerhalb der USV-Installation.',
+    'Class:UPSBattery/Attribute:battery_role/Value:internal' => 'Intern',
+    'Class:UPSBattery/Attribute:battery_role/Value:external' => 'Extern',
+    'Class:UPSBattery/Attribute:battery_role/Value:expansion' => 'Erweiterung',
+    'Class:UPSBattery/Attribute:battery_role/Value:replacement' => 'Ersatz',
+    'Class:UPSBattery/Attribute:battery_role/Value:other' => 'Sonstige',
+
+    'Class:UPSBattery/Attribute:battery_type' => 'Batterietyp',
+    'Class:UPSBattery/Attribute:battery_type+' => 'In dieser Batterieeinheit verwendete Batterietechnologie.',
+    'Class:UPSBattery/Attribute:battery_type/Value:vrla' => 'VRLA',
+    'Class:UPSBattery/Attribute:battery_type/Value:agm' => 'AGM',
+    'Class:UPSBattery/Attribute:battery_type/Value:gel' => 'Gel',
+    'Class:UPSBattery/Attribute:battery_type/Value:li_ion' => 'Li-Ion',
+    'Class:UPSBattery/Attribute:battery_type/Value:nicd' => 'NiCd',
+    'Class:UPSBattery/Attribute:battery_type/Value:other' => 'Sonstige',
+
+    'Class:UPSBattery/Attribute:battery_status' => 'Batteriestatus',
+    'Class:UPSBattery/Attribute:battery_status+' => 'Aktueller Status dieser Batterieeinheit.',
+    'Class:UPSBattery/Attribute:battery_status/Value:ok' => 'OK',
+    'Class:UPSBattery/Attribute:battery_status/Value:warning' => 'Warnung',
+    'Class:UPSBattery/Attribute:battery_status/Value:critical' => 'Kritisch',
+    'Class:UPSBattery/Attribute:battery_status/Value:expired' => 'Abgelaufen',
+    'Class:UPSBattery/Attribute:battery_status/Value:replaced' => 'Ersetzt',
+    'Class:UPSBattery/Attribute:battery_status/Value:unknown' => 'Unbekannt',
+
+    'Class:UPSBattery/Attribute:last_replacement_date' => 'Datum letzter Austausch',
+    'Class:UPSBattery/Attribute:last_replacement_date+' => 'Datum des letzten Austauschs dieser Batterieeinheit.',
+
+    'Class:UPSBattery/Attribute:next_replacement_date' => 'Datum nächster Austausch',
+    'Class:UPSBattery/Attribute:next_replacement_date+' => 'Geplantes Datum des nächsten Austauschs dieser Batterieeinheit.',
+
+    'Class:UPSBattery/Attribute:battery_voltage' => 'Batteriespannung (V)',
+    'Class:UPSBattery/Attribute:battery_voltage+' => 'Nennspannung dieser Batterieeinheit.',
+
+    'Class:UPSBattery/Attribute:battery_capacity_ah' => 'Batteriekapazität (Ah)',
+    'Class:UPSBattery/Attribute:battery_capacity_ah+' => 'Nennkapazität dieser Batterieeinheit.',
+));
