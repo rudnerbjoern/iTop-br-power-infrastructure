@@ -10,7 +10,7 @@
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure/0.0.1',
+    'br-power-infrastructure/0.0.2',
     array(
         // Identification
         //
@@ -20,15 +20,21 @@ SetupWebPage::AddModule(
         // Setup
         //
         'dependencies' => array(
-            'itop-config-mgmt/3.1.0',
-            'itop-datacenter-mgmt/3.2.1',
+            'itop-config-mgmt/3.2.0',
+            'itop-datacenter-mgmt/3.2.0',
+            'itop-virtualization-mgmt/3.2.0',
+            'itop-storage-mgmt/3.2.0',
+            'teemip-network-mgmt-extended/3.1.0',
         ),
         'mandatory' => false,
         'visible' => true,
 
         // Components
         //
-        'datamodel' => array(),
+        'datamodel' => array(
+            'src/Controller/PowerSocketController.php',
+            'src/Hook/PowerSocketOtherActions.php',
+        ),
         'webservice' => array(),
         'data.struct' => array(
             // add your 'structure' definition XML files here,

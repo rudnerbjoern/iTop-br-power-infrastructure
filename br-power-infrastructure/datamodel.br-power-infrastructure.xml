@@ -5,7 +5,358 @@
     @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
-        <!-- ***************** Classes ***************** -->
+<!-- ***************** PowerSocket ***************** -->
+        <class id="PowerSocketType" _delta="define">
+            <parent>Typology</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>powersockettype</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <image_attribute>picture</image_attribute>
+                </fields_semantic>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="name">
+                        <attributes>
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="picture" xsi:type="AttributeImage">
+                    <sql>picture</sql>
+                    <display_max_width>256</display_max_width>
+                    <display_max_height>256</display_max_height>
+                    <storage_max_width>512</storage_max_width>
+                    <storage_max_height>512</storage_max_height>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="description">
+                            <rank>20</rank>
+                        </item>
+                        <item id="picture">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name">
+                            <rank>20</rank>
+                        </item>
+                        <item id="description">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </list>
+                <default_search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </search>
+                <summary>
+                    <items>
+                        <item id="picture">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
+        <class id="PowerSocket" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR\Extension\PowerInfrastructure\Model\_PowerSocket</name>
+                <file>src/Model/_PowerSocket.php</file>
+            </php_parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>powersocket</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="pdu_name" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <style>
+                    <icon>images/powersocket.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="pdu_id" />
+                        <attribute id="pdu_name" />
+                    </attributes>
+                </reconciliation>
+                <obsolescence>
+                    <condition>pdu_id_obsolescence_flag</condition>
+                </obsolescence>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="comment" xsi:type="AttributeText">
+                    <sql>comment</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="pdu_id" xsi:type="AttributeExternalKey">
+                    <sql>pdu_id</sql>
+                    <target_class>PDU</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="pdu_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>pdu_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="phase" xsi:type="AttributeEnum">
+                    <sql>phase</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>radio_horizontal</display_style>
+                    <sort_type>rank</sort_type>
+                    <values>
+                        <value id="L1">
+                            <code>L1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="L2">
+                            <code>L2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="L3">
+                            <code>L3</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                </field>
+                <field id="socket_type_id" xsi:type="AttributeExternalKey">
+                    <sql>socket_type_id</sql>
+                    <target_class>PowerSocketType</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>true</allow_target_creation>
+                </field>
+                <field id="socket_type_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>socket_type_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>radio_horizontal</display_style>
+                    <sort_type>rank</sort_type>
+                    <values>
+                        <value id="available">
+                            <code>available</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="inactive">
+                            <code>inactive</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="active">
+                            <code>active</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <default_value>active</default_value>
+                </field>
+                <field id="datacenterdevice_id" xsi:type="AttributeExternalKey">
+                    <sql>datacenterdevice_id</sql>
+                    <target_class>DatacenterDevice</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="datacenterdevice_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>datacenterdevice_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <event_listeners>
+                <event_listener id="OnPowerSocketCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnPowerSocketCheckToWrite</callback>
+                </event_listener>
+                <event_listener id="OnPowerSocketBeforeWrite">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnPowerSocketBeforeWrite</callback>
+                </event_listener>
+                <event_listener id="OnPowerSocketAfterWrite">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnPowerSocketAfterWrite</callback>
+                </event_listener>
+                <event_listener id="OnPowerSocketAboutToDelete">
+                    <event>EVENT_DB_ABOUT_TO_DELETE</event>
+                    <rank>10</rank>
+                    <callback>OnPowerSocketAboutToDelete</callback>
+                </event_listener>
+            </event_listeners>
+            <methods />
+            <relations>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="datacenterdevice">
+                            <attribute>datacenterdevice_id</attribute>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="pdu_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase" _delta="define">
+                            <rank>50</rank>
+                        </item>
+                        <item id="socket_type_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="datacenterdevice_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="comment">
+                            <rank>80</rank>
+                        </item>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="socket_type_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="phase" _delta="define">
+                            <rank>60</rank>
+                        </item>
+                        <item id="datacenterdevice_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="comment">
+                            <rank>80</rank>
+                        </item>
+                    </items>
+                </list>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="socket_type_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase" _delta="define">
+                            <rank>50</rank>
+                        </item>
+                        <item id="pdu_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="datacenterdevice_id">
+                            <rank>70</rank>
+                        </item>
+                    </items>
+                </search>
+                <default_search>
+                    <items>
+                        <item id="friendlyname">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="socket_type_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="pdu_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="datacenterdevice_id">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </default_search>
+                <summary>
+                    <items>
+                        <item id="socket_type_id">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
+        <!-- ***************** PowerConnection ***************** -->
         <class id="PowerConnection" _delta="must_exist">
             <fields>
                 <field id="phase_type" xsi:type="AttributeEnum" _delta="define">
@@ -217,9 +568,175 @@
             </presentation>
         </class>
         <class id="PDU" _delta="must_exist">
+            <properties>
+                <naming>
+                    <complementary_attributes>
+                        <attribute id="capacity" _delta="define" />
+                    </complementary_attributes>
+                </naming>
+            </properties>
+            <fields>
+                <field id="capacity" xsi:type="AttributeInteger">
+                    <sql>capacity</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="powersocket_list" xsi:type="AttributeLinkedSet" _delta="define">
+                    <linked_class>PowerSocket</linked_class>
+                    <ext_key_to_me>pdu_id</ext_key_to_me>
+                    <edit_mode>in_place</edit_mode>
+                    <tracking_level>all</tracking_level>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
+            </fields>
+            <methods>
+                <method id="CreatePowerSockets">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Custom</type>
+                    <code><![CDATA[
+    public function CreatePowerSockets(): string
+    {
+        $iCapacity = $this->Get('capacity');
+        $oPowerSocketSet = $this->Get('powersocket_list');
+        $iPowerSocketCount = $oPowerSocketSet->Count();
+        if ($iPowerSocketCount >= $iCapacity) {
+            return Dict::S('UI:PowerSocket:Action:Create:PDU:CreatePowerSockets:NoCapacity');
+        }
+        $aPowerSocketName = $oPowerSocketSet->GetColumnAsArray('name');
+        $j = 0;
+        for ($i = $iPowerSocketCount + 1; $i <= $iCapacity; $i++) {
+            $oPowerSocket = MetaModel::NewObject('PowerSocket');
+            do {
+                $sName = sprintf('%1$0'.strlen((string)$iCapacity).'d/%2$d', ++$j, $iCapacity);
+            } while (in_array($sName, $aPowerSocketName));
+            $oPowerSocket->Set('name', $sName);
+            $oPowerSocket->Set('pdu_id', $this->GetKey());
+            $oPowerSocket->Set('status', 'active');
+            $oPowerSocket->DBInsert();
+        }
+        return '';
+    }
+                        ]]></code>
+                </method>
+            </methods>
             <presentation>
                 <details>
                     <items>
+                        <item id="name" _delta="delete" />
+                        <item id="org_id" _delta="delete" />
+                        <item id="status" _delta="delete" />
+                        <item id="business_criticity" _delta="delete" />
+                        <item id="location_id" _delta="delete" />
+                        <item id="description" _delta="delete" />
+                        <item id="rack_id" _delta="delete" />
+                        <item id="move2production" _delta="delete" />
+                        <item id="purchase_date" _delta="delete" />
+                        <item id="end_of_warranty" _delta="delete" />
+                        <item id="brand_id" _delta="delete" />
+                        <item id="model_id" _delta="delete" />
+                        <item id="serialnumber" _delta="delete" />
+                        <item id="asset_number" _delta="delete" />
+                        <item id="powerstart_id" _delta="delete" />
+                        <item id="col:col1" _delta="define">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:moreinfo">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>50</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>60</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PDU:rackinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="rack_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <!-- id:  enclosure_id - rank: 20 - source: datacenter-view -->
+                                        <!-- id:  position_p - rank: 30 - source: datacenter-view-extended -->
+                                        <!-- id:  zero_u - rank: 40 - source: datacenter-view-extended -->
+                                        <!-- id:  position_v - rank: 50 - source: datacenter-view -->
+                                        <!-- id:  position_h - rank: 60 - source: datacenter-view-extended -->
+                                        <!-- id:  nb_u - rank: 70 - source: datacenter-view -->
+                                        <!-- id:  nb_cols - rank: 80 - source: datacenter-view-extended -->
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:power">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="powerstart_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="capacity">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>40</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="powersocket_list" _delta="define">
+                            <rank>105</rank>
+                        </item>
                         <item id="phase_type" _delta="define">
                             <rank>75</rank>
                         </item>
@@ -290,6 +807,546 @@
                 </summary>
             </presentation>
         </class>
+        <class id="DatacenterDevice" _delta="must_exist">
+            <fields>
+                <field id="required_socket_type_id" xsi:type="AttributeExternalKey" _delta="define">
+                    <sql>required_socket_type_id</sql>
+                    <target_class>PowerSocketType</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="required_socket_type_name" xsi:type="AttributeExternalField" _delta="define">
+                    <extkey_attcode>required_socket_type_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="powerAsocket_id" xsi:type="AttributeExternalKey" _delta="define">
+                    <filter><![CDATA[
+                        SELECT PowerSocket
+                        WHERE pdu_id = :this->powerA_id
+                        AND datacenterdevice_id = 0
+                        AND (:this->required_socket_type_id = 0 OR socket_type_id = :this->required_socket_type_id)
+                        ]]></filter>
+                    <dependencies>
+                        <attribute id="powerA_id" />
+                        <attribute id="required_socket_type_id" />
+                    </dependencies>
+                    <sql>powerAsocket_id</sql>
+                    <target_class>PowerSocket</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="powerAsocket_name" xsi:type="AttributeExternalField" _delta="define">
+                    <extkey_attcode>powerAsocket_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="powerBsocket_id" xsi:type="AttributeExternalKey" _delta="define">
+                    <filter><![CDATA[
+                        SELECT PowerSocket
+                        WHERE pdu_id = :this->powerB_id
+                        AND datacenterdevice_id = 0
+                        AND (:this->required_socket_type_id = 0 OR socket_type_id = :this->required_socket_type_id)
+                        ]]></filter>
+                    <dependencies>
+                        <attribute id="powerB_id" />
+                        <attribute id="required_socket_type_id" />
+                    </dependencies>
+                    <sql>powerBsocket_id</sql>
+                    <target_class>PowerSocket</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="powerBsocket_name" xsi:type="AttributeExternalField" _delta="define">
+                    <extkey_attcode>powerBsocket_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <event_listeners>
+                <event_listener id="OnDatacenterDeviceCheckToWritePowerSocket">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnDatacenterDeviceCheckToWritePowerSocket</callback>
+                </event_listener>
+                <event_listener id="OnDatacenterDeviceBeforeWritePowerSocket">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnDatacenterDeviceBeforeWritePowerSocket</callback>
+                </event_listener>
+                <event_listener id="OnDatacenterDeviceAfterWritePowerSocket">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnDatacenterDeviceAfterWritePowerSocket</callback>
+                </event_listener>
+                <event_listener id="OnDatacenterDeviceAboutToDeletePowerSocket">
+                    <event>EVENT_DB_ABOUT_TO_DELETE</event>
+                    <rank>10</rank>
+                    <callback>OnDatacenterDeviceAboutToDeletePowerSocket</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="OnDatacenterDeviceCheckToWritePowerSocket">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function OnDatacenterDeviceCheckToWritePowerSocket(Combodo\iTop\Service\Events\EventData $oEventData): void
+    {
+        // Only validate if relevant fields are involved (avoid extra DB reads on unrelated updates)
+        $aChanges = $this->ListChanges();
+        $bCheckA = array_key_exists('powerAsocket_id', $aChanges) || array_key_exists('powerA_id', $aChanges) || array_key_exists('required_socket_type_id', $aChanges);
+        $bCheckB = array_key_exists('powerBsocket_id', $aChanges) || array_key_exists('powerB_id', $aChanges) || array_key_exists('required_socket_type_id', $aChanges);
+
+        // Also validate if both sockets exist (even if not changed) to catch edge cases (optional)
+        if (!$bCheckA && !$bCheckB) {
+            return;
+        }
+
+        $requiredTypeId = (int) $this->Get('required_socket_type_id');
+
+        $socketAId = (int) $this->Get('powerAsocket_id');
+        $socketBId = (int) $this->Get('powerBsocket_id');
+
+        $oA = null;
+        $oB = null;
+
+        if ($socketAId !== 0) {
+            $oA = MetaModel::GetObject('PowerSocket', $socketAId, false);
+        }
+        if ($socketBId !== 0) {
+            $oB = MetaModel::GetObject('PowerSocket', $socketBId, false);
+        }
+
+        // --- Slot A validations ---
+        if (is_object($oA)) {
+            // required socket type (hardening)
+            if ($requiredTypeId !== 0) {
+                $aTypeId = (int) $oA->Get('socket_type_id');
+                if ($aTypeId !== 0 && $aTypeId !== $requiredTypeId) {
+                    $this->AddCheckIssue(Dict::S('Class:DatacenterDevice/Error:SocketTypeMismatch'));
+                }
+            }
+        }
+
+        // --- Slot B validations ---
+        if (is_object($oB)) {
+            // required socket type (hardening)
+            if ($requiredTypeId !== 0) {
+                $bTypeId = (int) $oB->Get('socket_type_id');
+                if ($bTypeId !== 0 && $bTypeId !== $requiredTypeId) {
+                    $this->AddCheckIssue(Dict::S('Class:DatacenterDevice/Error:SocketTypeMismatch'));
+                }
+            }
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="OnDatacenterDeviceBeforeWritePowerSocket">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function OnDatacenterDeviceBeforeWritePowerSocket(Combodo\iTop\Service\Events\EventData $oEventData): void
+    {
+        if ($oEventData->Get('is_new') === true) {
+            return; // Insert: no previous sockets to disconnect.
+        }
+
+        $aChanges = $this->ListChanges();
+
+        // Slot A changed?
+        if (array_key_exists('powerAsocket_id', $aChanges)) {
+            $this->bPowerSocketAChanged = true;
+
+            $oldAId = (int) $this->GetOriginal('powerAsocket_id');
+            if ($oldAId !== 0) {
+                $this->DisconnectPowerSocket($oldAId);
+            }
+        }
+        // Slot B changed?
+        if (array_key_exists('powerBsocket_id', $aChanges)) {
+            $this->bPowerSocketBChanged = true;
+
+            $oldBId = (int) $this->GetOriginal('powerBsocket_id');
+            if ($oldBId !== 0) {
+                $this->DisconnectPowerSocket($oldBId);
+            }
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="OnDatacenterDeviceAfterWritePowerSocket">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function OnDatacenterDeviceAfterWritePowerSocket(Combodo\iTop\Service\Events\EventData $oEventData): void
+    {
+        // AfterInsert: connect any already selected sockets
+        if ($oEventData->Get('is_new') === true) {
+            $powerAId = (int) $this->Get('powerAsocket_id');
+            if ($powerAId !== 0) {
+                $this->ConnectPowerSocket($powerAId);
+            }
+
+            $powerBId = (int) $this->Get('powerBsocket_id');
+            if ($powerBId !== 0) {
+                $this->ConnectPowerSocket($powerBId);
+            }
+
+            // Ensure flags are clean (not strictly needed on insert, but safe)
+            $this->bPowerSocketAChanged = false;
+            $this->bPowerSocketBChanged = false;
+            return;
+        }
+
+        // AfterUpdate: connect only if the corresponding slot changed in BEFORE_WRITE
+        if ($this->bPowerSocketAChanged) {
+            $powerAId = (int) $this->Get('powerAsocket_id');
+            if ($powerAId !== 0) {
+                $this->ConnectPowerSocket($powerAId);
+            }
+            $this->bPowerSocketAChanged = false;
+        }
+
+        if ($this->bPowerSocketBChanged) {
+            $powerBId = (int) $this->Get('powerBsocket_id');
+            if ($powerBId !== 0) {
+                $this->ConnectPowerSocket($powerBId);
+            }
+            $this->bPowerSocketBChanged = false;
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="OnDatacenterDeviceAboutToDeletePowerSocket">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function OnDatacenterDeviceAboutToDeletePowerSocket(Combodo\iTop\Service\Events\EventData $oEventData): void
+    {
+        // On delete we always disconnect any referenced sockets, regardless of "changes"
+        $powerAId = (int) $this->Get('powerAsocket_id');
+        if ($powerAId !== 0) {
+            $this->DisconnectPowerSocket($powerAId);
+        }
+
+        $powerBId = (int) $this->Get('powerBsocket_id');
+        if ($powerBId !== 0) {
+            $this->DisconnectPowerSocket($powerBId);
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="ConnectPowerSocket" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
+                    <code><![CDATA[
+    public function ConnectPowerSocket(int $powerSocketId): void
+    {
+        if ($powerSocketId === 0) {
+            return;
+        }
+
+        $oPowerSocketObject = MetaModel::GetObject('PowerSocket', $powerSocketId, false);
+        if (!is_object($oPowerSocketObject)) {
+            return;
+        }
+
+        $oPowerSocketObject->Set('datacenterdevice_id', $this->GetKey());
+        $oPowerSocketObject->DBUpdate();
+    }
+  ]]></code>
+                </method>
+                <method id="DisconnectPowerSocket" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
+                    <code><![CDATA[
+    public function DisconnectPowerSocket(int $powerSocketId): void
+    {
+        if ($powerSocketId === 0) {
+            return;
+        }
+
+        $oPowerSocketObject = MetaModel::GetObject('PowerSocket', $powerSocketId, false);
+        if (!is_object($oPowerSocketObject)) {
+            return;
+        }
+
+        $oPowerSocketObject->Set('datacenterdevice_id', 0);
+        $oPowerSocketObject->DBUpdate();
+    }
+  ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>125</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>131</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>141</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>95</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="Server" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="NetworkDevice" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="StorageSystem" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="SANSwitch" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="TapeLibrary" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <class id="NAS" _delta="must_exist">
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col2" _delta="must_exist">
+                            <items>
+                                <item id="fieldset:Server:power" _delta="must_exist">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="required_socket_type_id" _delta="define">
+                                            <rank>9</rank>
+                                        </item>
+                                        <item id="powerAsocket_id" _delta="define">
+                                            <rank>11</rank>
+                                        </item>
+                                        <item id="powerBsocket_id" _delta="define">
+                                            <rank>21</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="required_socket_type_id" _delta="define">
+                            <rank>9</rank>
+                        </item>
+                        <item id="powerAsocket_id" _delta="define">
+                            <rank>101</rank>
+                        </item>
+                        <item id="powerBsocket_id" _delta="define">
+                            <rank>111</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+        </class>
+        <!-- ***************** UPS ***************** -->
         <class id="UPS" _delta="define">
             <parent>PowerSource</parent>
             <properties>
@@ -1100,6 +2157,34 @@
                             <dashlet id="98.2" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>UPSBattery</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                </cells>
+            </definition>
+        </menu>
+        <menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
+            <definition>
+                <cells>
+                    <cell id="0">
+                        <dashlets>
+                            <dashlet id="99" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>PowerSocket</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                </cells>
+            </definition>
+        </menu>
+        <menu id="Typology" xsi:type="DashboardMenuNode" _delta="if_exists">
+            <definition>
+                <cells>
+                    <cell id="0">
+                        <dashlets>
+                            <dashlet id="powersockettype" xsi:type="DashletBadge" _delta="define">
+                                <rank>35.1</rank>
+                                <class>PowerSocketType</class>
                             </dashlet>
                         </dashlets>
                     </cell>
