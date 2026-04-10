@@ -283,7 +283,7 @@ Typical usage includes:
 
 Recommended modeling direction:
 
-- always model connections from **source*- to **target**
+- always model connections from **source** to **target**
 
 Examples:
 
@@ -408,6 +408,19 @@ This prevents broken references and dangling assignments.
 
 4. Apply the data model changes and complete the update.
 
+### Optional bridge modules
+
+This repository also includes optional bridge modules that optimize the PDU presentation layout when specific third-party extensions are installed.
+
+- `br-power-infrastructure-bridge-for-datacenter-view`
+  - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view` are selected
+- `br-power-infrastructure-bridge-for-datacenter-view-extended`
+  - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view-extended` are selected
+- `br-power-infrastructure-bridge-for-teemip-ip-mgmt`
+  - auto-selected when both `br-power-infrastructure` and `teemip-datacenter-mgmt-adaptor` are selected
+
+These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
+
 ## Status
 
 This extension is currently in an early beta stage.
@@ -431,9 +444,19 @@ The extension was tested on:
 
 - iTop `3.2.2`
 
-Required dependency:
+Core module dependencies:
 
-- `itop-datacenter-mgmt/3.2.1`
+- `itop-config-mgmt/3.2.0`
+- `itop-datacenter-mgmt/3.2.0`
+- `itop-virtualization-mgmt/3.2.0`
+- `itop-storage-mgmt/3.2.0`
+- `teemip-network-mgmt-extended/3.1.0`
+
+Optional bridge dependencies (only required when using the related companion extensions):
+
+- `molkobain-datacenter-view/1.14.0` for the datacenter-view bridge module
+- `molkobain-datacenter-view-extended/1.11.0` for the datacenter-view-extended bridge module
+- `teemip-ip-mgmt/3.2.0`, `teemip-config-mgmt-adaptor/3.2.0`, and `teemip-datacenter-mgmt-adaptor/3.2.2` for the TeemIP bridge module
 
 ## Roadmap
 
