@@ -207,8 +207,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     // Class: lnkPowerConnectionToPowerConnection
     'Class:lnkPowerConnectionToPowerConnection' => 'Stromverbindungs-Link',
     'Class:lnkPowerConnectionToPowerConnection+' => 'Verknüpfung zwischen zwei Stromversorgungsobjekten',
-    'Class:lnkPowerConnectionToPowerConnection/Name' => '%1$s -> %2$s',
-    'Class:lnkPowerConnectionToPowerConnection/ComplementaryName' => '(%1$s)',
+    'Class:lnkPowerConnectionToPowerConnection/Name' => '%1$s -> %2$s (%3$s)',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:source_powerconnection_id' => 'Quelle',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:source_powerconnection_id+' => 'Quellseitige Stromverbindung.',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:source_powerconnection_name' => 'Name Quelle',

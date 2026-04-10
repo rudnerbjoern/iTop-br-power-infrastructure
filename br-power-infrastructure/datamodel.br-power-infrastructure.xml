@@ -2337,6 +2337,7 @@
                     </complementary_attributes>
                 </naming>
                 <style>
+                    <icon>images/power-generator.svg</icon>
                     <main_color>#2E7D32</main_color>
                 </style>
                 <reconciliation>
@@ -2625,7 +2626,6 @@
                         </item>
                     </items>
                 </details>
-
                 <search>
                     <items>
                         <item id="name">
@@ -2778,6 +2778,7 @@
                 </naming>
                 <style>
                     <icon>images/power-transfer-switch.svg</icon>
+                    <main_color>#6D4C41</main_color>
                 </style>
                 <reconciliation>
                     <attributes>
@@ -3071,10 +3072,8 @@
                     <attributes>
                         <attribute id="source_powerconnection_name" />
                         <attribute id="target_powerconnection_name" />
-                    </attributes>
-                    <complementary_attributes>
                         <attribute id="link_role" />
-                    </complementary_attributes>
+                    </attributes>
                 </naming>
                 <style>
                     <icon>images/power-link.svg</icon>
@@ -3272,6 +3271,8 @@
                     <class id="UPS" />
                     <class id="UPSBattery" />
                     <class id="PowerGenerator" />
+                    <class id="PowerTransferSwitch" />
+                    <class id="lnkPowerConnectionToPowerConnection" />
                 </classes>
             </group>
         </groups>
