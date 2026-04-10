@@ -429,7 +429,43 @@
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="outgoing_powerconnection_links" xsi:type="AttributeLinkedSet" _delta="define">
+                    <linked_class>lnkPowerConnectionToPowerConnection</linked_class>
+                    <ext_key_to_me>source_powerconnection_id</ext_key_to_me>
+                    <edit_mode>in_place</edit_mode>
+                    <tracking_level>all</tracking_level>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
+                <field id="incoming_powerconnection_links" xsi:type="AttributeLinkedSet" _delta="define">
+                    <linked_class>lnkPowerConnectionToPowerConnection</linked_class>
+                    <ext_key_to_me>target_powerconnection_id</ext_key_to_me>
+                    <edit_mode>none</edit_mode>
+                    <tracking_level>all</tracking_level>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
             </fields>
+            <relations>
+                <relation id="impacts" _delta="must_exist">
+                    <neighbours>
+                        <neighbour id="powerconnection" _delta="define">
+                            <query_down><![CDATA[
+                    SELECT PowerConnection AS pc
+                    JOIN lnkPowerConnectionToPowerConnection AS lnk
+                    ON lnk.target_powerconnection_id = pc.id
+                    WHERE lnk.source_powerconnection_id = :this->id
+                ]]></query_down>
+                            <query_up><![CDATA[
+                    SELECT PowerConnection AS pc
+                    JOIN lnkPowerConnectionToPowerConnection AS lnk
+                    ON lnk.source_powerconnection_id = pc.id
+                    WHERE lnk.target_powerconnection_id = :this->id
+                ]]></query_up>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
             <presentation>
                 <details>
                     <items>
@@ -450,6 +486,12 @@
                         </item>
                         <item id="next_maintenance_date" _delta="define">
                             <rank>126</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links" _delta="define">
+                            <rank>210</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links" _delta="define">
+                            <rank>220</rank>
                         </item>
                     </items>
                 </details>
@@ -613,6 +655,12 @@
                         </item>
                         <item id="documents_list">
                             <rank>130</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>140</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>150</rank>
                         </item>
                     </items>
                 </details>
@@ -869,6 +917,12 @@
                         </item>
                         <item id="powersocket_list" _delta="define">
                             <rank>110</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>120</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -1679,6 +1733,12 @@
                         </item>
                         <item id="documents_list">
                             <rank>140</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>150</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>160</rank>
                         </item>
                     </items>
                 </details>
@@ -2557,6 +2617,12 @@
                         <item id="documents_list">
                             <rank>140</rank>
                         </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>150</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>160</rank>
+                        </item>
                     </items>
                 </details>
 
@@ -2862,6 +2928,12 @@
                         <item id="documents_list">
                             <rank>120</rank>
                         </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>130</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>140</rank>
+                        </item>
                     </items>
                 </details>
                 <search>
@@ -2986,6 +3058,160 @@
                 </summary>
             </presentation>
         </class>
+        <class id="lnkPowerConnectionToPowerConnection" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkpowerconnectiontopowerconnection</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="source_powerconnection_name" />
+                        <attribute id="target_powerconnection_name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="link_role" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>images/power-link.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="source_powerconnection_id" />
+                        <attribute id="target_powerconnection_id" />
+                        <attribute id="link_role" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="unique_connection">
+                        <attributes>
+                            <attribute id="source_powerconnection_id" />
+                            <attribute id="target_powerconnection_id" />
+                            <attribute id="link_role" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="source_powerconnection_id" xsi:type="AttributeExternalKey">
+                    <sql>source_powerconnection_id</sql>
+                    <target_class>PowerConnection</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="source_powerconnection_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>source_powerconnection_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="target_powerconnection_id" xsi:type="AttributeExternalKey">
+                    <sql>target_powerconnection_id</sql>
+                    <target_class>PowerConnection</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="target_powerconnection_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>target_powerconnection_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="link_role" xsi:type="AttributeEnum">
+                    <sql>link_role</sql>
+                    <values>
+                        <value id="primary_input">
+                            <code>primary_input</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="secondary_input">
+                            <code>secondary_input</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="output">
+                            <code>output</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="bypass">
+                            <code>bypass</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="downstream">
+                            <code>downstream</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>60</rank>
+                        </value>
+                    </values>
+                    <default_value>downstream</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="comment" xsi:type="AttributeText">
+                    <sql>comment</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                        <item id="comment">
+                            <rank>40</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="link_role">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -3005,6 +3231,14 @@
                             <dashlet id="98.3" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>PowerGenerator</class>
+                            </dashlet>
+                            <dashlet id="98.4" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>PowerTransferSwitch</class>
+                            </dashlet>
+                            <dashlet id="98.5" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>lnkPowerConnectionToPowerConnection</class>
                             </dashlet>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
