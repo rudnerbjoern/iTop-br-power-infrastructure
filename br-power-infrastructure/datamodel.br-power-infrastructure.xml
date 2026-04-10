@@ -2257,6 +2257,440 @@
                 </summary>
             </presentation>
         </class>
+        <!-- ***************** PowerGenerator ***************** -->
+        <class id="PowerGenerator" _delta="define">
+            <parent>PowerSource</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>generator</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <main_color>#2E7D32</main_color>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="generator_type" xsi:type="AttributeEnum">
+                    <sql>generator_type</sql>
+                    <values>
+                        <value id="standby">
+                            <code>standby</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="prime">
+                            <code>prime</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="continuous">
+                            <code>continuous</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="mobile">
+                            <code>mobile</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>standby</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="fuel_type" xsi:type="AttributeEnum">
+                    <sql>fuel_type</sql>
+                    <values>
+                        <value id="diesel">
+                            <code>diesel</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="gas">
+                            <code>gas</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="hvo">
+                            <code>hvo</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="biodiesel">
+                            <code>biodiesel</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="dual_fuel">
+                            <code>dual_fuel</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>60</rank>
+                        </value>
+                    </values>
+                    <default_value>diesel</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="rated_power_kva" xsi:type="AttributeInteger">
+                    <sql>rated_power_kva</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="fuel_tank_capacity_l" xsi:type="AttributeInteger">
+                    <sql>fuel_tank_capacity_l</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="fuel_consumption_lph" xsi:type="AttributeDecimal">
+                    <sql>fuel_consumption_lph</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                    <digits>10</digits>
+                    <decimals>2</decimals>
+                </field>
+                <field id="autonomy_time" xsi:type="AttributeDuration">
+                    <sql>autonomy_time</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="start_method" xsi:type="AttributeEnum">
+                    <sql>start_method</sql>
+                    <values>
+                        <value id="electric">
+                            <code>electric</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="manual">
+                            <code>manual</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="pneumatic">
+                            <code>pneumatic</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="hydraulic">
+                            <code>hydraulic</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>electric</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="is_ats_available" xsi:type="AttributeBoolean">
+                    <sql>is_ats_available</sql>
+                    <default_value>true</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="last_test_date" xsi:type="AttributeDate">
+                    <sql>last_test_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="next_test_date" xsi:type="AttributeDate">
+                    <sql>next_test_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col1">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerGenerator:generatorinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="generator_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="fuel_type">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="rated_power_kva">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="fuel_tank_capacity_l">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="fuel_consumption_lph">
+                                            <rank>50</rank>
+                                        </item>
+                                        <item id="autonomy_time">
+                                            <rank>60</rank>
+                                        </item>
+                                        <item id="start_method">
+                                            <rank>70</rank>
+                                        </item>
+                                        <item id="is_ats_available">
+                                            <rank>80</rank>
+                                        </item>
+                                        <item id="last_test_date">
+                                            <rank>90</rank>
+                                        </item>
+                                        <item id="next_test_date">
+                                            <rank>100</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="pdus_list">
+                            <rank>120</rank>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>130</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>140</rank>
+                        </item>
+                    </items>
+                </details>
+
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="generator_type">
+                            <rank>100</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>110</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>120</rank>
+                        </item>
+                        <item id="fuel_tank_capacity_l">
+                            <rank>130</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>140</rank>
+                        </item>
+                        <item id="start_method">
+                            <rank>150</rank>
+                        </item>
+                        <item id="is_ats_available">
+                            <rank>160</rank>
+                        </item>
+                        <item id="next_test_date">
+                            <rank>170</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>180</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>190</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>200</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>40</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>50</rank>
+                        </item>
+                        <item id="generator_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>70</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>80</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>90</rank>
+                        </item>
+                        <item id="next_test_date">
+                            <rank>100</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>120</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>60</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>70</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -2272,6 +2706,10 @@
                             <dashlet id="98.2" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>UPSBattery</class>
+                            </dashlet>
+                            <dashlet id="98.3" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>PowerGenerator</class>
                             </dashlet>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
@@ -2304,6 +2742,7 @@
                 <classes>
                     <class id="UPS" />
                     <class id="UPSBattery" />
+                    <class id="PowerGenerator" />
                 </classes>
             </group>
         </groups>

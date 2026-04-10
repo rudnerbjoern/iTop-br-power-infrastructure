@@ -17,6 +17,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Adds generic electrical and maintenance-related attributes to existing power classes
 - Introduces a dedicated `UPS` class derived from `PowerSource`
 - Introduces a dedicated `UPSBattery` class derived from `PhysicalDevice`
+- Introduces a dedicated `PowerGenerator` class derived from `PowerSource`
 - Supports relationships between UPS systems and their battery units
 - Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
 - Adds UPS-specific documentation fields such as topology, rated power, and autonomy time
@@ -27,7 +28,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Provides automatic synchronization logic between `PowerSocket`, `PDU`, and `DatacenterDevice`
 - Supports automatic slot assignment for Power A / Power B connections
 - Includes consistency checks and rollback logic for invalid assignments
-- Provides a structured foundation for future extensions covering additional power infrastructure components such as generators
+- Provides generator-specific documentation fields such as generator type, fuel type (including diesel), tank capacity, runtime, and test schedule
 
 ## Data Model
 
@@ -42,6 +43,7 @@ The extension currently introduces the following additional classes:
 
 - `UPS`
 - `UPSBattery`
+- `PowerGenerator`
 - `PowerSocket`
 
 ### Extended native classes
@@ -102,6 +104,27 @@ Current battery-specific attributes include:
 - `last_replacement_date`
 - `next_replacement_date`
 
+#### `PowerGenerator`
+
+A dedicated generator class based on `PowerSource`.
+
+Current generator-specific attributes include:
+
+- `generator_type`
+- `fuel_type`
+- `rated_power_kva`
+- `fuel_tank_capacity_l`
+- `fuel_consumption_lph`
+- `autonomy_time`
+- `start_method`
+- `is_ats_available`
+- `last_test_date`
+- `next_test_date`
+
+In addition, the class provides:
+
+- inherited relationships to downstream PDUs
+
 #### `PowerSocket`
 
 A `PowerSocket` represents an individual physical outlet on a PDU.
@@ -119,6 +142,7 @@ The current data model supports relationships such as:
 - `PowerSource` feeding `PDU`
 - `UPS` acting as a specialized `PowerSource`
 - `UPS` owning one or more `UPSBattery` objects
+- `PowerGenerator` acting as a specialized `PowerSource`
 - `PDU` owning one or more `PowerSocket` objects
 - `PowerSocket` being linked to a `DatacenterDevice`
 - chained power infrastructure dependencies through the native iTop power model
@@ -154,6 +178,17 @@ Typical usage includes:
 - documenting UPS-specific electrical and technical data
 - assigning one or more battery units to a UPS
 - documenting replacement cycles and battery status
+
+### PowerGenerator
+
+Use the `PowerGenerator` class to document diesel generators and other common emergency power units (gensets).
+
+Typical usage includes:
+
+- documenting generator category (standby, prime, continuous, mobile)
+- tracking fuel type (for example diesel, gas, HVO, biodiesel, dual-fuel)
+- recording rated power, fuel tank capacity, and fuel consumption
+- planning generator test runs using last/next test dates
 
 ### PowerSockets
 
@@ -239,6 +274,7 @@ The current implementation focuses on:
 - extending the generic native power infrastructure model
 - introducing a dedicated UPS class
 - introducing a dedicated UPS battery class
+- introducing a dedicated generator class
 - introducing PowerSocket support for PDUs
 - establishing relations between UPS systems and their battery units
 - providing synchronized socket handling for `DatacenterDevice`

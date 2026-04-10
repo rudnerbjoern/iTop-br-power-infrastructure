@@ -22,6 +22,8 @@
         "fieldset",
         "finalclass",
         "friendlyname",
+        "generatorinfo",
+        "Kilovoltampere",
         "macaddress",
         "mgmt",
         "MODULESROOT",
