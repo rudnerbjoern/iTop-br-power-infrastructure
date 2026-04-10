@@ -429,7 +429,43 @@
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="outgoing_powerconnection_links" xsi:type="AttributeLinkedSet" _delta="define">
+                    <linked_class>lnkPowerConnectionToPowerConnection</linked_class>
+                    <ext_key_to_me>source_powerconnection_id</ext_key_to_me>
+                    <edit_mode>in_place</edit_mode>
+                    <tracking_level>all</tracking_level>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
+                <field id="incoming_powerconnection_links" xsi:type="AttributeLinkedSet" _delta="define">
+                    <linked_class>lnkPowerConnectionToPowerConnection</linked_class>
+                    <ext_key_to_me>target_powerconnection_id</ext_key_to_me>
+                    <edit_mode>none</edit_mode>
+                    <tracking_level>all</tracking_level>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
             </fields>
+            <relations>
+                <relation id="impacts" _delta="must_exist">
+                    <neighbours>
+                        <neighbour id="powerconnection" _delta="define">
+                            <query_down><![CDATA[
+                    SELECT PowerConnection AS pc
+                    JOIN lnkPowerConnectionToPowerConnection AS lnk
+                    ON lnk.target_powerconnection_id = pc.id
+                    WHERE lnk.source_powerconnection_id = :this->id
+                ]]></query_down>
+                            <query_up><![CDATA[
+                    SELECT PowerConnection AS pc
+                    JOIN lnkPowerConnectionToPowerConnection AS lnk
+                    ON lnk.source_powerconnection_id = pc.id
+                    WHERE lnk.target_powerconnection_id = :this->id
+                ]]></query_up>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
             <presentation>
                 <details>
                     <items>
@@ -450,6 +486,12 @@
                         </item>
                         <item id="next_maintenance_date" _delta="define">
                             <rank>126</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links" _delta="define">
+                            <rank>210</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links" _delta="define">
+                            <rank>220</rank>
                         </item>
                     </items>
                 </details>
@@ -613,6 +655,12 @@
                         </item>
                         <item id="documents_list">
                             <rank>130</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>140</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>150</rank>
                         </item>
                     </items>
                 </details>
@@ -869,6 +917,12 @@
                         </item>
                         <item id="powersocket_list" _delta="define">
                             <rank>110</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>120</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -1680,6 +1734,12 @@
                         <item id="documents_list">
                             <rank>140</rank>
                         </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>150</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>160</rank>
+                        </item>
                     </items>
                 </details>
                 <search>
@@ -2257,6 +2317,998 @@
                 </summary>
             </presentation>
         </class>
+        <!-- ***************** PowerGenerator ***************** -->
+        <class id="PowerGenerator" _delta="define">
+            <parent>PowerSource</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>generator</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>images/power-generator.svg</icon>
+                    <main_color>#2E7D32</main_color>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="generator_type" xsi:type="AttributeEnum">
+                    <sql>generator_type</sql>
+                    <values>
+                        <value id="standby">
+                            <code>standby</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="prime">
+                            <code>prime</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="continuous">
+                            <code>continuous</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="mobile">
+                            <code>mobile</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>standby</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="fuel_type" xsi:type="AttributeEnum">
+                    <sql>fuel_type</sql>
+                    <values>
+                        <value id="diesel">
+                            <code>diesel</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="gas">
+                            <code>gas</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="hvo">
+                            <code>hvo</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="biodiesel">
+                            <code>biodiesel</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="dual_fuel">
+                            <code>dual_fuel</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>60</rank>
+                        </value>
+                    </values>
+                    <default_value>diesel</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="rated_power_kva" xsi:type="AttributeInteger">
+                    <sql>rated_power_kva</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="fuel_tank_capacity_l" xsi:type="AttributeInteger">
+                    <sql>fuel_tank_capacity_l</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="fuel_consumption_lph" xsi:type="AttributeDecimal">
+                    <sql>fuel_consumption_lph</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                    <digits>10</digits>
+                    <decimals>2</decimals>
+                </field>
+                <field id="autonomy_time" xsi:type="AttributeDuration">
+                    <sql>autonomy_time</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="start_method" xsi:type="AttributeEnum">
+                    <sql>start_method</sql>
+                    <values>
+                        <value id="electric">
+                            <code>electric</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="manual">
+                            <code>manual</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="pneumatic">
+                            <code>pneumatic</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="hydraulic">
+                            <code>hydraulic</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>electric</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="is_ats_available" xsi:type="AttributeBoolean">
+                    <sql>is_ats_available</sql>
+                    <default_value>true</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="last_test_date" xsi:type="AttributeDate">
+                    <sql>last_test_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="next_test_date" xsi:type="AttributeDate">
+                    <sql>next_test_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col1">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerGenerator:generatorinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="generator_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="fuel_type">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="rated_power_kva">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="fuel_tank_capacity_l">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="fuel_consumption_lph">
+                                            <rank>50</rank>
+                                        </item>
+                                        <item id="autonomy_time">
+                                            <rank>60</rank>
+                                        </item>
+                                        <item id="start_method">
+                                            <rank>70</rank>
+                                        </item>
+                                        <item id="is_ats_available">
+                                            <rank>80</rank>
+                                        </item>
+                                        <item id="last_test_date">
+                                            <rank>90</rank>
+                                        </item>
+                                        <item id="next_test_date">
+                                            <rank>100</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="pdus_list">
+                            <rank>120</rank>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>130</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>140</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>150</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>160</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="generator_type">
+                            <rank>100</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>110</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>120</rank>
+                        </item>
+                        <item id="fuel_tank_capacity_l">
+                            <rank>130</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>140</rank>
+                        </item>
+                        <item id="start_method">
+                            <rank>150</rank>
+                        </item>
+                        <item id="is_ats_available">
+                            <rank>160</rank>
+                        </item>
+                        <item id="next_test_date">
+                            <rank>170</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>180</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>190</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>200</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>40</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>50</rank>
+                        </item>
+                        <item id="generator_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>70</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>80</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>90</rank>
+                        </item>
+                        <item id="next_test_date">
+                            <rank>100</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>120</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="fuel_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="rated_power_kva">
+                            <rank>60</rank>
+                        </item>
+                        <item id="autonomy_time">
+                            <rank>70</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
+        <!-- ***************** PowerTransferSwitch ***************** -->
+        <class id="PowerTransferSwitch" _delta="define">
+            <parent>PowerConnection</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>powertransferswitch</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>images/power-transfer-switch.svg</icon>
+                    <main_color>#6D4C41</main_color>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="switch_type" xsi:type="AttributeEnum">
+                    <sql>switch_type</sql>
+                    <values>
+                        <value id="manual">
+                            <code>manual</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="automatic">
+                            <code>automatic</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="static">
+                            <code>static</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="bypass">
+                            <code>bypass</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>automatic</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col1">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerTransferSwitch:switchinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="switch_type">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>110</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>120</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>130</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>140</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>100</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>120</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>130</rank>
+                        </item>
+                        <item id="asset_number">
+                            <rank>140</rank>
+                        </item>
+                        <item id="move2production">
+                            <rank>150</rank>
+                        </item>
+                        <item id="purchase_date">
+                            <rank>160</rank>
+                        </item>
+                        <item id="end_of_warranty">
+                            <rank>170</rank>
+                        </item>
+                        <item id="last_maintenance_date">
+                            <rank>180</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>190</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>40</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>50</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>70</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>80</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>90</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>100</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>110</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
+        <class id="lnkPowerConnectionToPowerConnection" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkpowerconnectiontopowerconnection</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="source_powerconnection_name" />
+                        <attribute id="target_powerconnection_name" />
+                        <attribute id="link_role" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon>images/power-link.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="source_powerconnection_id" />
+                        <attribute id="target_powerconnection_id" />
+                        <attribute id="link_role" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="unique_connection">
+                        <attributes>
+                            <attribute id="source_powerconnection_id" />
+                            <attribute id="target_powerconnection_id" />
+                            <attribute id="link_role" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="source_powerconnection_id" xsi:type="AttributeExternalKey">
+                    <sql>source_powerconnection_id</sql>
+                    <target_class>PowerConnection</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="source_powerconnection_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>source_powerconnection_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="target_powerconnection_id" xsi:type="AttributeExternalKey">
+                    <sql>target_powerconnection_id</sql>
+                    <target_class>PowerConnection</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <allow_target_creation>false</allow_target_creation>
+                </field>
+                <field id="target_powerconnection_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>target_powerconnection_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="link_role" xsi:type="AttributeEnum">
+                    <sql>link_role</sql>
+                    <values>
+                        <value id="primary_input">
+                            <code>primary_input</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="secondary_input">
+                            <code>secondary_input</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="output">
+                            <code>output</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="bypass">
+                            <code>bypass</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="downstream">
+                            <code>downstream</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>60</rank>
+                        </value>
+                    </values>
+                    <default_value>downstream</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="comment" xsi:type="AttributeText">
+                    <sql>comment</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <event_listeners>
+                <event_listener id="OnCheckToWriteValidatePowerConnectionLink">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnCheckToWriteValidatePowerConnectionLink</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="OnCheckToWriteValidatePowerConnectionLink">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\Events\EventData $oEventData): void
+{
+    $iSourceId = (int) $this->Get('source_powerconnection_id');
+    $iTargetId = (int) $this->Get('target_powerconnection_id');
+    $sRole = (string) $this->Get('link_role');
+    $iCurrentId = (int) $this->GetKey();
+
+    // 1. No self reference
+    if (($iSourceId !== 0) && ($iSourceId === $iTargetId)) {
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:SelfReference'));
+        return;
+    }
+
+    if (($iSourceId === 0) || ($iTargetId === 0)) {
+        return;
+    }
+
+    // 2. No reverse duplicate
+    $sReverseOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                    WHERE source_powerconnection_id = :target
+                    AND target_powerconnection_id = :source';
+    $oReverseSearch = DBObjectSearch::FromOQL($sReverseOQL);
+    $oReverseSet = new DBObjectSet($oReverseSearch, array(), array(
+        'source' => $iSourceId,
+        'target' => $iTargetId,
+    ));
+
+    while ($oExisting = $oReverseSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate'));
+        return;
+    }
+
+    // The following checks only apply to primary_input / secondary_input
+    if (($sRole !== 'primary_input') && ($sRole !== 'secondary_input')) {
+        return;
+    }
+
+    // 3. Only one primary_input / secondary_input per target
+    $sUniqueRoleOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                       WHERE target_powerconnection_id = :target
+                       AND link_role = :role';
+    $oUniqueRoleSearch = DBObjectSearch::FromOQL($sUniqueRoleOQL);
+    $oUniqueRoleSet = new DBObjectSet($oUniqueRoleSearch, array(), array(
+        'target' => $iTargetId,
+        'role' => $sRole,
+    ));
+
+    while ($oExisting = $oUniqueRoleSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::Format('Class:lnkPowerConnectionToPowerConnection/Error:DuplicateInputRolePerTarget', $sRole));
+        return;
+    }
+
+    // 4. Same source must not be both primary and secondary for same target
+    $sOtherRole = ($sRole === 'primary_input') ? 'secondary_input' : 'primary_input';
+
+    $sSameSourceOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                       WHERE source_powerconnection_id = :source
+                       AND target_powerconnection_id = :target
+                       AND link_role = :other_role';
+    $oSameSourceSearch = DBObjectSearch::FromOQL($sSameSourceOQL);
+    $oSameSourceSet = new DBObjectSet($oSameSourceSearch, array(), array(
+        'source' => $iSourceId,
+        'target' => $iTargetId,
+        'other_role' => $sOtherRole,
+    ));
+
+    while ($oExisting = $oSameSourceSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:SameSourceForPrimaryAndSecondary'));
+        return;
+    }
+}
+        ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                        <item id="comment">
+                            <rank>40</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="source_powerconnection_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="target_powerconnection_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_role">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="link_role">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -2272,6 +3324,14 @@
                             <dashlet id="98.2" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>UPSBattery</class>
+                            </dashlet>
+                            <dashlet id="98.3" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>PowerGenerator</class>
+                            </dashlet>
+                            <dashlet id="98.4" xsi:type="DashletBadge" _delta="define">
+                                <rank>10</rank>
+                                <class>PowerTransferSwitch</class>
                             </dashlet>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
@@ -2304,6 +3364,9 @@
                 <classes>
                     <class id="UPS" />
                     <class id="UPSBattery" />
+                    <class id="PowerGenerator" />
+                    <class id="PowerTransferSwitch" />
+                    <class id="lnkPowerConnectionToPowerConnection" />
                 </classes>
             </group>
         </groups>
