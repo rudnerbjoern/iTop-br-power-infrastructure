@@ -226,4 +226,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkPowerConnectionToPowerConnection/Attribute:comment+' => 'Optional comment for this connection link.',
     'Class:lnkPowerConnectionToPowerConnection/UniquenessRule:unique_connection' => 'Source, target and link role must be unique',
     'Class:lnkPowerConnectionToPowerConnection/UniquenessRule:unique_connection+' => 'The combination of source power connection, target power connection and link role must be unique.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:SelfReference' => 'Source and target power connection must not be identical.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate' => 'A reverse power connection already exists between these two objects.',
 ));

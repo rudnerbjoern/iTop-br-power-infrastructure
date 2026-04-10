@@ -3158,7 +3158,68 @@
                     <is_null_allowed>true</is_null_allowed>
                 </field>
             </fields>
-            <methods />
+            <event_listeners>
+                <event_listener id="OnCheckToWriteNoSelfReference">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnCheckToWriteNoSelfReference</callback>
+                </event_listener>
+                <event_listener id="OnCheckToWriteNoReverseDuplicate">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>20</rank>
+                    <callback>OnCheckToWriteNoReverseDuplicate</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="OnCheckToWriteNoSelfReference">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+public function OnCheckToWriteNoSelfReference(Combodo\iTop\Service\Events\EventData $oEventData): void
+{
+    $iSourceId = (int) $this->Get('source_powerconnection_id');
+    $iTargetId = (int) $this->Get('target_powerconnection_id');
+
+    if (($iSourceId !== 0) && ($iSourceId === $iTargetId)) {
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:SelfReference'));
+    }
+}
+        ]]></code>
+                </method>
+                <method id="OnCheckToWriteNoReverseDuplicate">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+public function OnCheckToWriteNoReverseDuplicate(Combodo\iTop\Service\Events\EventData $oEventData): void
+{
+    $iSourceId = (int) $this->Get('source_powerconnection_id');
+    $iTargetId = (int) $this->Get('target_powerconnection_id');
+
+    if (($iSourceId === 0) || ($iTargetId === 0)) {
+        return;
+    }
+
+    $sOQL = 'SELECT lnkPowerConnectionToPowerConnection WHERE source_powerconnection_id = :target AND target_powerconnection_id = :source';
+    $oSearch = DBObjectSearch::FromOQL($sOQL);
+    $oSet = new DBObjectSet($oSearch, array(), array(
+        'source' => $iSourceId,
+        'target' => $iTargetId,
+    ));
+
+    while ($oExisting = $oSet->Fetch()) {
+        if (!$this->IsNew() && ((int) $oExisting->GetKey() === (int) $this->GetKey())) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate'));
+        return;
+    }
+}
+    ]]></code>
+                </method>
+            </methods>
             <presentation>
                 <details>
                     <items>
@@ -3234,10 +3295,6 @@
                             <dashlet id="98.4" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>PowerTransferSwitch</class>
-                            </dashlet>
-                            <dashlet id="98.5" xsi:type="DashletBadge" _delta="define">
-                                <rank>10</rank>
-                                <class>lnkPowerConnectionToPowerConnection</class>
                             </dashlet>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
