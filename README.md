@@ -18,17 +18,19 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Introduces a dedicated `UPS` class derived from `PowerSource`
 - Introduces a dedicated `UPSBattery` class derived from `PhysicalDevice`
 - Introduces a dedicated `PowerGenerator` class derived from `PowerSource`
+- Introduces a dedicated `PowerTransferSwitch` class derived from `PowerConnection`
 - Supports relationships between UPS systems and their battery units
 - Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
 - Adds UPS-specific documentation fields such as topology, rated power, and autonomy time
 - Adds battery-specific documentation fields such as battery role, battery type, battery status, replacement dates, voltage, and capacity
+- Adds generator-specific documentation fields such as generator type, fuel type, tank capacity, runtime, and test schedule
+- Adds transfer-switch-specific documentation fields such as switch type
 - Introduces the `PowerSocket` class to model individual PDU outlets
 - Extends `PDU` with dedicated power socket handling
 - Allows `DatacenterDevice` objects to be connected to specific PDU sockets
 - Provides automatic synchronization logic between `PowerSocket`, `PDU`, and `DatacenterDevice`
 - Supports automatic slot assignment for Power A / Power B connections
 - Includes consistency checks and rollback logic for invalid assignments
-- Provides generator-specific documentation fields such as generator type, fuel type (including diesel), tank capacity, runtime, and test schedule
 
 ## Data Model
 
@@ -44,6 +46,7 @@ The extension currently introduces the following additional classes:
 - `UPS`
 - `UPSBattery`
 - `PowerGenerator`
+- `PowerTransferSwitch`
 - `PowerSocket`
 
 ### Extended native classes
@@ -125,6 +128,16 @@ In addition, the class provides:
 
 - inherited relationships to downstream PDUs
 
+#### `PowerTransferSwitch`
+
+A dedicated transfer switch class based on `PowerConnection`.
+
+Current transfer-switch-specific attributes include:
+
+- `switch_type`
+
+The class is intended to represent electrical transfer switches used to switch loads between different power sources, for example between utility power and generator supply.
+
 #### `PowerSocket`
 
 A `PowerSocket` represents an individual physical outlet on a PDU.
@@ -143,6 +156,7 @@ The current data model supports relationships such as:
 - `UPS` acting as a specialized `PowerSource`
 - `UPS` owning one or more `UPSBattery` objects
 - `PowerGenerator` acting as a specialized `PowerSource`
+- `PowerTransferSwitch` acting as a switching component within the power supply chain
 - `PDU` owning one or more `PowerSocket` objects
 - `PowerSocket` being linked to a `DatacenterDevice`
 - chained power infrastructure dependencies through the native iTop power model
@@ -189,6 +203,16 @@ Typical usage includes:
 - tracking fuel type (for example diesel, gas, HVO, biodiesel, dual-fuel)
 - recording rated power, fuel tank capacity, and fuel consumption
 - planning generator test runs using last/next test dates
+
+### PowerTransferSwitch
+
+Use the `PowerTransferSwitch` class to document transfer switches within the electrical supply chain.
+
+Typical usage includes:
+
+- documenting manual, automatic, static, or bypass transfer switches
+- distinguishing switching devices from power sources
+- preparing structured modeling of power paths between utility supply, generator, UPS, and downstream distribution
 
 ### PowerSockets
 
@@ -275,6 +299,7 @@ The current implementation focuses on:
 - introducing a dedicated UPS class
 - introducing a dedicated UPS battery class
 - introducing a dedicated generator class
+- introducing a dedicated transfer switch class
 - introducing PowerSocket support for PDUs
 - establishing relations between UPS systems and their battery units
 - providing synchronized socket handling for `DatacenterDevice`
@@ -295,8 +320,9 @@ Required dependency:
 Planned or possible future enhancements may include:
 
 - additional UPS-related technical attributes
-- support for generator-related classes
-- more detailed power source modeling
+- support for more advanced generator-related classes
+- support for generic links between `PowerConnection` objects
+- more detailed transfer switch modeling
 - improved monitoring and operational metadata
 - further refinement of power infrastructure relations
 - additional power distribution and socket-level modeling improvements

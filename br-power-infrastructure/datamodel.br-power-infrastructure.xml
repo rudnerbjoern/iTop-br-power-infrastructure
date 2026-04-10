@@ -2691,6 +2691,301 @@
                 </summary>
             </presentation>
         </class>
+        <!-- ***************** PowerTransferSwitch ***************** -->
+        <class id="PowerTransferSwitch" _delta="define">
+            <parent>PowerConnection</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>powertransferswitch</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>images/power-transfer-switch.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="switch_type" xsi:type="AttributeEnum">
+                    <sql>switch_type</sql>
+                    <values>
+                        <value id="manual">
+                            <code>manual</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="automatic">
+                            <code>automatic</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="static">
+                            <code>static</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="bypass">
+                            <code>bypass</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>automatic</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col1">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerTransferSwitch:switchinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="switch_type">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>110</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>120</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>100</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>110</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>120</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>130</rank>
+                        </item>
+                        <item id="asset_number">
+                            <rank>140</rank>
+                        </item>
+                        <item id="move2production">
+                            <rank>150</rank>
+                        </item>
+                        <item id="purchase_date">
+                            <rank>160</rank>
+                        </item>
+                        <item id="end_of_warranty">
+                            <rank>170</rank>
+                        </item>
+                        <item id="last_maintenance_date">
+                            <rank>180</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>190</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>40</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>50</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>70</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>80</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>90</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>100</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>110</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="switch_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>

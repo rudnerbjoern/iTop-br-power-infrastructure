@@ -189,4 +189,15 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:PowerGenerator/Attribute:last_test_date+' => 'Date of the most recent generator test run.',
     'Class:PowerGenerator/Attribute:next_test_date' => 'Next test date',
     'Class:PowerGenerator/Attribute:next_test_date+' => 'Planned date for the next generator test run.',
+    // Class: PowerTransferSwitch
+    'PowerTransferSwitch:switchinfo' => 'Transfer switch data',
+    'Class:PowerTransferSwitch' => 'Power transfer switch',
+    'Class:PowerTransferSwitch+' => 'Switching device for transferring electrical load between power sources',
+    'Class:PowerTransferSwitch/Attribute:switch_type' => 'Switch type',
+    'Class:PowerTransferSwitch/Attribute:switch_type+' => 'Type of power transfer switch.',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:manual' => 'Manual',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:automatic' => 'Automatic',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:static' => 'Static',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:bypass' => 'Bypass',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:other' => 'Other',
 ));

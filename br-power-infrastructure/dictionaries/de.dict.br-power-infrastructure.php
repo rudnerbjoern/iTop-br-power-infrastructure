@@ -189,4 +189,15 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:PowerGenerator/Attribute:last_test_date+' => 'Datum des letzten Generator-Testlaufs.',
     'Class:PowerGenerator/Attribute:next_test_date' => 'Datum nächster Testlauf',
     'Class:PowerGenerator/Attribute:next_test_date+' => 'Geplantes Datum des nächsten Generator-Testlaufs.',
+    // Class: PowerGenerator
+    'PowerTransferSwitch:switchinfo' => 'Umschalter-Daten',
+    'Class:PowerTransferSwitch' => 'Stromumschalter',
+    'Class:PowerTransferSwitch+' => 'Schaltgerät zur Umschaltung elektrischer Last zwischen Stromquellen',
+    'Class:PowerTransferSwitch/Attribute:switch_type' => 'Schaltertyp',
+    'Class:PowerTransferSwitch/Attribute:switch_type+' => 'Typ des Stromumschalters.',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:manual' => 'Manuell',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:automatic' => 'Automatisch',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:static' => 'Statisch',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:bypass' => 'Bypass',
+    'Class:PowerTransferSwitch/Attribute:switch_type/Value:other' => 'Sonstige',
 ));
