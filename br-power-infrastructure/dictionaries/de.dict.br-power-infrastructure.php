@@ -228,4 +228,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkPowerConnectionToPowerConnection/UniquenessRule:unique_connection+' => 'Die Kombination aus Quell-Stromverbindung, Ziel-Stromverbindung und Verbindungsrolle muss eindeutig sein.',
     'Class:lnkPowerConnectionToPowerConnection/Error:SelfReference' => 'Quell- und Ziel-Stromverbindung dürfen nicht identisch sein.',
     'Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate' => 'Zwischen diesen beiden Objekten existiert bereits eine Stromverbindung in Gegenrichtung.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:DuplicateInputRolePerTarget' => 'Pro Ziel-Stromverbindung ist nur eine Verbindung mit der Rolle "%1$s" zulässig.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:SameSourceForPrimaryAndSecondary' => 'Dieselbe Quell-Stromverbindung darf für dasselbe Ziel nicht gleichzeitig als Primär- und Sekundäreinspeisung verwendet werden.',
 ));

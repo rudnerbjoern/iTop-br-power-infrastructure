@@ -228,4 +228,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkPowerConnectionToPowerConnection/UniquenessRule:unique_connection+' => 'The combination of source power connection, target power connection and link role must be unique.',
     'Class:lnkPowerConnectionToPowerConnection/Error:SelfReference' => 'Source and target power connection must not be identical.',
     'Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate' => 'A reverse power connection already exists between these two objects.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:DuplicateInputRolePerTarget' => 'Only one connection with role "%1$s" is allowed per target power connection.',
+    'Class:lnkPowerConnectionToPowerConnection/Error:SameSourceForPrimaryAndSecondary' => 'The same source power connection cannot be used as both primary and secondary input for the same target.',
 ));

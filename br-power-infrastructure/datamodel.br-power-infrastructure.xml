@@ -3159,65 +3159,102 @@
                 </field>
             </fields>
             <event_listeners>
-                <event_listener id="OnCheckToWriteNoSelfReference">
+                <event_listener id="OnCheckToWriteValidatePowerConnectionLink">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>OnCheckToWriteNoSelfReference</callback>
-                </event_listener>
-                <event_listener id="OnCheckToWriteNoReverseDuplicate">
-                    <event>EVENT_DB_CHECK_TO_WRITE</event>
-                    <rank>20</rank>
-                    <callback>OnCheckToWriteNoReverseDuplicate</callback>
+                    <callback>OnCheckToWriteValidatePowerConnectionLink</callback>
                 </event_listener>
             </event_listeners>
             <methods>
-                <method id="OnCheckToWriteNoSelfReference">
+                <method id="OnCheckToWriteValidatePowerConnectionLink">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-public function OnCheckToWriteNoSelfReference(Combodo\iTop\Service\Events\EventData $oEventData): void
+public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\Events\EventData $oEventData): void
 {
     $iSourceId = (int) $this->Get('source_powerconnection_id');
     $iTargetId = (int) $this->Get('target_powerconnection_id');
+    $sRole = (string) $this->Get('link_role');
+    $iCurrentId = (int) $this->GetKey();
 
+    // 1. No self reference
     if (($iSourceId !== 0) && ($iSourceId === $iTargetId)) {
         $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:SelfReference'));
+        return;
     }
-}
-        ]]></code>
-                </method>
-                <method id="OnCheckToWriteNoReverseDuplicate">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-public function OnCheckToWriteNoReverseDuplicate(Combodo\iTop\Service\Events\EventData $oEventData): void
-{
-    $iSourceId = (int) $this->Get('source_powerconnection_id');
-    $iTargetId = (int) $this->Get('target_powerconnection_id');
 
     if (($iSourceId === 0) || ($iTargetId === 0)) {
         return;
     }
 
-    $sOQL = 'SELECT lnkPowerConnectionToPowerConnection WHERE source_powerconnection_id = :target AND target_powerconnection_id = :source';
-    $oSearch = DBObjectSearch::FromOQL($sOQL);
-    $oSet = new DBObjectSet($oSearch, array(), array(
+    // 2. No reverse duplicate
+    $sReverseOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                    WHERE source_powerconnection_id = :target
+                    AND target_powerconnection_id = :source';
+    $oReverseSearch = DBObjectSearch::FromOQL($sReverseOQL);
+    $oReverseSet = new DBObjectSet($oReverseSearch, array(), array(
         'source' => $iSourceId,
         'target' => $iTargetId,
     ));
 
-    while ($oExisting = $oSet->Fetch()) {
-        if (!$this->IsNew() && ((int) $oExisting->GetKey() === (int) $this->GetKey())) {
+    while ($oExisting = $oReverseSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
             continue;
         }
 
         $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:ReverseDuplicate'));
         return;
     }
+
+    // The following checks only apply to primary_input / secondary_input
+    if (($sRole !== 'primary_input') && ($sRole !== 'secondary_input')) {
+        return;
+    }
+
+    // 3. Only one primary_input / secondary_input per target
+    $sUniqueRoleOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                       WHERE target_powerconnection_id = :target
+                       AND link_role = :role';
+    $oUniqueRoleSearch = DBObjectSearch::FromOQL($sUniqueRoleOQL);
+    $oUniqueRoleSet = new DBObjectSet($oUniqueRoleSearch, array(), array(
+        'target' => $iTargetId,
+        'role' => $sRole,
+    ));
+
+    while ($oExisting = $oUniqueRoleSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::Format('Class:lnkPowerConnectionToPowerConnection/Error:DuplicateInputRolePerTarget', $sRole));
+        return;
+    }
+
+    // 4. Same source must not be both primary and secondary for same target
+    $sOtherRole = ($sRole === 'primary_input') ? 'secondary_input' : 'primary_input';
+
+    $sSameSourceOQL = 'SELECT lnkPowerConnectionToPowerConnection
+                       WHERE source_powerconnection_id = :source
+                       AND target_powerconnection_id = :target
+                       AND link_role = :other_role';
+    $oSameSourceSearch = DBObjectSearch::FromOQL($sSameSourceOQL);
+    $oSameSourceSet = new DBObjectSet($oSameSourceSearch, array(), array(
+        'source' => $iSourceId,
+        'target' => $iTargetId,
+        'other_role' => $sOtherRole,
+    ));
+
+    while ($oExisting = $oSameSourceSet->Fetch()) {
+        if (($iCurrentId !== 0) && ((int) $oExisting->GetKey() === $iCurrentId)) {
+            continue;
+        }
+
+        $this->AddCheckIssue(Dict::S('Class:lnkPowerConnectionToPowerConnection/Error:SameSourceForPrimaryAndSecondary'));
+        return;
+    }
 }
-    ]]></code>
+        ]]></code>
                 </method>
             </methods>
             <presentation>
