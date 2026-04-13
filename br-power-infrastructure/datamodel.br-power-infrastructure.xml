@@ -5,7 +5,7 @@
     @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
-<!-- ***************** PowerSocket ***************** -->
+        <!-- ***************** PowerSocketType ***************** -->
         <class id="PowerSocketType" _delta="define">
             <parent>Typology</parent>
             <properties>
@@ -102,6 +102,7 @@
                 </summary>
             </presentation>
         </class>
+        <!-- ***************** PowerSocket ***************** -->
         <class id="PowerSocket" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
@@ -137,6 +138,15 @@
                 <obsolescence>
                     <condition>pdu_id_obsolescence_flag</condition>
                 </obsolescence>
+                <uniqueness_rules>
+                    <rule id="unique_name_per_pdu">
+                        <attributes>
+                            <attribute id="name" />
+                            <attribute id="pdu_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
             </properties>
             <fields>
                 <field id="name" xsi:type="AttributeString">
@@ -767,14 +777,21 @@
                     <code><![CDATA[
     public function CreatePowerSockets(): string
     {
-        $iCapacity = $this->Get('capacity');
+        $iCapacity = (int) $this->Get('capacity');
+        if ($iCapacity <= 0) {
+            return Dict::S('UI:PowerSocket:Action:Create:PDU:CreatePowerSockets:NoCapacity');
+        }
+
         $oPowerSocketSet = $this->Get('powersocket_list');
         $iPowerSocketCount = $oPowerSocketSet->Count();
+
         if ($iPowerSocketCount >= $iCapacity) {
             return Dict::S('UI:PowerSocket:Action:Create:PDU:CreatePowerSockets:NoCapacity');
         }
+
         $aPowerSocketName = $oPowerSocketSet->GetColumnAsArray('name');
         $j = 0;
+
         for ($i = $iPowerSocketCount + 1; $i <= $iCapacity; $i++) {
             $oPowerSocket = MetaModel::NewObject('PowerSocket');
             do {
@@ -785,6 +802,7 @@
             $oPowerSocket->Set('status', 'active');
             $oPowerSocket->DBInsert();
         }
+
         return '';
     }
                         ]]></code>
@@ -1004,7 +1022,7 @@
                     <filter><![CDATA[
                         SELECT PowerSocket
                         WHERE pdu_id = :this->powerA_id
-                        AND datacenterdevice_id = 0
+                        AND (datacenterdevice_id = 0 OR datacenterdevice_id = :this->id)
                         AND (:this->required_socket_type_id = 0 OR socket_type_id = :this->required_socket_type_id)
                         ]]></filter>
                     <dependencies>
@@ -1025,7 +1043,7 @@
                     <filter><![CDATA[
                         SELECT PowerSocket
                         WHERE pdu_id = :this->powerB_id
-                        AND datacenterdevice_id = 0
+                        AND (datacenterdevice_id = 0 OR datacenterdevice_id = :this->id)
                         AND (:this->required_socket_type_id = 0 OR socket_type_id = :this->required_socket_type_id)
                         ]]></filter>
                     <dependencies>
@@ -3808,9 +3826,20 @@
                     <extkey_attcode>source_powerconnection_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
                 </field>
+                <field id="source_powerconnection_org_id" xsi:type="AttributeExternalField">
+                    <extkey_attcode>source_powerconnection_id</extkey_attcode>
+                    <target_attcode>org_id</target_attcode>
+                </field>
                 <field id="target_powerconnection_id" xsi:type="AttributeExternalKey">
                     <sql>target_powerconnection_id</sql>
                     <target_class>PowerConnection</target_class>
+                    <filter><![CDATA[
+        SELECT PowerConnection
+        WHERE (:this->source_powerconnection_id = 0 OR org_id = :this->source_powerconnection_org_id)
+    ]]></filter>
+                    <dependencies>
+                        <attribute id="source_powerconnection_id" />
+                    </dependencies>
                     <is_null_allowed>false</is_null_allowed>
                     <on_target_delete>DEL_MANUAL</on_target_delete>
                     <allow_target_creation>false</allow_target_creation>
@@ -3818,6 +3847,10 @@
                 <field id="target_powerconnection_name" xsi:type="AttributeExternalField">
                     <extkey_attcode>target_powerconnection_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
+                </field>
+                <field id="target_powerconnection_org_id" xsi:type="AttributeExternalField">
+                    <extkey_attcode>target_powerconnection_id</extkey_attcode>
+                    <target_attcode>org_id</target_attcode>
                 </field>
                 <field id="link_role" xsi:type="AttributeEnum">
                     <sql>link_role</sql>
