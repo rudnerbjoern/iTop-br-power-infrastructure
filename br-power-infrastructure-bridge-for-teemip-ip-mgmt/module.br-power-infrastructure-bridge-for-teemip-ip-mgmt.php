@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2022-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
- * @version     2026-04-10
+ * @version     2026-04-13
  *
  * iTop module definition file
  */
@@ -22,8 +22,8 @@ SetupWebPage::AddModule(
             'itop-datacenter-mgmt/3.1.0',
             'teemip-ip-mgmt/3.2.0',
             'teemip-config-mgmt-adaptor/3.2.0',
-            'br-power-infrastructure/1.1.0',
-            'teemip-datacenter-mgmt-adaptor/3.2.2||br-power-infrastructure/1.1.0',
+            'br-power-infrastructure/2.0.0',
+            'teemip-datacenter-mgmt-adaptor/3.2.2||br-power-infrastructure/2.0.0',
         ),
         'mandatory' => false,
         'visible' => true,
