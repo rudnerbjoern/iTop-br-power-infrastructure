@@ -67,6 +67,14 @@ if (!class_exists('PowerInfrastructureInstaller')) {
             return $oConfiguration;
         }
 
+        public static function BeforeDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
+        {
+            if (version_compare($sPreviousVersion, '2.0.0', '<')) {
+                SetupLog::Info("|- Applying pre-schema role migration for br-power-infrastructure 2.0.0.");
+                self::MigrateOutputRoleToDownstream();
+            }
+        }
+
         public static function AfterDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
         {
             if (version_compare($sPreviousVersion, '2.0.0', '<')) {
@@ -75,77 +83,121 @@ if (!class_exists('PowerInfrastructureInstaller')) {
             }
         }
 
+        protected static function MigrateOutputRoleToDownstream(): void
+        {
+            try {
+                if (!MetaModel::IsValidClass('lnkPowerConnectionToPowerConnection')) {
+                    SetupLog::Info("|- Skipping output->downstream migration: class lnkPowerConnectionToPowerConnection not available yet.");
+                    return;
+                }
+
+                $oSearch = DBSearch::FromOQL(
+                    "SELECT lnkPowerConnectionToPowerConnection WHERE link_role = 'output'"
+                );
+                $oSet = new DBObjectSet($oSearch, array(), array());
+
+                $iUpdated = 0;
+                $iDeleted = 0;
+
+                while ($oLink = $oSet->Fetch()) {
+                    $iSourceId = (int) $oLink->Get('source_powerconnection_id');
+                    $iTargetId = (int) $oLink->Get('target_powerconnection_id');
+                    $iCurrentId = (int) $oLink->GetKey();
+
+                    $oExistingSearch = DBSearch::FromOQL(
+                        "SELECT lnkPowerConnectionToPowerConnection
+                 WHERE source_powerconnection_id = :source
+                 AND target_powerconnection_id = :target
+                 AND link_role = 'downstream'"
+                    );
+                    $oExistingSet = new DBObjectSet($oExistingSearch, array(), array(
+                        'source' => $iSourceId,
+                        'target' => $iTargetId,
+                    ));
+
+                    $bDownstreamExists = false;
+                    while ($oExisting = $oExistingSet->Fetch()) {
+                        if ((int) $oExisting->GetKey() === $iCurrentId) {
+                            continue;
+                        }
+                        $bDownstreamExists = true;
+                        break;
+                    }
+
+                    if ($bDownstreamExists) {
+                        $oLink->DBDelete();
+                        $iDeleted++;
+                        continue;
+                    }
+
+                    $oLink->Set('link_role', 'downstream');
+                    $oLink->DBUpdate();
+                    $iUpdated++;
+                }
+
+                SetupLog::Info("|- Power link role migration finished. Updated output->downstream: $iUpdated, deleted duplicates: $iDeleted.");
+            } catch (Exception $e) {
+                SetupLog::Info("|- Skipping output->downstream migration: " . $e->getMessage());
+            }
+        }
+
         protected static function ImportLegacyPduPowerSourceLinks(): void
         {
-            $oSearch = DBSearch::FromOQL('SELECT PDU WHERE powerstart_id != 0');
-            $oSet = new DBObjectSet($oSearch, array(), array());
-
-            $iChecked = 0;
-            $iCreated = 0;
-            $iSkipped = 0;
-
-            while ($oPDU = $oSet->Fetch()) {
-                $iChecked++;
-
-                $iSourceId = (int) $oPDU->Get('powerstart_id');
-                $iTargetId = (int) $oPDU->GetKey();
-
-                if (($iSourceId === 0) || ($iTargetId === 0)) {
-                    $iSkipped++;
-                    continue;
+            try {
+                if (!MetaModel::IsValidClass('PDU') || !MetaModel::IsValidClass('lnkPowerConnectionToPowerConnection')) {
+                    SetupLog::Info("|- Skipping legacy PDU power path import: required classes not available yet.");
+                    return;
                 }
 
-                $oExistingSearch = DBSearch::FromOQL(
-                    'SELECT lnkPowerConnectionToPowerConnection
-                     WHERE source_powerconnection_id = :source
-                     AND target_powerconnection_id = :target
-                     AND link_role = :role'
-                );
-                $oExistingSet = new DBObjectSet($oExistingSearch, array(), array(
-                    'source' => $iSourceId,
-                    'target' => $iTargetId,
-                    'role' => 'downstream',
-                ));
+                $oSearch = DBSearch::FromOQL('SELECT PDU WHERE powerstart_id != 0');
+                $oSet = new DBObjectSet($oSearch, array(), array());
 
-                if ($oExistingSet->Count() > 0) {
-                    $sSourceName = trim((string) $oPDU->Get('powerstart_name'));
-                    $sTargetName = trim((string) $oPDU->GetName());
+                $iChecked = 0;
+                $iCreated = 0;
+                $iSkipped = 0;
 
-                    if ($sSourceName === '') {
-                        $sSourceName = '#' . $iSourceId;
-                    }
-                    if ($sTargetName === '') {
-                        $sTargetName = '#' . $iTargetId;
+                while ($oPDU = $oSet->Fetch()) {
+                    $iChecked++;
+
+                    $iSourceId = (int) $oPDU->Get('powerstart_id');
+                    $iTargetId = (int) $oPDU->GetKey();
+
+                    if (($iSourceId === 0) || ($iTargetId === 0)) {
+                        $iSkipped++;
+                        continue;
                     }
 
-                    SetupLog::Info("|  |- Skipped existing legacy power path: '$sSourceName' -> '$sTargetName'.");
-                    $iSkipped++;
-                    continue;
+                    $oExistingSearch = DBSearch::FromOQL(
+                        'SELECT lnkPowerConnectionToPowerConnection
+                 WHERE source_powerconnection_id = :source
+                 AND target_powerconnection_id = :target
+                 AND link_role = :role'
+                    );
+                    $oExistingSet = new DBObjectSet($oExistingSearch, array(), array(
+                        'source' => $iSourceId,
+                        'target' => $iTargetId,
+                        'role' => 'downstream',
+                    ));
+
+                    if ($oExistingSet->Count() > 0) {
+                        $iSkipped++;
+                        continue;
+                    }
+
+                    $oLink = MetaModel::NewObject('lnkPowerConnectionToPowerConnection');
+                    $oLink->Set('source_powerconnection_id', $iSourceId);
+                    $oLink->Set('target_powerconnection_id', $iTargetId);
+                    $oLink->Set('link_role', 'downstream');
+                    $oLink->Set('comment', 'Imported from legacy PDU powerstart_id');
+                    $oLink->DBInsert();
+
+                    $iCreated++;
                 }
 
-                $oLink = MetaModel::NewObject('lnkPowerConnectionToPowerConnection');
-                $oLink->Set('source_powerconnection_id', $iSourceId);
-                $oLink->Set('target_powerconnection_id', $iTargetId);
-                $oLink->Set('link_role', 'downstream');
-                $oLink->Set('comment', 'Imported from legacy PDU powerstart_id');
-                $oLink->DBInsert();
-
-                $sSourceName = trim((string) $oPDU->Get('powerstart_name'));
-                $sTargetName = trim((string) $oPDU->GetName());
-
-                if ($sSourceName === '') {
-                    $sSourceName = '#' . $iSourceId;
-                }
-                if ($sTargetName === '') {
-                    $sTargetName = '#' . $iTargetId;
-                }
-
-                $iCreated++;
-
-                SetupLog::Info("|  |- Imported legacy power path: '$sSourceName' -> '$sTargetName'.");
+                SetupLog::Info("|- Legacy PDU power path import finished. Checked: $iChecked, created: $iCreated, skipped: $iSkipped.");
+            } catch (Exception $e) {
+                SetupLog::Info("|- Skipping legacy PDU power path import: " . $e->getMessage());
             }
-
-            SetupLog::Info("|- Legacy PDU power path import finished. Checked: $iChecked, created: $iCreated, skipped: $iSkipped.");
         }
     }
 }

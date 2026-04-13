@@ -259,7 +259,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role+' => 'Fachliche Rolle dieser Verknüpfung.',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:primary_input' => 'Primäreinspeisung',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:secondary_input' => 'Sekundäreinspeisung',
-    'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:output' => 'Ausgang',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:bypass' => 'Bypass',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:downstream' => 'Nachgelagert',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:other' => 'Sonstige',

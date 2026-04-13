@@ -5,353 +5,73 @@ Copyright (c) 2026 Björn Rudner
 
 ## What?
 
-`iTop-br-power-infrastructure` is an extension for iTop that enhances the native CMDB data model for documenting and managing power infrastructure components.
+`iTop-br-power-infrastructure` is an extension for iTop that enhances the native CMDB data model for documenting and managing electrical power infrastructure components.
 
-The extension focuses on structured modeling of electrical power supply components and their relationships in environments such as data centers, server rooms, technical facilities, and other infrastructure areas where reliable documentation of power dependencies is required.
-
-It extends the native iTop power model and introduces additional classes, attributes, and synchronization logic for documenting technical, operational, and maintenance-related information.
+It extends the native iTop power model and introduces additional classes, attributes, synchronization logic, and generic topology links for documenting power supply paths in environments such as data centers, server rooms, technical facilities, and related infrastructure areas.
 
 ## Features
 
-- Extends the native iTop classes related to power infrastructure
-- Adds generic electrical and maintenance-related attributes to existing power classes
-- Introduces a dedicated `UtilityPower` class derived from `PowerSource`
-- Introduces a dedicated `UPS` class derived from `PowerSource`
-- Introduces a dedicated `UPSBattery` class derived from `PhysicalDevice`
-- Introduces a dedicated `PowerGenerator` class derived from `PowerSource`
-- Introduces a dedicated `PowerTransferSwitch` class derived from `PowerConnection`
-- Introduces a dedicated `PowerDistributionBoard` class derived from `PowerConnection`
-- Introduces a generic link class `lnkPowerConnectionToPowerConnection` for modeling relationships between `PowerConnection` objects
-- Supports relationships between UPS systems and their battery units
-- Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
-- Adds utility-supply-specific documentation fields such as supply type, utility provider, redundancy group, contract power, and handover point
-- Adds UPS-specific documentation fields such as topology, rated power, and autonomy time
-- Adds battery-specific documentation fields such as battery role, battery type, battery status, replacement dates, voltage, and capacity
-- Adds generator-specific documentation fields such as generator type, fuel type, tank capacity, runtime, and test schedule
-- Adds transfer-switch-specific documentation fields such as switch type
-- Adds distribution-board-specific documentation fields such as board type, redundancy group, and number of outgoing feeds
-- Introduces the `PowerSocket` class to model individual PDU outlets
-- Extends `PDU` with dedicated power socket handling
-- Allows `DatacenterDevice` objects to be connected to specific PDU sockets
-- Provides automatic synchronization logic between `PowerSocket`, `PDU`, and `DatacenterDevice`
-- Supports automatic slot assignment for Power A / Power B connections
-- Includes consistency checks and rollback logic for invalid assignments
-- Supports structured modeling of generic power paths such as utility → transfer switch → UPS → PDU
-
-## Data Model
-
-The extension currently builds on the following native iTop classes:
-
-- `PowerConnection`
-- `PowerSource`
-- `PDU`
-- `DatacenterDevice`
-
-The extension currently introduces the following additional classes:
-
-- `UtilityPower`
-- `UPS`
-- `UPSBattery`
-- `PowerGenerator`
-- `PowerTransferSwitch`
-- `PowerDistributionBoard`
-- `PowerSocket`
-- `lnkPowerConnectionToPowerConnection`
-
-### Extended native classes
-
-#### `PowerConnection`
-
-Additional generic attributes for electrical and maintenance-related documentation:
-
-- `phase_type`
-- `nominal_voltage`
-- `nominal_frequency`
-- `max_current_ampere`
-- `last_maintenance_date`
-- `next_maintenance_date`
-
-In addition, `PowerConnection` can be linked to other `PowerConnection` objects through the generic link model.
-
-#### `PowerSource`
-
-Presentation enhancements for inherited generic power-related attributes.
-
-#### `PDU`
-
-Presentation enhancements for inherited generic power-related attributes and support for individual power sockets.
-
-#### `DatacenterDevice`
-
-Extended to support dedicated Power A / Power B socket assignments.
-
-### New classes
-
-#### `UtilityPower`
-
-A dedicated utility or upstream power supply class based on `PowerSource`.
-
-Current utility-supply-specific attributes include:
-
-- `supply_type`
-- `utility_provider_id`
-- `redundancy_group`
-- `contract_power_kw`
-- `handover_point`
-
-This class is intended to represent the normal external or upstream power source, for example a public grid connection, a building feed, or another upstream supply path.
-
-#### `UPS`
-
-A dedicated UPS class based on `PowerSource`.
-
-Current UPS-specific attributes include:
-
-- `ups_topology`
-- `rated_power_va`
-- `rated_power_watt`
-- `autonomy_time`
-
-In addition, the class provides:
-
-- `batteries_list`
-- inherited relationships to downstream PDUs
-- generic power topology links through `lnkPowerConnectionToPowerConnection`
-
-#### `UPSBattery`
-
-A dedicated battery unit class based on `PhysicalDevice`.
-
-Current battery-specific attributes include:
-
-- `ups_id`
-- `battery_role`
-- `battery_type`
-- `battery_status`
-- `battery_voltage`
-- `battery_capacity_ah`
-- `last_replacement_date`
-- `next_replacement_date`
-
-#### `PowerGenerator`
-
-A dedicated generator class based on `PowerSource`.
-
-Current generator-specific attributes include:
-
-- `generator_type`
-- `fuel_type`
-- `rated_power_kva`
-- `fuel_tank_capacity_l`
-- `fuel_consumption_lph`
-- `autonomy_time`
-- `start_method`
-- `is_ats_available`
-- `last_test_date`
-- `next_test_date`
-
-In addition, the class provides:
-
-- inherited relationships to downstream PDUs
-- generic power topology links through `lnkPowerConnectionToPowerConnection`
-
-#### `PowerTransferSwitch`
-
-A dedicated transfer switch class based on `PowerConnection`.
-
-Current transfer-switch-specific attributes include:
-
-- `switch_type`
-
-The class is intended to represent electrical transfer switches used to switch loads between different power sources, for example between utility power and generator supply.
-
-#### `PowerDistributionBoard`
-
-A dedicated distribution board class based on `PowerConnection`.
-
-Current distribution-board-specific attributes include:
-
-- `board_type`
-- `redundancy_group`
-- `number_of_outgoing_feeds`
-
-This class is intended to represent electrical distribution boards such as main distributions, sub-distributions, critical load panels, or rack-related power distribution stages between upstream sources and downstream consumers.
-
-#### `PowerSocket`
-
-A `PowerSocket` represents an individual physical outlet on a PDU.
-
-Each socket:
-
-- belongs to exactly one `PDU`
-- may be connected to exactly one `DatacenterDevice`
-- can be assigned to either Power A or Power B on the connected device
-
-#### `lnkPowerConnectionToPowerConnection`
-
-A generic link class used to model directional relationships between `PowerConnection` objects.
-
-This class can be used to document power paths such as:
-
-- utility power → transfer switch
-- generator → transfer switch
-- transfer switch → UPS
-- UPS → PDU
-
-Current link attributes include:
-
-- `source_powerconnection_id`
-- `target_powerconnection_id`
-- `link_role`
-- `comment`
-
-## Relations
-
-The current data model supports relationships such as:
-
-- `UtilityPower` acting as a specialized `PowerSource`
-- `PowerSource` feeding `PDU`
-- `UPS` acting as a specialized `PowerSource`
-- `UPS` owning one or more `UPSBattery` objects
-- `PowerGenerator` acting as a specialized `PowerSource`
-- `PowerTransferSwitch` acting as a switching component within the power supply chain
-- `PowerDistributionBoard` acting as a distribution component within the power supply chain
-- `PDU` owning one or more `PowerSocket` objects
-- `PowerSocket` being linked to a `DatacenterDevice`
-- generic directional links between `PowerConnection` objects through `lnkPowerConnectionToPowerConnection`
-- chained power infrastructure dependencies through the native iTop power model
-
-## Power Topology Model
-
-The extension supports two approaches for modeling electrical relationships:
-
-### Native iTop power chain
-
-The native iTop model already provides relationships such as:
-
-- `PowerSource` feeding `PDU`
-
-This remains available and can still be used where appropriate.
-
-### Generic power links
-
-For more flexible and realistic topologies, the extension introduces `lnkPowerConnectionToPowerConnection`.
-
-This allows directional modeling of electrical paths between `PowerConnection` objects, for example:
-
-- utility power → transfer switch
-- generator → transfer switch
-- transfer switch → UPS
-- UPS → PDU
-
-This approach is especially useful for documenting:
-
-- transfer switches
-- distribution boards
-- generators
-- chained power supply paths
-- more complex emergency power configurations
-
-## PowerSocket Logic
-
-The integrated PowerSocket functionality provides synchronization logic between:
-
-- `PowerSocket`
-- `PDU`
-- `DatacenterDevice`
-
-Each `DatacenterDevice` can be connected to:
-
-- one Power A socket
-- one Power B socket
-
-The extension ensures that:
-
-- no more than two sockets are assigned to a single `DatacenterDevice`
-- slots are automatically assigned (A first, then B)
-- connections stay consistent when objects are updated or deleted
-- invalid assignments are rejected or rolled back
-
-## How to Use
-
-### UtilityPower
-
-Use the `UtilityPower` class to document normal external or upstream power supplies.
-
-Typical usage includes:
-
-- documenting the regular primary supply path feeding a transfer switch or UPS
-- distinguishing between public grid, building feed, external feed, and temporary feed
-- linking the supply to the responsible utility provider organization
-- documenting redundancy group, contract power, and technical handover point
-
-### UPS and UPSBattery
-
-Use the `UPS` class to document dedicated uninterruptible power supplies and the `UPSBattery` class to document associated battery units.
-
-Typical usage includes:
-
-- documenting UPS-specific electrical and technical data
-- assigning one or more battery units to a UPS
-- documenting replacement cycles and battery status
-
-### PowerGenerator
-
-Use the `PowerGenerator` class to document diesel generators and other common emergency power units (gensets).
-
-Typical usage includes:
-
-- documenting generator category (standby, prime, continuous, mobile)
-- tracking fuel type (for example diesel, gas, HVO, biodiesel, dual-fuel)
-- recording rated power, fuel tank capacity, and fuel consumption
-- planning generator test runs using last/next test dates
-
-### PowerTransferSwitch
-
-Use the `PowerTransferSwitch` class to document transfer switches within the electrical supply chain.
-
-Typical usage includes:
-
-- documenting manual, automatic, static, or bypass transfer switches
-- distinguishing switching devices from power sources
-- preparing structured modeling of power paths between utility supply, generator, UPS, and downstream distribution
-
-### PowerDistributionBoard
-
-Use the `PowerDistributionBoard` class to document electrical distribution stages between upstream sources and downstream consumers.
-
-Typical usage includes:
-
-- documenting main distributions and sub-distributions
-- representing critical load panels and rack-related distribution stages
-- distinguishing distribution components from power sources and transfer switches
-- structuring the power path between utility, generator, UPS, PDU, and downstream devices
-
-### Generic PowerConnection Links
-
-Use `lnkPowerConnectionToPowerConnection` to model directional power paths between `PowerConnection` objects.
-
-Typical usage includes:
-
-- linking utility supply to a transfer switch
-- linking a generator to a transfer switch
-- linking a transfer switch to a UPS
-- linking a UPS to a PDU
-
-Recommended modeling direction:
-
-- always model connections from **source** to **target**
-
-Examples:
-
-- utility power → transfer switch
-- generator → transfer switch
-- transfer switch → UPS
-- UPS → PDU
+* Extends the native iTop power infrastructure model
+* Adds generic electrical and maintenance-related attributes to existing power classes
+* Introduces dedicated classes for:
+
+  * `UtilityPower`
+  * `UPS`
+  * `UPSBattery`
+  * `PowerGenerator`
+  * `PowerTransferSwitch`
+  * `PowerDistributionBoard`
+  * `PowerSocketType`
+  * `PowerSocket`
+* Introduces `lnkPowerConnectionToPowerConnection` for generic directional topology modeling between `PowerConnection` objects
+* Extends `PDU` with dedicated power socket handling
+* Supports Power A / Power B assignment for `DatacenterDevice` objects
+* Includes synchronization logic between `PowerSocket`, `PDU`, and `DatacenterDevice`
+* Supports both legacy native power relations and the preferred generic topology model
+
+## Main Classes
+
+The extension builds on the following native iTop classes:
+
+* `PowerConnection`
+* `PowerSource`
+* `PDU`
+* `DatacenterDevice`
+
+The extension introduces the following additional classes:
+
+* `UtilityPower`
+* `UPS`
+* `UPSBattery`
+* `PowerGenerator`
+* `PowerTransferSwitch`
+* `PowerDistributionBoard`
+* `PowerSocketType`
+* `PowerSocket`
+* `lnkPowerConnectionToPowerConnection`
+
+## Preferred Topology Model
+
+The preferred way to model power flow in this extension is the generic link model:
+
+* `lnkPowerConnectionToPowerConnection`
+
+This allows directional relationships between `PowerConnection` objects, for example:
+
+* utility feed → transfer switch
+* generator → transfer switch
+* transfer switch → UPS
+* UPS → distribution board
+* distribution board → PDU
+
+Recommended role usage:
+
+* use `downstream` as the standard generic source-to-target role
+* use `primary_input` and `secondary_input` for transfer switch input modeling
+
+The native iTop `PowerSource` → `PDU` relation remains supported for compatibility.
 
 ## Example Topology
-
-The following example shows a typical emergency power path modeled with this extension:
 
 ```mermaid
 graph TD
@@ -366,96 +86,12 @@ graph TD
 
     UtilityPower -->|primary_input| TransferSwitch
     Generator -->|secondary_input| TransferSwitch
-    TransferSwitch -->|output| UPS
+    TransferSwitch -->|downstream| UPS
     UPS -->|downstream| DistributionBoard
     DistributionBoard -->|downstream| PDU
     PDU --> Socket
     Socket --> Device
 ```
-
-This example represents a setup where:
-
-- the normal utility supply is the primary source
-- the generator is the secondary backup source
-- the transfer switch selects the active source
-- the UPS protects downstream equipment
-- the distribution board represents an intermediate electrical distribution stage
-- the PDU distributes power within the rack
-- individual PowerSockets connect the final devices
-
-A possible modeling of the generic power links could look like this:
-
-- `UtilityPower` → `PowerTransferSwitch` with role `primary_input`
-- `PowerGenerator` → `PowerTransferSwitch` with role `secondary_input`
-- `PowerTransferSwitch` → `UPS` with role `output`
-- `UPS` → `PowerDistributionBoard` with role `downstream`
-- `PowerDistributionBoard` → `PDU` with role `downstream`
-
-This approach makes it possible to document both simple and more advanced power topologies in a structured and extensible way.
-
-### PowerSockets
-
-#### Creating PowerSockets
-
-PowerSockets represent physical outlets on a PDU.
-
-1. Open the PDU object in iTop.
-2. Scroll to the PowerSockets list.
-3. Add one or more PowerSockets.
-4. Give each socket a meaningful name, for example `Outlet 1`, `A01`, or `Rack-3-Port-5`.
-
-Each `PowerSocket` belongs to exactly one `PDU`.
-
-#### Connecting a PowerSocket to a DatacenterDevice
-
-You can connect a `PowerSocket` to a `DatacenterDevice` in two ways.
-
-##### Option A: From the PowerSocket side
-
-1. Open a `PowerSocket`.
-2. Set the `Datacenter Device` field.
-3. Save.
-
-The system will automatically:
-
-- assign the socket to slot Power A or Power B
-- set the corresponding PDU reference on the device
-
-##### Option B: From the DatacenterDevice side
-
-1. Open a `DatacenterDevice` such as a server, storage system, or switch.
-2. Select a `PowerSocket` in:
-
-   - `Power A socket`, or
-   - `Power B socket`
-3. Save.
-
-The system will automatically:
-
-- link the `PowerSocket` back to the `DatacenterDevice`
-- keep both sides consistent
-
-#### Automatic Slot Assignment
-
-Each `DatacenterDevice` can have:
-
-- one Power A socket
-- one Power B socket
-
-When connecting a `PowerSocket`:
-
-1. Slot A is used first
-2. Slot B is used if A is already occupied
-3. If both slots are occupied, the assignment is rejected
-
-#### Deleting a PowerSocket
-
-When a `PowerSocket` is deleted:
-
-- the slot reference on the `DatacenterDevice` is automatically cleared
-- Power A / Power B fields are reset if they pointed to this socket
-
-This prevents broken references and dangling assignments.
 
 ## Installation
 
@@ -473,139 +109,65 @@ This prevents broken references and dangling assignments.
 
 This repository also includes optional bridge modules that optimize the PDU presentation layout when specific third-party extensions are installed.
 
-- `br-power-infrastructure-bridge-for-datacenter-view`
-
-  - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view` are selected
-- `br-power-infrastructure-bridge-for-datacenter-view-extended`
-
-  - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view-extended` are selected
-- `br-power-infrastructure-bridge-for-teemip-ip-mgmt`
-
-  - auto-selected when both `br-power-infrastructure` and `teemip-datacenter-mgmt-adaptor` are selected
+* `br-power-infrastructure-bridge-for-datacenter-view`
+* `br-power-infrastructure-bridge-for-datacenter-view-extended`
+* `br-power-infrastructure-bridge-for-teemip-ip-mgmt`
 
 These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
 
 ## Upgrade Notes for Version 2.0.0
 
-Version `2.0.0` introduces the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
+Version `2.0.0` further establishes the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
 
-During upgrade, the module installer automatically imports existing legacy `powerstart_id` relations from `PDU` objects into the new link model.
+During upgrade:
 
-This means that existing connections of the form:
+* existing legacy `PDU.powerstart_id` relations are imported into the generic link model with role `downstream`
+* existing generic links using the role `output` are migrated to `downstream`
+* duplicate `downstream` links are not created
 
-- `PowerSource` → `PDU`
+The legacy `powerstart_id` field is not removed during upgrade.
 
-are automatically duplicated into `lnkPowerConnectionToPowerConnection` with the role:
+## Documentation
 
-- `downstream`
+A more detailed guide covering modeling principles, class usage, topology design, screenshots, demo data, and migration behavior is available here:
 
-### Important notes
-
-- The legacy `powerstart_id` field is **not removed** during upgrade.
-- Existing data remains available and usable after the upgrade.
-- The migration only creates missing links and does **not** create duplicates if matching topology links already exist.
-- Imported links are marked with the comment:
-
-  `Imported from legacy PDU powerstart_id`
-
-This ensures a smooth transition from the legacy native power chain to the newer generic topology model introduced by this extension.
-
-## Status
-
-This extension is currently in an early beta stage.
-
-The current implementation focuses on:
-
-- extending the generic native power infrastructure model
-- introducing a dedicated utility power class
-- introducing a dedicated UPS class
-- introducing a dedicated UPS battery class
-- introducing a dedicated generator class
-- introducing a dedicated transfer switch class
-- introducing a dedicated power distribution board class
-- introducing a generic power link model between `PowerConnection` objects
-- introducing PowerSocket support for PDUs
-- establishing relations between UPS systems and their battery units
-- providing synchronized socket handling for `DatacenterDevice`
-- preparing the module structure for future power infrastructure extensions
-
-## iTop Compatibility
-
-The extension was tested on:
-
-- iTop `3.2.2`
-
-Core module dependencies:
-
-- `itop-config-mgmt/3.2.0`
-- `itop-datacenter-mgmt/3.2.0`
-- `itop-virtualization-mgmt/3.2.0`
-- `itop-storage-mgmt/3.2.0`
-- `teemip-network-mgmt-extended/3.1.0`
-
-Optional bridge dependencies (only required when using the related companion extensions):
-
-- `molkobain-datacenter-view/1.14.0` for the datacenter-view bridge module
-- `molkobain-datacenter-view-extended/1.11.0` for the datacenter-view-extended bridge module
-- `teemip-ip-mgmt/3.2.0`, `teemip-config-mgmt-adaptor/3.2.0`, and `teemip-datacenter-mgmt-adaptor/3.2.2` for the TeemIP bridge module
-
-## Roadmap
-
-Planned or possible future enhancements may include:
-
-- additional utility-supply-related technical attributes
-- additional UPS-related technical attributes
-- support for more advanced generator-related classes
-- more detailed transfer switch modeling
-- more detailed distribution-board modeling
-- improved monitoring and operational metadata
-- further refinement of power infrastructure relations
-- additional power distribution and socket-level modeling improvements
+* [User Guide](doc/User-Guide.md)
 
 ## Screenshots
 
 ### Power Infrastructure Overview
 
-The custom **Power Infrastructure** menu provides a central entry point for all relevant classes introduced by this extension.
-
-It groups objects such as utility feeds, UPS systems, generators, transfer switches, distribution boards, sockets, and topology links into a structured navigation area, making it easier to explore and manage the complete electrical model.
-
 ![Power Infrastructure Menu](doc/Screenshots/PowerInfrastructureMenu.png)
 
 ### Utility Power
 
-The `UtilityPower` class is used to document the normal external or upstream power supply.
-
-Typical fields include the supply type, utility provider, redundancy group, contract power, and technical handover point. This makes it possible to model the primary incoming feed in a structured and reusable way.
-
 ![Utility Power Details](doc/Screenshots/UtilityFeedDetails.png)
 
 ### Transfer Switch Relations
-
-The `PowerTransferSwitch` class is used to represent switching components between multiple upstream and downstream power paths.
-
-In the example below, the transfer switch depends on both the normal utility feed and the generator supply, while impacting the downstream UPS. This provides a clear visual representation of the switching logic within the electrical topology.
 
 ![Transfer Switch Depends On](doc/Screenshots/TransferSwitchDependsOn.png)
 ![Transfer Switch Impacts](doc/Screenshots/TransferSwitchImpacts.png)
 
 ### Redundant Device Power Assignment
 
-Datacenter devices can be connected to dedicated Power A and Power B sockets.
-
-This allows the extension to document redundant power supply paths for servers, storage systems, and network devices. In the example below, the device is connected to two separate rack PDUs representing protected and unprotected power paths.
-
 ![Datacenter Device Power Supply](doc/Screenshots/DatacenterDevicePowerSupply.png)
 
 ![Datacenter Device Depends On](doc/Screenshots/DatacenterDeviceDependsOn.png)
 
-### Power Supply
+## iTop Compatibility
 
-![Power Supply](doc/Screenshots/PowerSupply.png)
+The extension was tested on:
 
-### PDU
+* iTop `3.2.2`
 
-![PDU](doc/Screenshots/PDU.png)
+Core module dependencies:
+
+* `itop-config-mgmt/3.2.0`
+* `itop-datacenter-mgmt/3.2.0`
+* `itop-virtualization-mgmt/3.2.0`
+* `itop-storage-mgmt/3.2.0`
+
+Optional bridge dependencies are only required when using the related companion extensions.
 
 ## Attribution
 

@@ -259,7 +259,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role+' => 'Functional role of this connection link.',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:primary_input' => 'Primary input',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:secondary_input' => 'Secondary input',
-    'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:output' => 'Output',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:bypass' => 'Bypass',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:downstream' => 'Downstream',
     'Class:lnkPowerConnectionToPowerConnection/Attribute:link_role/Value:other' => 'Other',
