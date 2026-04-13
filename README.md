@@ -20,6 +20,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Introduces a dedicated `UPSBattery` class derived from `PhysicalDevice`
 - Introduces a dedicated `PowerGenerator` class derived from `PowerSource`
 - Introduces a dedicated `PowerTransferSwitch` class derived from `PowerConnection`
+- Introduces a dedicated `PowerDistributionBoard` class derived from `PowerConnection`
 - Introduces a generic link class `lnkPowerConnectionToPowerConnection` for modeling relationships between `PowerConnection` objects
 - Supports relationships between UPS systems and their battery units
 - Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
@@ -28,6 +29,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Adds battery-specific documentation fields such as battery role, battery type, battery status, replacement dates, voltage, and capacity
 - Adds generator-specific documentation fields such as generator type, fuel type, tank capacity, runtime, and test schedule
 - Adds transfer-switch-specific documentation fields such as switch type
+- Adds distribution-board-specific documentation fields such as board type, redundancy group, and number of outgoing feeds
 - Introduces the `PowerSocket` class to model individual PDU outlets
 - Extends `PDU` with dedicated power socket handling
 - Allows `DatacenterDevice` objects to be connected to specific PDU sockets
@@ -52,6 +54,7 @@ The extension currently introduces the following additional classes:
 - `UPSBattery`
 - `PowerGenerator`
 - `PowerTransferSwitch`
+- `PowerDistributionBoard`
 - `PowerSocket`
 - `lnkPowerConnectionToPowerConnection`
 
@@ -162,6 +165,18 @@ Current transfer-switch-specific attributes include:
 
 The class is intended to represent electrical transfer switches used to switch loads between different power sources, for example between utility power and generator supply.
 
+#### `PowerDistributionBoard`
+
+A dedicated distribution board class based on `PowerConnection`.
+
+Current distribution-board-specific attributes include:
+
+- `board_type`
+- `redundancy_group`
+- `number_of_outgoing_feeds`
+
+This class is intended to represent electrical distribution boards such as main distributions, sub-distributions, critical load panels, or rack-related power distribution stages between upstream sources and downstream consumers.
+
 #### `PowerSocket`
 
 A `PowerSocket` represents an individual physical outlet on a PDU.
@@ -200,6 +215,7 @@ The current data model supports relationships such as:
 - `UPS` owning one or more `UPSBattery` objects
 - `PowerGenerator` acting as a specialized `PowerSource`
 - `PowerTransferSwitch` acting as a switching component within the power supply chain
+- `PowerDistributionBoard` acting as a distribution component within the power supply chain
 - `PDU` owning one or more `PowerSocket` objects
 - `PowerSocket` being linked to a `DatacenterDevice`
 - generic directional links between `PowerConnection` objects through `lnkPowerConnectionToPowerConnection`
@@ -231,6 +247,7 @@ This allows directional modeling of electrical paths between `PowerConnection` o
 This approach is especially useful for documenting:
 
 - transfer switches
+- distribution boards
 - generators
 - chained power supply paths
 - more complex emergency power configurations
@@ -299,6 +316,17 @@ Typical usage includes:
 - distinguishing switching devices from power sources
 - preparing structured modeling of power paths between utility supply, generator, UPS, and downstream distribution
 
+### PowerDistributionBoard
+
+Use the `PowerDistributionBoard` class to document electrical distribution stages between upstream sources and downstream consumers.
+
+Typical usage includes:
+
+- documenting main distributions and sub-distributions
+- representing critical load panels and rack-related distribution stages
+- distinguishing distribution components from power sources and transfer switches
+- structuring the power path between utility, generator, UPS, PDU, and downstream devices
+
 ### Generic PowerConnection Links
 
 Use `lnkPowerConnectionToPowerConnection` to model directional power paths between `PowerConnection` objects.
@@ -326,11 +354,12 @@ Examples:
 The following example shows a typical emergency power path modeled with this extension:
 
 ```mermaid
-graph LR
+graph TD
     UtilityPower[UtilityPower]
     Generator[PowerGenerator]
     TransferSwitch[PowerTransferSwitch]
     UPS[UPS]
+    DistributionBoard[PowerDistributionBoard]
     PDU[PDU]
     Socket[PowerSocket]
     Device[DatacenterDevice]
@@ -338,7 +367,8 @@ graph LR
     UtilityPower -->|primary_input| TransferSwitch
     Generator -->|secondary_input| TransferSwitch
     TransferSwitch -->|output| UPS
-    UPS -->|downstream| PDU
+    UPS -->|downstream| DistributionBoard
+    DistributionBoard -->|downstream| PDU
     PDU --> Socket
     Socket --> Device
 ```
@@ -349,6 +379,7 @@ This example represents a setup where:
 - the generator is the secondary backup source
 - the transfer switch selects the active source
 - the UPS protects downstream equipment
+- the distribution board represents an intermediate electrical distribution stage
 - the PDU distributes power within the rack
 - individual PowerSockets connect the final devices
 
@@ -357,7 +388,8 @@ A possible modeling of the generic power links could look like this:
 - `UtilityPower` → `PowerTransferSwitch` with role `primary_input`
 - `PowerGenerator` → `PowerTransferSwitch` with role `secondary_input`
 - `PowerTransferSwitch` → `UPS` with role `output`
-- `UPS` → `PDU` with role `downstream`
+- `UPS` → `PowerDistributionBoard` with role `downstream`
+- `PowerDistributionBoard` → `PDU` with role `downstream`
 
 This approach makes it possible to document both simple and more advanced power topologies in a structured and extensible way.
 
@@ -465,6 +497,7 @@ The current implementation focuses on:
 - introducing a dedicated UPS battery class
 - introducing a dedicated generator class
 - introducing a dedicated transfer switch class
+- introducing a dedicated power distribution board class
 - introducing a generic power link model between `PowerConnection` objects
 - introducing PowerSocket support for PDUs
 - establishing relations between UPS systems and their battery units
@@ -499,6 +532,7 @@ Planned or possible future enhancements may include:
 - additional UPS-related technical attributes
 - support for more advanced generator-related classes
 - more detailed transfer switch modeling
+- more detailed distribution-board modeling
 - improved monitoring and operational metadata
 - further refinement of power infrastructure relations
 - additional power distribution and socket-level modeling improvements
