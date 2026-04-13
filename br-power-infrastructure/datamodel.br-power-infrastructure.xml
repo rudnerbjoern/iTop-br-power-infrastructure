@@ -3312,27 +3312,75 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
+        <menu id="ConfigManagement:PowerInfrastructure" xsi:type="DashboardMenuNode" _delta="define">
+            <rank>60</rank>
+            <parent>ConfigManagementOverview</parent>
+            <definition>
+                <cells>
+                    <cell id="power_sources">
+                        <rank>10</rank>
+                        <dashlets>
+                            <dashlet id="10" xsi:type="DashletHeaderStatic">
+                                <rank>10</rank>
+                                <title>Menu:ConfigManagement:PowerInfrastructure:PowerSources</title>
+                                <icon>br-power-infrastructure/images/power-source.svg</icon>
+                            </dashlet>
+                            <dashlet id="20" xsi:type="DashletBadge">
+                                <rank>20</rank>
+                                <class>PowerSource</class>
+                            </dashlet>
+                            <dashlet id="30" xsi:type="DashletBadge">
+                                <rank>30</rank>
+                                <class>UPS</class>
+                            </dashlet>
+                            <dashlet id="40" xsi:type="DashletBadge">
+                                <rank>40</rank>
+                                <class>UPSBattery</class>
+                            </dashlet>
+                            <dashlet id="50" xsi:type="DashletBadge">
+                                <rank>50</rank>
+                                <class>PowerGenerator</class>
+                            </dashlet>
+                            <dashlet id="60" xsi:type="DashletBadge">
+                                <rank>60</rank>
+                                <class>PowerTransferSwitch</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                    <cell id="power_connectivity">
+                        <rank>20</rank>
+                        <dashlets>
+                            <dashlet id="10" xsi:type="DashletHeaderStatic">
+                                <rank>10</rank>
+                                <title>Menu:ConfigManagement:PowerInfrastructure:Connectivity</title>
+                                <icon>br-power-infrastructure/images/power-link.svg</icon>
+                            </dashlet>
+                            <dashlet id="20" xsi:type="DashletBadge">
+                                <rank>20</rank>
+                                <class>PDU</class>
+                            </dashlet>
+                            <dashlet id="30" xsi:type="DashletBadge">
+                                <rank>30</rank>
+                                <class>PowerSocket</class>
+                            </dashlet>
+                            <dashlet id="40" xsi:type="DashletBadge">
+                                <rank>40</rank>
+                                <class>lnkPowerConnectionToPowerConnection</class>
+                            </dashlet>
+                            <dashlet id="50" xsi:type="DashletBadge">
+                                <rank>50</rank>
+                                <class>PowerSocketType</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                </cells>
+            </definition>
+        </menu>
         <menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
             <definition>
                 <cells>
                     <cell id="0">
                         <dashlets>
-                            <dashlet id="98.1" xsi:type="DashletBadge" _delta="define">
-                                <rank>10</rank>
-                                <class>UPS</class>
-                            </dashlet>
-                            <dashlet id="98.2" xsi:type="DashletBadge" _delta="define">
-                                <rank>10</rank>
-                                <class>UPSBattery</class>
-                            </dashlet>
-                            <dashlet id="98.3" xsi:type="DashletBadge" _delta="define">
-                                <rank>10</rank>
-                                <class>PowerGenerator</class>
-                            </dashlet>
-                            <dashlet id="98.4" xsi:type="DashletBadge" _delta="define">
-                                <rank>10</rank>
-                                <class>PowerTransferSwitch</class>
-                            </dashlet>
                             <dashlet id="99" xsi:type="DashletBadge" _delta="define">
                                 <rank>10</rank>
                                 <class>PowerSocket</class>
@@ -3342,7 +3390,7 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
                 </cells>
             </definition>
         </menu>
-        <menu id="Typology" xsi:type="DashboardMenuNode" _delta="if_exists">
+        <menu id="Typology" xsi:type="DashboardMenuNode" _delta="must_exist">
             <definition>
                 <cells>
                     <cell id="0">
@@ -3360,13 +3408,15 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
     <!-- ***************** User Rights ***************** -->
     <user_rights>
         <groups>
-            <group id="PowerDevice" _delta="define">
+            <group id="PowerInfrastructure" _delta="define">
                 <classes>
                     <class id="UPS" />
                     <class id="UPSBattery" />
                     <class id="PowerGenerator" />
                     <class id="PowerTransferSwitch" />
                     <class id="lnkPowerConnectionToPowerConnection" />
+                    <class id="PowerSocket" />
+                    <class id="PowerSocketType" />
                 </classes>
             </group>
         </groups>
@@ -3374,7 +3424,7 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
             <profile id="117" _delta="if_exists">
                 <!-- SuperUser -->
                 <groups>
-                    <group id="PowerDevice" _delta="define">
+                    <group id="PowerInfrastructure" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
                             <action id="action:bulk read">allow</action>
@@ -3389,7 +3439,7 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
             <profile id="3" _delta="if_exists">
                 <!-- Configuration Manager -->
                 <groups>
-                    <group id="PowerDevice" _delta="define">
+                    <group id="PowerInfrastructure" _delta="define">
                         <actions>
                             <action id="action:write">allow</action>
                             <action id="action:bulk write">allow</action>
