@@ -11,6 +11,11 @@
 
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
+    // Menu & UI
+    'Menu:ConfigManagement:PowerInfrastructure' => 'Strominfrastruktur',
+    'Menu:ConfigManagement:PowerInfrastructure+' => 'Übersicht über Komponenten und Verbindungen der Strominfrastruktur.',
+    'Menu:ConfigManagement:PowerInfrastructure:PowerSources' => 'Stromquellen',
+    'Menu:ConfigManagement:PowerInfrastructure:Connectivity' => 'Verteilung & Konnektivität',
     'UI:PowerSocket:Action:Create:PDU:CreatePowerSockets' => 'Stromanschlüsse erstellen',
     'UI:PowerSocket:Action:Create:PDU:CreatePowerSockets:NoCapacity' => 'Stromanschlüsse können nicht erstellt werden, keine freie Kapazität!',
     // Class: PowerSocketType

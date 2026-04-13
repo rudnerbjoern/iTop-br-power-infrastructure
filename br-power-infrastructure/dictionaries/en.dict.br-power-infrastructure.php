@@ -11,6 +11,11 @@
 
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    // Menu & UI
+    'Menu:ConfigManagement:PowerInfrastructure' => 'Power Infrastructure',
+    'Menu:ConfigManagement:PowerInfrastructure+' => 'Overview of power infrastructure components and connectivity.',
+    'Menu:ConfigManagement:PowerInfrastructure:PowerSources' => 'Power Sources',
+    'Menu:ConfigManagement:PowerInfrastructure:Connectivity' => 'Distribution & Connectivity',
     'UI:PowerSocket:Action:Create:PDU:CreatePowerSockets' => 'Create power sockets',
     'UI:PowerSocket:Action:Create:PDU:CreatePowerSockets:NoCapacity' => 'Power sockets cannot be created because there is no capacity left!',
     // Class: PowerSocketType
