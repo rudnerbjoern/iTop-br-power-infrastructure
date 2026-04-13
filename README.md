@@ -485,6 +485,31 @@ This repository also includes optional bridge modules that optimize the PDU pres
 
 These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
 
+## Upgrade Notes for Version 2.0.0
+
+Version `2.0.0` introduces the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
+
+During upgrade, the module installer automatically imports existing legacy `powerstart_id` relations from `PDU` objects into the new link model.
+
+This means that existing connections of the form:
+
+- `PowerSource` → `PDU`
+
+are automatically duplicated into `lnkPowerConnectionToPowerConnection` with the role:
+
+- `downstream`
+
+### Important notes
+
+- The legacy `powerstart_id` field is **not removed** during upgrade.
+- Existing data remains available and usable after the upgrade.
+- The migration only creates missing links and does **not** create duplicates if matching topology links already exist.
+- Imported links are marked with the comment:
+
+  `Imported from legacy PDU powerstart_id`
+
+This ensures a smooth transition from the legacy native power chain to the newer generic topology model introduced by this extension.
+
 ## Status
 
 This extension is currently in an early beta stage.
@@ -538,6 +563,41 @@ Planned or possible future enhancements may include:
 - additional power distribution and socket-level modeling improvements
 
 ## Screenshots
+
+### Power Infrastructure Overview
+
+The custom **Power Infrastructure** menu provides a central entry point for all relevant classes introduced by this extension.
+
+It groups objects such as utility feeds, UPS systems, generators, transfer switches, distribution boards, sockets, and topology links into a structured navigation area, making it easier to explore and manage the complete electrical model.
+
+![Power Infrastructure Menu](doc/Screenshots/PowerInfrastructureMenu.png)
+
+### Utility Power
+
+The `UtilityPower` class is used to document the normal external or upstream power supply.
+
+Typical fields include the supply type, utility provider, redundancy group, contract power, and technical handover point. This makes it possible to model the primary incoming feed in a structured and reusable way.
+
+![Utility Power Details](doc/Screenshots/UtilityFeedDetails.png)
+
+### Transfer Switch Relations
+
+The `PowerTransferSwitch` class is used to represent switching components between multiple upstream and downstream power paths.
+
+In the example below, the transfer switch depends on both the normal utility feed and the generator supply, while impacting the downstream UPS. This provides a clear visual representation of the switching logic within the electrical topology.
+
+![Transfer Switch Depends On](doc/Screenshots/TransferSwitchDependsOn.png)
+![Transfer Switch Impacts](doc/Screenshots/TransferSwitchImpacts.png)
+
+### Redundant Device Power Assignment
+
+Datacenter devices can be connected to dedicated Power A and Power B sockets.
+
+This allows the extension to document redundant power supply paths for servers, storage systems, and network devices. In the example below, the device is connected to two separate rack PDUs representing protected and unprotected power paths.
+
+![Datacenter Device Power Supply](doc/Screenshots/DatacenterDevicePowerSupply.png)
+
+![Datacenter Device Depends On](doc/Screenshots/DatacenterDeviceDependsOn.png)
 
 ### Power Supply
 
