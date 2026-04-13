@@ -41,6 +41,7 @@
         "pdus",
         "physicalinterface",
         "powerconnection",
+        "powerdistributionboard",
         "powersocket",
         "powersockettype",
         "powerstart",

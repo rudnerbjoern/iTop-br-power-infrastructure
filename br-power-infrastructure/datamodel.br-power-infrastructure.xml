@@ -1873,6 +1873,330 @@
                 </summary>
             </presentation>
         </class>
+        <!-- ***************** PowerDistributionBoard ***************** -->
+        <class id="PowerDistributionBoard" _delta="define">
+            <parent>PowerConnection</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>powerdistributionboard</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                    <complementary_attributes>
+                        <attribute id="organization_name" />
+                        <attribute id="location_name" />
+                    </complementary_attributes>
+                </naming>
+                <style>
+                    <icon>images/power-distribution-board.svg</icon>
+                    <main_color>#5E35B1</main_color>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="board_type" xsi:type="AttributeEnum">
+                    <sql>board_type</sql>
+                    <values>
+                        <value id="main_distribution">
+                            <code>main_distribution</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="sub_distribution">
+                            <code>sub_distribution</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="critical_load_panel">
+                            <code>critical_load_panel</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="rack_distribution">
+                            <code>rack_distribution</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="other">
+                            <code>other</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <default_value>sub_distribution</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                <field id="redundancy_group" xsi:type="AttributeString">
+                    <sql>redundancy_group</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="number_of_outgoing_feeds" xsi:type="AttributeInteger">
+                    <sql>number_of_outgoing_feeds</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col1">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="business_criticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="location_id">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerSource:electrical">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="phase_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="nominal_voltage">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="nominal_frequency">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="max_current_ampere">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:PowerDistributionBoard:boardinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="board_type">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="redundancy_group">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="number_of_outgoing_feeds">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:PowerSource:assetinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="brand_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="model_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="serialnumber">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="asset_number">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:Date">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="move2production">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="purchase_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="end_of_warranty">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="last_maintenance_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="next_maintenance_date">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:otherinfo">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="contacts_list">
+                            <rank>110</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>120</rank>
+                        </item>
+                        <item id="outgoing_powerconnection_links">
+                            <rank>130</rank>
+                        </item>
+                        <item id="incoming_powerconnection_links">
+                            <rank>140</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="business_criticity">
+                            <rank>40</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>70</rank>
+                        </item>
+                        <item id="nominal_frequency">
+                            <rank>80</rank>
+                        </item>
+                        <item id="max_current_ampere">
+                            <rank>90</rank>
+                        </item>
+                        <item id="board_type">
+                            <rank>100</rank>
+                        </item>
+                        <item id="redundancy_group">
+                            <rank>110</rank>
+                        </item>
+                        <item id="number_of_outgoing_feeds">
+                            <rank>120</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>130</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>140</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>150</rank>
+                        </item>
+                        <item id="asset_number">
+                            <rank>160</rank>
+                        </item>
+                        <item id="move2production">
+                            <rank>170</rank>
+                        </item>
+                        <item id="purchase_date">
+                            <rank>180</rank>
+                        </item>
+                        <item id="end_of_warranty">
+                            <rank>190</rank>
+                        </item>
+                        <item id="last_maintenance_date">
+                            <rank>200</rank>
+                        </item>
+                        <item id="next_maintenance_date">
+                            <rank>210</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>40</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>50</rank>
+                        </item>
+                        <item id="board_type">
+                            <rank>60</rank>
+                        </item>
+                        <item id="redundancy_group">
+                            <rank>70</rank>
+                        </item>
+                        <item id="number_of_outgoing_feeds">
+                            <rank>80</rank>
+                        </item>
+                        <item id="brand_id">
+                            <rank>90</rank>
+                        </item>
+                        <item id="model_id">
+                            <rank>100</rank>
+                        </item>
+                        <item id="serialnumber">
+                            <rank>110</rank>
+                        </item>
+                    </items>
+                </list>
+                <summary>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="phase_type">
+                            <rank>30</rank>
+                        </item>
+                        <item id="nominal_voltage">
+                            <rank>40</rank>
+                        </item>
+                        <item id="board_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="redundancy_group">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </summary>
+            </presentation>
+        </class>
         <!-- ***************** UPS ***************** -->
         <class id="UPS" _delta="define">
             <parent>PowerSource</parent>
@@ -3719,18 +4043,22 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
                             </dashlet>
                             <dashlet id="20" xsi:type="DashletBadge">
                                 <rank>20</rank>
-                                <class>PDU</class>
+                                <class>PowerDistributionBoard</class>
                             </dashlet>
                             <dashlet id="30" xsi:type="DashletBadge">
                                 <rank>30</rank>
-                                <class>PowerSocket</class>
+                                <class>PDU</class>
                             </dashlet>
                             <dashlet id="40" xsi:type="DashletBadge">
                                 <rank>40</rank>
-                                <class>lnkPowerConnectionToPowerConnection</class>
+                                <class>PowerSocket</class>
                             </dashlet>
                             <dashlet id="50" xsi:type="DashletBadge">
                                 <rank>50</rank>
+                                <class>lnkPowerConnectionToPowerConnection</class>
+                            </dashlet>
+                            <dashlet id="60" xsi:type="DashletBadge">
+                                <rank>60</rank>
                                 <class>PowerSocketType</class>
                             </dashlet>
                         </dashlets>
@@ -3777,6 +4105,7 @@ public function OnCheckToWriteValidatePowerConnectionLink(Combodo\iTop\Service\E
                     <class id="UPSBattery" />
                     <class id="PowerGenerator" />
                     <class id="PowerTransferSwitch" />
+                    <class id="PowerDistributionBoard" />
                     <class id="lnkPowerConnectionToPowerConnection" />
                     <class id="PowerSocket" />
                     <class id="PowerSocketType" />
