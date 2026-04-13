@@ -252,8 +252,19 @@
             <relations>
                 <relation id="impacts">
                     <neighbours>
+                        <neighbour id="pdu">
+                            <query_down><![CDATA[
+                    SELECT PowerSocket AS ps
+                    WHERE ps.pdu_id = :this->id
+                ]]></query_down>
+                            <query_up><![CDATA[
+                    SELECT PDU AS p
+                    WHERE p.id = :this->pdu_id
+                ]]></query_up>
+                        </neighbour>
                         <neighbour id="datacenterdevice">
                             <attribute>datacenterdevice_id</attribute>
+                            <direction>down</direction>
                         </neighbour>
                     </neighbours>
                 </relation>
@@ -2754,7 +2765,14 @@
                 <relation id="impacts">
                     <neighbours>
                         <neighbour id="ups">
-                            <attribute>ups_id</attribute>
+                            <query_down><![CDATA[
+                    SELECT UPS AS u
+                    WHERE u.id = :this->ups_id
+                ]]></query_down>
+                            <query_up><![CDATA[
+                    SELECT UPSBattery AS b
+                    WHERE b.ups_id = :this->id
+                ]]></query_up>
                         </neighbour>
                     </neighbours>
                 </relation>
