@@ -24,10 +24,10 @@ SetupWebPage::AddModule(
             'itop-datacenter-mgmt/3.2.0',
             'itop-virtualization-mgmt/3.2.0',
             'itop-storage-mgmt/3.2.0',
-            'teemip-network-mgmt-extended/3.1.0',
         ),
         'mandatory' => false,
         'visible' => true,
+        'installer' => 'PowerInfrastructureInstaller',
 
         // Components
         //
@@ -55,3 +55,97 @@ SetupWebPage::AddModule(
         ),
     )
 );
+
+if (!class_exists('PowerInfrastructureInstaller')) {
+    /**
+     * Class PowerInfrastructureInstaller
+     */
+    class PowerInfrastructureInstaller extends ModuleInstallerAPI
+    {
+        public static function BeforeWritingConfig(Config $oConfiguration)
+        {
+            return $oConfiguration;
+        }
+
+        public static function AfterDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
+        {
+            if (version_compare($sPreviousVersion, '2.0.0', '<')) {
+                SetupLog::Info("|- Upgrading br-power-infrastructure from '$sPreviousVersion' to '$sCurrentVersion'.");
+                self::ImportLegacyPduPowerSourceLinks();
+            }
+        }
+
+        protected static function ImportLegacyPduPowerSourceLinks(): void
+        {
+            $oSearch = DBSearch::FromOQL('SELECT PDU WHERE powerstart_id != 0');
+            $oSet = new DBObjectSet($oSearch, array(), array());
+
+            $iChecked = 0;
+            $iCreated = 0;
+            $iSkipped = 0;
+
+            while ($oPDU = $oSet->Fetch()) {
+                $iChecked++;
+
+                $iSourceId = (int) $oPDU->Get('powerstart_id');
+                $iTargetId = (int) $oPDU->GetKey();
+
+                if (($iSourceId === 0) || ($iTargetId === 0)) {
+                    $iSkipped++;
+                    continue;
+                }
+
+                $oExistingSearch = DBSearch::FromOQL(
+                    'SELECT lnkPowerConnectionToPowerConnection
+                     WHERE source_powerconnection_id = :source
+                     AND target_powerconnection_id = :target
+                     AND link_role = :role'
+                );
+                $oExistingSet = new DBObjectSet($oExistingSearch, array(), array(
+                    'source' => $iSourceId,
+                    'target' => $iTargetId,
+                    'role' => 'downstream',
+                ));
+
+                if ($oExistingSet->Count() > 0) {
+                    $sSourceName = trim((string) $oPDU->Get('powerstart_name'));
+                    $sTargetName = trim((string) $oPDU->GetName());
+
+                    if ($sSourceName === '') {
+                        $sSourceName = '#' . $iSourceId;
+                    }
+                    if ($sTargetName === '') {
+                        $sTargetName = '#' . $iTargetId;
+                    }
+
+                    SetupLog::Info("|  |- Skipped existing legacy power path: '$sSourceName' -> '$sTargetName'.");
+                    $iSkipped++;
+                    continue;
+                }
+
+                $oLink = MetaModel::NewObject('lnkPowerConnectionToPowerConnection');
+                $oLink->Set('source_powerconnection_id', $iSourceId);
+                $oLink->Set('target_powerconnection_id', $iTargetId);
+                $oLink->Set('link_role', 'downstream');
+                $oLink->Set('comment', 'Imported from legacy PDU powerstart_id');
+                $oLink->DBInsert();
+
+                $sSourceName = trim((string) $oPDU->Get('powerstart_name'));
+                $sTargetName = trim((string) $oPDU->GetName());
+
+                if ($sSourceName === '') {
+                    $sSourceName = '#' . $iSourceId;
+                }
+                if ($sTargetName === '') {
+                    $sTargetName = '#' . $iTargetId;
+                }
+
+                $iCreated++;
+
+                SetupLog::Info("|  |- Imported legacy power path: '$sSourceName' -> '$sTargetName'.");
+            }
+
+            SetupLog::Info("|- Legacy PDU power path import finished. Checked: $iChecked, created: $iCreated, skipped: $iSkipped.");
+        }
+    }
+}

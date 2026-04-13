@@ -485,6 +485,31 @@ This repository also includes optional bridge modules that optimize the PDU pres
 
 These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
 
+## Upgrade Notes for Version 2.0.0
+
+Version `2.0.0` introduces the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
+
+During upgrade, the module installer automatically imports existing legacy `powerstart_id` relations from `PDU` objects into the new link model.
+
+This means that existing connections of the form:
+
+- `PowerSource` → `PDU`
+
+are automatically duplicated into `lnkPowerConnectionToPowerConnection` with the role:
+
+- `downstream`
+
+### Important notes
+
+- The legacy `powerstart_id` field is **not removed** during upgrade.
+- Existing data remains available and usable after the upgrade.
+- The migration only creates missing links and does **not** create duplicates if matching topology links already exist.
+- Imported links are marked with the comment:
+
+  `Imported from legacy PDU powerstart_id`
+
+This ensures a smooth transition from the legacy native power chain to the newer generic topology model introduced by this extension.
+
 ## Status
 
 This extension is currently in an early beta stage.
