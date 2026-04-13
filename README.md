@@ -15,6 +15,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 
 - Extends the native iTop classes related to power infrastructure
 - Adds generic electrical and maintenance-related attributes to existing power classes
+- Introduces a dedicated `UtilityPower` class derived from `PowerSource`
 - Introduces a dedicated `UPS` class derived from `PowerSource`
 - Introduces a dedicated `UPSBattery` class derived from `PhysicalDevice`
 - Introduces a dedicated `PowerGenerator` class derived from `PowerSource`
@@ -22,6 +23,7 @@ It extends the native iTop power model and introduces additional classes, attrib
 - Introduces a generic link class `lnkPowerConnectionToPowerConnection` for modeling relationships between `PowerConnection` objects
 - Supports relationships between UPS systems and their battery units
 - Improves documentation of electrical characteristics such as phase type, nominal voltage, nominal frequency, and maximum current
+- Adds utility-supply-specific documentation fields such as supply type, utility provider, redundancy group, contract power, and handover point
 - Adds UPS-specific documentation fields such as topology, rated power, and autonomy time
 - Adds battery-specific documentation fields such as battery role, battery type, battery status, replacement dates, voltage, and capacity
 - Adds generator-specific documentation fields such as generator type, fuel type, tank capacity, runtime, and test schedule
@@ -45,6 +47,7 @@ The extension currently builds on the following native iTop classes:
 
 The extension currently introduces the following additional classes:
 
+- `UtilityPower`
 - `UPS`
 - `UPSBattery`
 - `PowerGenerator`
@@ -80,6 +83,20 @@ Presentation enhancements for inherited generic power-related attributes and sup
 Extended to support dedicated Power A / Power B socket assignments.
 
 ### New classes
+
+#### `UtilityPower`
+
+A dedicated utility or upstream power supply class based on `PowerSource`.
+
+Current utility-supply-specific attributes include:
+
+- `supply_type`
+- `utility_provider_id`
+- `redundancy_group`
+- `contract_power_kw`
+- `handover_point`
+
+This class is intended to represent the normal external or upstream power source, for example a public grid connection, a building feed, or another upstream supply path.
 
 #### `UPS`
 
@@ -177,6 +194,7 @@ Current link attributes include:
 
 The current data model supports relationships such as:
 
+- `UtilityPower` acting as a specialized `PowerSource`
 - `PowerSource` feeding `PDU`
 - `UPS` acting as a specialized `PowerSource`
 - `UPS` owning one or more `UPSBattery` objects
@@ -239,6 +257,17 @@ The extension ensures that:
 
 ## How to Use
 
+### UtilityPower
+
+Use the `UtilityPower` class to document normal external or upstream power supplies.
+
+Typical usage includes:
+
+- documenting the regular primary supply path feeding a transfer switch or UPS
+- distinguishing between public grid, building feed, external feed, and temporary feed
+- linking the supply to the responsible utility provider organization
+- documenting redundancy group, contract power, and technical handover point
+
 ### UPS and UPSBattery
 
 Use the `UPS` class to document dedicated uninterruptible power supplies and the `UPSBattery` class to document associated battery units.
@@ -298,7 +327,7 @@ The following example shows a typical emergency power path modeled with this ext
 
 ```mermaid
 graph LR
-    UtilityPower[Utility Power]
+    UtilityPower[UtilityPower]
     Generator[PowerGenerator]
     TransferSwitch[PowerTransferSwitch]
     UPS[UPS]
@@ -325,7 +354,7 @@ This example represents a setup where:
 
 A possible modeling of the generic power links could look like this:
 
-- `Utility Power` → `PowerTransferSwitch` with role `primary_input`
+- `UtilityPower` → `PowerTransferSwitch` with role `primary_input`
 - `PowerGenerator` → `PowerTransferSwitch` with role `secondary_input`
 - `PowerTransferSwitch` → `UPS` with role `output`
 - `UPS` → `PDU` with role `downstream`
@@ -413,10 +442,13 @@ This prevents broken references and dangling assignments.
 This repository also includes optional bridge modules that optimize the PDU presentation layout when specific third-party extensions are installed.
 
 - `br-power-infrastructure-bridge-for-datacenter-view`
+
   - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view` are selected
 - `br-power-infrastructure-bridge-for-datacenter-view-extended`
+
   - auto-selected when both `br-power-infrastructure` and `molkobain-datacenter-view-extended` are selected
 - `br-power-infrastructure-bridge-for-teemip-ip-mgmt`
+
   - auto-selected when both `br-power-infrastructure` and `teemip-datacenter-mgmt-adaptor` are selected
 
 These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
@@ -428,6 +460,7 @@ This extension is currently in an early beta stage.
 The current implementation focuses on:
 
 - extending the generic native power infrastructure model
+- introducing a dedicated utility power class
 - introducing a dedicated UPS class
 - introducing a dedicated UPS battery class
 - introducing a dedicated generator class
@@ -462,6 +495,7 @@ Optional bridge dependencies (only required when using the related companion ext
 
 Planned or possible future enhancements may include:
 
+- additional utility-supply-related technical attributes
 - additional UPS-related technical attributes
 - support for more advanced generator-related classes
 - more detailed transfer switch modeling
