@@ -3863,21 +3863,17 @@
                             <code>secondary_input</code>
                             <rank>20</rank>
                         </value>
-                        <value id="output">
-                            <code>output</code>
-                            <rank>30</rank>
-                        </value>
                         <value id="bypass">
                             <code>bypass</code>
-                            <rank>40</rank>
+                            <rank>30</rank>
                         </value>
                         <value id="downstream">
                             <code>downstream</code>
-                            <rank>50</rank>
+                            <rank>40</rank>
                         </value>
                         <value id="other">
                             <code>other</code>
-                            <rank>60</rank>
+                            <rank>50</rank>
                         </value>
                     </values>
                     <default_value>downstream</default_value>

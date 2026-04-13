@@ -55,6 +55,7 @@ The extension currently introduces the following additional classes:
 - `PowerGenerator`
 - `PowerTransferSwitch`
 - `PowerDistributionBoard`
+- `PowerSocketType`
 - `PowerSocket`
 - `lnkPowerConnectionToPowerConnection`
 
@@ -177,6 +178,10 @@ Current distribution-board-specific attributes include:
 
 This class is intended to represent electrical distribution boards such as main distributions, sub-distributions, critical load panels, or rack-related power distribution stages between upstream sources and downstream consumers.
 
+#### `PowerSocketType`
+
+A supporting typology class used to standardize socket formats such as IEC C13 or IEC C19.
+
 #### `PowerSocket`
 
 A `PowerSocket` represents an individual physical outlet on a PDU.
@@ -209,16 +214,21 @@ Current link attributes include:
 
 The current data model supports relationships such as:
 
-- `UtilityPower` acting as a specialized `PowerSource`
-- `PowerSource` feeding `PDU`
-- `UPS` acting as a specialized `PowerSource`
+### Ownership and assignment relations
+
 - `UPS` owning one or more `UPSBattery` objects
-- `PowerGenerator` acting as a specialized `PowerSource`
-- `PowerTransferSwitch` acting as a switching component within the power supply chain
-- `PowerDistributionBoard` acting as a distribution component within the power supply chain
 - `PDU` owning one or more `PowerSocket` objects
 - `PowerSocket` being linked to a `DatacenterDevice`
+
+### Generic topology links
+
 - generic directional links between `PowerConnection` objects through `lnkPowerConnectionToPowerConnection`
+- `PowerTransferSwitch` acting as a switching component within the power supply chain
+- `PowerDistributionBoard` acting as a distribution component within the power supply chain
+
+### Native iTop legacy power chain
+
+- `PowerSource` feeding `PDU`
 - chained power infrastructure dependencies through the native iTop power model
 
 ## Power Topology Model
@@ -231,11 +241,11 @@ The native iTop model already provides relationships such as:
 
 - `PowerSource` feeding `PDU`
 
-This remains available and can still be used where appropriate.
+This remains available for compatibility and can still be used where appropriate.
 
 ### Generic power links
 
-For more flexible and realistic topologies, the extension introduces `lnkPowerConnectionToPowerConnection`.
+For more flexible and realistic topologies, the extension introduces `lnkPowerConnectionToPowerConnection` as the preferred topology model.
 
 This allows directional modeling of electrical paths between `PowerConnection` objects, for example:
 
@@ -341,6 +351,8 @@ Typical usage includes:
 Recommended modeling direction:
 
 - always model connections from **source** to **target**
+- use `downstream` as the recommended generic role for standard source-to-target power flow
+- use `primary_input` and `secondary_input` specifically for transfer switch input modeling
 
 Examples:
 
@@ -366,7 +378,7 @@ graph TD
 
     UtilityPower -->|primary_input| TransferSwitch
     Generator -->|secondary_input| TransferSwitch
-    TransferSwitch -->|output| UPS
+    TransferSwitch -->|downstream| UPS
     UPS -->|downstream| DistributionBoard
     DistributionBoard -->|downstream| PDU
     PDU --> Socket
@@ -387,7 +399,7 @@ A possible modeling of the generic power links could look like this:
 
 - `UtilityPower` → `PowerTransferSwitch` with role `primary_input`
 - `PowerGenerator` → `PowerTransferSwitch` with role `secondary_input`
-- `PowerTransferSwitch` → `UPS` with role `output`
+- `PowerTransferSwitch` → `UPS` with role `downstream`
 - `UPS` → `PowerDistributionBoard` with role `downstream`
 - `PowerDistributionBoard` → `PDU` with role `downstream`
 
@@ -487,7 +499,7 @@ These bridge modules do not introduce new business classes; they only adapt fiel
 
 ## Upgrade Notes for Version 2.0.0
 
-Version `2.0.0` introduces the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
+Version `2.0.0` further establishes the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
 
 During upgrade, the module installer automatically imports existing legacy `powerstart_id` relations from `PDU` objects into the new link model.
 
@@ -499,35 +511,26 @@ are automatically duplicated into `lnkPowerConnectionToPowerConnection` with the
 
 - `downstream`
 
+In addition, existing generic topology links using the role:
+
+- `output`
+
+are automatically migrated to:
+
+- `downstream`
+
 ### Important notes
 
 - The legacy `powerstart_id` field is **not removed** during upgrade.
 - Existing data remains available and usable after the upgrade.
 - The migration only creates missing links and does **not** create duplicates if matching topology links already exist.
-- Imported links are marked with the comment:
+- Existing `output` role values are migrated to `downstream`.
+- Obsolete duplicate `output` links are removed during migration when an equivalent `downstream` link already exists.
+- Imported legacy links are marked with the comment:
 
   `Imported from legacy PDU powerstart_id`
 
 This ensures a smooth transition from the legacy native power chain to the newer generic topology model introduced by this extension.
-
-## Status
-
-This extension is currently in an early beta stage.
-
-The current implementation focuses on:
-
-- extending the generic native power infrastructure model
-- introducing a dedicated utility power class
-- introducing a dedicated UPS class
-- introducing a dedicated UPS battery class
-- introducing a dedicated generator class
-- introducing a dedicated transfer switch class
-- introducing a dedicated power distribution board class
-- introducing a generic power link model between `PowerConnection` objects
-- introducing PowerSocket support for PDUs
-- establishing relations between UPS systems and their battery units
-- providing synchronized socket handling for `DatacenterDevice`
-- preparing the module structure for future power infrastructure extensions
 
 ## iTop Compatibility
 
@@ -541,7 +544,6 @@ Core module dependencies:
 - `itop-datacenter-mgmt/3.2.0`
 - `itop-virtualization-mgmt/3.2.0`
 - `itop-storage-mgmt/3.2.0`
-- `teemip-network-mgmt-extended/3.1.0`
 
 Optional bridge dependencies (only required when using the related companion extensions):
 
@@ -601,9 +603,13 @@ This allows the extension to document redundant power supply paths for servers, 
 
 ### Power Supply
 
+The following screenshot shows a representative power supply object view used during testing and documentation.
+
 ![Power Supply](doc/Screenshots/PowerSupply.png)
 
 ### PDU
+
+The following screenshot shows a PDU object with the extended power-related presentation layout used by this extension.
 
 ![PDU](doc/Screenshots/PDU.png)
 
