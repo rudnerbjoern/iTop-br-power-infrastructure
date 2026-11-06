@@ -9,7 +9,7 @@
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure/2.0.0',
+    'br-power-infrastructure/3.2.4',
     array(
         // Identification
         //
