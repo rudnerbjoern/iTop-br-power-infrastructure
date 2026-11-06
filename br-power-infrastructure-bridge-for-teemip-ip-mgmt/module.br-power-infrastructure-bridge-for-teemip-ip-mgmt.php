@@ -10,7 +10,7 @@
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure-bridge-for-teemip-ip-mgmt/3.2.3',
+    'br-power-infrastructure-bridge-for-teemip-ip-mgmt/3.2.4',
     array(
         // Identification
         'label' => 'Links between TeemIp IP Management and power socket',
@@ -21,8 +21,8 @@ SetupWebPage::AddModule(
             'itop-datacenter-mgmt/3.1.0',
             'teemip-ip-mgmt/3.2.0',
             'teemip-config-mgmt-adaptor/3.2.0',
-            'br-power-infrastructure/2.0.0',
-            'teemip-datacenter-mgmt-adaptor/3.2.2||br-power-infrastructure/2.0.0',
+            'br-power-infrastructure/3.2.4',
+            'teemip-datacenter-mgmt-adaptor/3.2.2||br-power-infrastructure/3.2.4',
         ),
         'mandatory' => false,
         'visible' => true,
