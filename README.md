@@ -93,33 +93,43 @@ graph TD
     Socket --> Device
 ```
 
+## Compatibility
+
+Power Infrastructure 3.3.x requires iTop 3.3.0 or later.
+Earlier installations are maintained on the [itop/3.2 branch](https://github.com/rudnerbjoern/iTop-br-power-infrastructure/tree/itop/3.2).
+
+iTop Setup requires Configuration Management, Datacenter Management,
+Virtualization Management, and Storage Management at version 3.3.0 or later.
+
 ## Installation
 
-1. Clone or copy this extension into your iTop `extensions` directory:
+1. Extract the release ZIP into the iTop extensions directory. The descriptor
+   is at `extensions/br-power-infrastructure/extension.xml`.
+2. Run iTop Setup and select **Datamodel: Power Infrastructure**.
+3. Complete the model update and check the device and PDU detail views.
 
-   `extensions/iTop-br-power-infrastructure`
+### Optional TeemIP bridge
 
-2. Make sure the extension files are placed in the correct module directory structure.
+For PDU MAC and IP address integration, install TeemIP Core 3.3.1 or later.
+iTop automatically selects the bridge when Power Infrastructure and the
+TeemIP IP Management, Configuration Management, and Datacenter Management
+adapters are selected. The TeemIP Configuration Management adapter requires
+module version 3.3.0 or later, and the Datacenter Management adapter requires
+3.2.3 or later. TeemIP Core 3.3.1 includes both versions.
 
-3. Run the iTop setup or upgrade process.
+### Optional Datacenter View bridge
 
-4. Apply the data model changes and complete the update.
+With Molkobain Datacenter View 1.15.0 or later selected, iTop Setup selects the
+standard bridge automatically. The PDU details show enclosure, vertical position,
+and rack-unit height alongside the rack in the General Information fieldset.
 
-### Optional bridge modules
-
-This repository also includes optional bridge modules that optimize the PDU presentation layout when specific third-party extensions are installed.
-
-* `br-power-infrastructure-bridge-for-datacenter-view`
-* `br-power-infrastructure-bridge-for-datacenter-view-extended`
-* `br-power-infrastructure-bridge-for-teemip-ip-mgmt`
-
-These bridge modules do not introduce new business classes; they only adapt field placement in the `PDU` detail view to keep UI sections aligned with the corresponding companion extensions.
+The Datacenter View Extended bridge for iTop 3.2 is available on the maintenance branch.
 
 ## Upgrade Notes for Version 2.0.0
 
 Version `2.0.0` further establishes the generic link model `lnkPowerConnectionToPowerConnection` as the preferred way to document directional relationships between `PowerConnection` objects.
 
-During upgrade:
+When upgrading across version 2.0.0:
 
 * existing legacy `PDU.powerstart_id` relations are imported into the generic link model with role `downstream`
 * existing generic links using the role `output` are migrated to `downstream`
@@ -153,21 +163,6 @@ A more detailed guide covering modeling principles, class usage, topology design
 ![Datacenter Device Power Supply](doc/Screenshots/DatacenterDevicePowerSupply.png)
 
 ![Datacenter Device Depends On](doc/Screenshots/DatacenterDeviceDependsOn.png)
-
-## iTop Compatibility
-
-The extension was tested on:
-
-* iTop `3.2.2`
-
-Core module dependencies:
-
-* `itop-config-mgmt/3.2.0`
-* `itop-datacenter-mgmt/3.2.0`
-* `itop-virtualization-mgmt/3.2.0`
-* `itop-storage-mgmt/3.2.0`
-
-Optional bridge dependencies are only required when using the related companion extensions.
 
 ## Attribution
 

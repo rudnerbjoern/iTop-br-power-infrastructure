@@ -22,6 +22,7 @@ try {
     $tests = array_merge($tests, require __DIR__ . '/socket-assignment.php');
     $tests = array_merge($tests, require __DIR__ . '/schemas.php');
     $tests = array_merge($tests, require __DIR__ . '/prepare-release.php');
+    $tests = array_merge($tests, require __DIR__ . '/installer.php');
     if (!is_array($tests) || $tests === []) {
         throw new RuntimeException('No tests found.');
     }

@@ -9,7 +9,7 @@
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure/3.2.4',
+    'br-power-infrastructure/3.3.0',
     array(
         // Identification
         //
@@ -19,10 +19,10 @@ SetupWebPage::AddModule(
         // Setup
         //
         'dependencies' => array(
-            'itop-config-mgmt/3.2.0',
-            'itop-datacenter-mgmt/3.2.0',
-            'itop-virtualization-mgmt/3.2.0',
-            'itop-storage-mgmt/3.2.0',
+            'itop-config-mgmt/3.3.0',
+            'itop-datacenter-mgmt/3.3.0',
+            'itop-virtualization-mgmt/3.3.0',
+            'itop-storage-mgmt/3.3.0',
         ),
         'mandatory' => false,
         'visible' => true,
@@ -66,20 +66,16 @@ if (!class_exists('PowerInfrastructureInstaller')) {
             return $oConfiguration;
         }
 
-        public static function BeforeDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
-        {
-            if (version_compare($sPreviousVersion, '2.0.0', '<')) {
-                SetupLog::Info("|- Applying pre-schema role migration for br-power-infrastructure 2.0.0.");
-                self::MigrateOutputRoleToDownstream();
-            }
-        }
-
         public static function AfterDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
         {
-            if (version_compare($sPreviousVersion, '2.0.0', '<')) {
-                SetupLog::Info("|- Upgrading br-power-infrastructure from '$sPreviousVersion' to '$sCurrentVersion'.");
-                self::ImportLegacyPduPowerSourceLinks();
+            if ($sPreviousVersion === '' || !self::IsVersionCrossed($sPreviousVersion, $sCurrentVersion, '2.0.0')) {
+                return;
             }
+
+            // iTop retains existing enum values during the schema update and adds the new downstream value.
+            SetupLog::Info("|- Upgrading br-power-infrastructure from '$sPreviousVersion' to '$sCurrentVersion'.");
+            self::MigrateOutputRoleToDownstream();
+            self::ImportLegacyPduPowerSourceLinks();
         }
 
         protected static function MigrateOutputRoleToDownstream(): void

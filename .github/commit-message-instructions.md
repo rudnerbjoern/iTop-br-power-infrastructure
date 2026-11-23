@@ -1,6 +1,6 @@
 # Commit-message generation
 
-Generate a message only for the staged change in this iTop 3.2 power infrastructure extension project.
+Generate a message only for the staged change in this iTop 3.3 power infrastructure extension project.
 Use English and this header:
 
 ```text

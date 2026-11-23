@@ -83,13 +83,16 @@ jobs:
 
       - name: Download XML schemas
         run: |
-          mkdir -p .tmp/schemas/3.2
+          mkdir -p .tmp/schemas/3.2 .tmp/schemas/3.3
           curl --fail --silent --show-error --location --retry 3 --max-time 60 \
             https://rudnerbjoern.github.io/iTop-schema/extension.xsd \
             --output .tmp/schemas/extension.xsd
           curl --fail --silent --show-error --location --retry 3 --max-time 60 \
             https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd \
             --output .tmp/schemas/3.2/itop_design.xsd
+          curl --fail --silent --show-error --location --retry 3 --max-time 60 \
+            https://rudnerbjoern.github.io/iTop-schema/dist/3.3/itop_design.xsd \
+            --output .tmp/schemas/3.3/itop_design.xsd
 
       - name: Run PHP tests and schema validation
         run: php tests/run.php
@@ -123,11 +126,15 @@ jobs:
           root = ET.parse('extension.xml').getroot()
           if root.findtext('version', '').strip() != version:
               raise SystemExit('Release branch and manifest versions must match')
-          modules = sorted(Path('.').glob('br-power-infrastructure*/module.*.php'))
-          if len(modules) != 4:
-              raise SystemExit('Expected the main module and three bridges')
-          for module in modules:
-              name = module.parent.name
+          configured_modules = ['br-power-infrastructure', 'br-power-infrastructure-bridge-for-datacenter-view', 'br-power-infrastructure-bridge-for-teemip-ip-mgmt']
+          module_array = root.find('modules')
+          entries = module_array.findall('module') if module_array is not None else []
+          if (module_array is None or module_array.get('type') != 'array' or len(entries) != len(configured_modules)
+                  or {entry.findtext('id') for entry in entries} != set(configured_modules)
+                  or any(entry.findtext('version', '').strip() != version for entry in entries)):
+              raise SystemExit('Expected matching manifest versions for the main module and both optional bridges')
+          for name in configured_modules:
+              module = Path(f'{name}/module.{name}.php')
               content = module.read_text()
               versions = re.findall(r"'" + re.escape(name) + r"/([^']+)'", content)
               if versions != [version]:

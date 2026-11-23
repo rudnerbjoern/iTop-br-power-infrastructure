@@ -5,10 +5,11 @@ declare(strict_types=1);
 /** All first-party modules shipped in the release package. */
 function releaseModulePaths(): array
 {
-    $modules = ['br-power-infrastructure'];
-    foreach (['datacenter-view', 'datacenter-view-extended', 'teemip-ip-mgmt'] as $bridge) {
-        $modules[] = 'br-power-infrastructure-bridge-for-' . $bridge;
-    }
+    $modules = [
+        'br-power-infrastructure',
+        'br-power-infrastructure-bridge-for-datacenter-view',
+        'br-power-infrastructure-bridge-for-teemip-ip-mgmt',
+    ];
     return array_combine($modules, array_map(
         static fn (string $module): string => "$module/module.$module.php",
         $modules
@@ -39,16 +40,31 @@ function prepareReleaseContents(string $manifest, array $modules, string $versio
         libxml_use_internal_errors($previous);
     }
     if (array_keys($modules) !== array_keys(releaseModulePaths())) {
-        throw new RuntimeException('Expected the main module and all three bridge modules.');
+        throw new RuntimeException('Expected the main module and its Datacenter View and TeemIP bridges.');
     }
+    if (count($xml->modules) !== 1 || (string) $xml->modules['type'] !== 'array') {
+        throw new RuntimeException('Expected an iTop module array in the manifest.');
+    }
+    $manifestModules = [];
+    foreach ($xml->modules->module as $entry) {
+        $name = trim((string) $entry->id);
+        if (isset($manifestModules[$name]) || trim((string) $entry->version) !== $currentVersion) {
+            throw new RuntimeException('Duplicate or mismatched manifest module: ' . $name);
+        }
+        $manifestModules[$name] = true;
+    }
+    if (array_diff_key($manifestModules, $modules) || array_diff_key($modules, $manifestModules)) {
+        throw new RuntimeException('Manifest must list the main module and its Datacenter View and TeemIP bridges.');
+    }
+
     foreach ($modules as $name => $content) {
         $pattern = "~'" . preg_quote($name, '~') . "/([^']+)'~";
         if (preg_match_all($pattern, $content, $matches) !== 1) {
             throw new RuntimeException('Expected exactly one registration version for ' . $name);
         }
         $oldVersion = $matches[1][0];
-        if ($name === 'br-power-infrastructure' && $oldVersion !== $currentVersion) {
-            throw new RuntimeException('Extension and main module versions must match before preparing a release.');
+        if ($oldVersion !== $currentVersion) {
+            throw new RuntimeException('Extension and module versions must match before preparing a release.');
         }
         if (!preg_match('/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/D', $oldVersion)
             || !version_compare($version, $oldVersion, '>')) {
@@ -70,8 +86,9 @@ function prepareReleaseContents(string $manifest, array $modules, string $versio
             -1,
             $count
         );
-        if ($manifest === null || $count !== 1) {
-            throw new RuntimeException('Expected exactly one editable ' . $element . ' element.');
+        $expectedCount = $element === 'version' ? count($modules) + 1 : 1;
+        if ($manifest === null || $count !== $expectedCount) {
+            throw new RuntimeException('Unexpected number of editable ' . $element . ' element.');
         }
     }
     return array_merge([$manifest], array_values($modules));

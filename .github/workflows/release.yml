@@ -94,11 +94,15 @@ jobs:
               if branch != f'release/{version}':
                   raise SystemExit('Release branch must match the project version')
 
-          modules = sorted(Path('.').glob('br-power-infrastructure*/module.*.php'))
-          if len(modules) != 4:
-              raise SystemExit('Expected the main module and three bridges')
-          for module in modules:
-              name = module.parent.name
+          configured_modules = ['br-power-infrastructure', 'br-power-infrastructure-bridge-for-datacenter-view', 'br-power-infrastructure-bridge-for-teemip-ip-mgmt']
+          module_array = root.find('modules')
+          entries = module_array.findall('module') if module_array is not None else []
+          if (module_array is None or module_array.get('type') != 'array' or len(entries) != len(configured_modules)
+                  or {entry.findtext('id') for entry in entries} != set(configured_modules)
+                  or any(entry.findtext('version', '').strip() != version for entry in entries)):
+              raise SystemExit('Expected matching manifest versions for the main module and both optional bridges')
+          for name in configured_modules:
+              module = Path(f'{name}/module.{name}.php')
               content = module.read_text()
               versions = re.findall(r"'" + re.escape(name) + r"/([^']+)'", content)
               if versions != [version]:
@@ -152,9 +156,7 @@ jobs:
             --prefix=br-power-infrastructure/ \
             --output=".tmp/br-power-infrastructure-${RELEASE_TAG}.zip" \
             HEAD -- \
-            br-power-infrastructure br-power-infrastructure-bridge-for-datacenter-view \
-            br-power-infrastructure-bridge-for-datacenter-view-extended \
-            br-power-infrastructure-bridge-for-teemip-ip-mgmt extension.xml LICENSE
+            br-power-infrastructure br-power-infrastructure-bridge-for-datacenter-view br-power-infrastructure-bridge-for-teemip-ip-mgmt extension.xml LICENSE
           cd .tmp
           sha256sum "br-power-infrastructure-${RELEASE_TAG}.zip" \
             > "br-power-infrastructure-${RELEASE_TAG}.zip.sha256"

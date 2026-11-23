@@ -19,6 +19,8 @@ class MetaModel
 {
     public static array $sockets = [];
     public static array $devices = [];
+    public static function IsValidClass(string $class): bool { return false; }
+
     public static function GetObject(string $class, int $id, bool $mustExist = true): mixed
     {
         if ($class !== 'DatacenterDevice') {
