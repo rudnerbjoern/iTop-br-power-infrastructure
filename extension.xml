@@ -19,7 +19,7 @@
         <module><id>br-power-infrastructure-bridge-for-datacenter-view</id><version><![CDATA[3.3.0]]></version></module>
         <module><id>br-power-infrastructure-bridge-for-teemip-ip-mgmt</id><version><![CDATA[3.3.0]]></version></module>
     </modules>
-    <release_date><![CDATA[2026-11-20]]></release_date>
+    <release_date><![CDATA[2026-11-23]]></release_date>
     <version_description>
         <![CDATA[Updated power infrastructure and the optional Datacenter View and TeemIP bridges for iTop 3.3.0. Fixed deprecated and undefined PHP properties in socket A/B change tracking.]]>
     </version_description>
