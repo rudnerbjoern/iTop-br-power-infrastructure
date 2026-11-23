@@ -28,6 +28,11 @@ $tests = [
                 !== preg_replace('~<(version|release_date)>.*?</\\1>~s', '', $manifest)) {
             throw new RuntimeException('Unexpected manifest edits.');
         }
+        foreach ($xml->modules->module as $entry) {
+            if ((string) $entry->version !== $next) {
+                throw new RuntimeException('Manifest module version was not updated.');
+            }
+        }
         foreach (array_keys($modules) as $index => $name) {
             $expected = preg_replace_callback(
                 '~(?<=[\'|])br-power-infrastructure(?:-bridge-for-[a-z-]+)?/[^\'|]+~',
@@ -49,10 +54,18 @@ $mismatched['br-power-infrastructure'] = str_replace("'br-power-infrastructure/$
 $missing = $modules;
 array_pop($missing);
 $badBridge = $modules;
-$bridge = 'br-power-infrastructure-bridge-for-datacenter-view';
+$bridge = 'br-power-infrastructure-bridge-for-teemip-ip-mgmt';
 $badBridge[$bridge] = preg_replace("~'" . $bridge . "/[^']+'~", "'$bridge/invalid'", $badBridge[$bridge]);
 
 $cases = [
+    'reject missing manifest module array' => [preg_replace('~<modules.*?</modules>~s', '', $manifest), $modules, $next, '2028-02-29'],
+    'reject duplicate manifest module' => [str_replace('<id>' . $bridge . '</id>', '<id>br-power-infrastructure</id>', $manifest), $modules, $next, '2028-02-29'],
+    'reject mismatched manifest module version' => [str_replace(
+        '<id>' . $bridge . '</id><version><![CDATA[' . $current . ']]>',
+        '<id>' . $bridge . '</id><version><![CDATA[0.0.0]]>',
+        $manifest
+    ), $modules, $next, '2028-02-29'],
+
     'reject missing bridge' => [$manifest, $missing, $next, '2028-02-29'],
     'reject invalid bridge version' => [$manifest, $badBridge, $next, '2028-02-29'],
     'reject target older than a bridge' => [$manifest, $modules, $highest, '2028-02-29'],

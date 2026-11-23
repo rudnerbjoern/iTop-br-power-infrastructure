@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension format="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/extension.xsd">
-    <extension_code>
-        <![CDATA[br-power-infrastructure]]>
-    </extension_code>
+    <extension_code>br-power-infrastructure</extension_code>
     <company>
         <![CDATA[]]>
     </company>
@@ -15,12 +13,17 @@
     <description>
         <![CDATA[An iTop extension for modeling and managing power infrastructure components in the CMDB.]]>
     </description>
-    <version><![CDATA[3.2.4]]></version>
-    <release_date><![CDATA[2026-11-06]]></release_date>
+    <version><![CDATA[3.3.0]]></version>
+    <modules type="array">
+        <module><id>br-power-infrastructure</id><version><![CDATA[3.3.0]]></version></module>
+        <module><id>br-power-infrastructure-bridge-for-datacenter-view</id><version><![CDATA[3.3.0]]></version></module>
+        <module><id>br-power-infrastructure-bridge-for-teemip-ip-mgmt</id><version><![CDATA[3.3.0]]></version></module>
+    </modules>
+    <release_date><![CDATA[2026-11-20]]></release_date>
     <version_description>
-        <![CDATA[Initial version of the power infrastructure extension.]]>
+        <![CDATA[Updated power infrastructure and the optional Datacenter View and TeemIP bridges for iTop 3.3.0. Fixed deprecated and undefined PHP properties in socket A/B change tracking.]]>
     </version_description>
-    <itop_version_min>3.2.2</itop_version_min>
+    <itop_version_min>3.3.0</itop_version_min>
     <status>beta</status>
     <mandatory>false</mandatory>
     <more_info_url>https://github.com/rudnerbjoern/iTop-br-power-infrastructure/blob/main/README.md</more_info_url>

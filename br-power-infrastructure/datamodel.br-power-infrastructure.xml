@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
+<itop_design version="3.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.3/itop_design.xsd">
     <!--
     @copyright   Copyright (C) 2026 Björn Rudner
     @license     https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -560,47 +560,10 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="name" _delta="delete" />
-                        <item id="org_id" _delta="delete" />
-                        <item id="status" _delta="delete" />
-                        <item id="business_criticity" _delta="delete" />
-                        <item id="location_id" _delta="delete" />
-                        <item id="brand_id" _delta="delete" />
-                        <item id="model_id" _delta="delete" />
-                        <item id="serialnumber" _delta="delete" />
-                        <item id="asset_number" _delta="delete" />
-                        <item id="move2production" _delta="delete" />
-                        <item id="purchase_date" _delta="delete" />
-                        <item id="end_of_warranty" _delta="delete" />
-                        <item id="description" _delta="delete" />
-                        <item id="pdus_list" _delta="delete" />
-                        <item id="contacts_list" _delta="delete" />
-                        <item id="documents_list" _delta="delete" />
-                        <item id="col:col1" _delta="define">
-                            <rank>10</rank>
+                        <item id="col:col1" _delta="must_exist">
                             <items>
-                                <item id="fieldset:Server:baseinfo">
-                                    <rank>10</rank>
-                                    <items>
-                                        <item id="name">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="org_id">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="status">
-                                            <rank>30</rank>
-                                        </item>
-                                        <item id="business_criticity">
-                                            <rank>40</rank>
-                                        </item>
-                                        <item id="location_id">
-                                            <rank>50</rank>
-                                        </item>
-                                    </items>
-                                </item>
                                 <item id="fieldset:PowerSource:electrical" _delta="define">
-                                    <rank>20</rank>
+                                    <rank>30</rank>
                                     <items>
                                         <item id="phase_type">
                                             <rank>10</rank>
@@ -618,69 +581,24 @@
                                 </item>
                             </items>
                         </item>
-                        <item id="col:col2" _delta="define">
-                            <rank>20</rank>
+                        <item id="col:col2" _delta="must_exist">
                             <items>
-                                <item id="fieldset:PowerSource:assetinfo" _delta="define">
-                                    <rank>10</rank>
+                                <item id="fieldset:ConfigMgmt:dates" _delta="must_exist">
                                     <items>
-                                        <item id="brand_id">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="model_id">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="serialnumber">
-                                            <rank>30</rank>
-                                        </item>
-                                        <item id="asset_number">
-                                            <rank>40</rank>
-                                        </item>
-                                    </items>
-                                </item>
-                                <item id="fieldset:Server:Date">
-                                    <rank>20</rank>
-                                    <items>
-                                        <item id="move2production">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="purchase_date">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="end_of_warranty">
-                                            <rank>30</rank>
-                                        </item>
-                                        <item id="last_maintenance_date">
-                                            <rank>40</rank>
-                                        </item>
-                                        <item id="next_maintenance_date">
+                                        <item id="last_maintenance_date" _delta="define">
                                             <rank>50</rank>
                                         </item>
-                                    </items>
-                                </item>
-                                <item id="fieldset:Server:otherinfo">
-                                    <rank>30</rank>
-                                    <items>
-                                        <item id="description">
-                                            <rank>10</rank>
+                                        <item id="next_maintenance_date" _delta="define">
+                                            <rank>60</rank>
                                         </item>
                                     </items>
                                 </item>
                             </items>
                         </item>
-                        <item id="pdus_list">
-                            <rank>110</rank>
-                        </item>
-                        <item id="contacts_list">
-                            <rank>120</rank>
-                        </item>
-                        <item id="documents_list">
-                            <rank>130</rank>
-                        </item>
-                        <item id="outgoing_powerconnection_links">
+                        <item id="outgoing_powerconnection_links" _delta="define">
                             <rank>140</rank>
                         </item>
-                        <item id="incoming_powerconnection_links">
+                        <item id="incoming_powerconnection_links" _delta="define">
                             <rank>150</rank>
                         </item>
                     </items>
@@ -811,91 +729,29 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="name" _delta="delete" />
-                        <item id="org_id" _delta="delete" />
-                        <item id="status" _delta="delete" />
-                        <item id="business_criticity" _delta="delete" />
-                        <item id="location_id" _delta="delete" />
-                        <item id="description" _delta="delete" />
-                        <item id="rack_id" _delta="delete" />
-                        <item id="move2production" _delta="delete" />
-                        <item id="purchase_date" _delta="delete" />
-                        <item id="end_of_warranty" _delta="delete" />
-                        <item id="brand_id" _delta="delete" />
-                        <item id="model_id" _delta="delete" />
-                        <item id="serialnumber" _delta="delete" />
-                        <item id="asset_number" _delta="delete" />
-                        <item id="powerstart_id" _delta="delete" />
-                        <item id="col:col1" _delta="define">
-                            <rank>10</rank>
+                        <item id="col:col1" _delta="must_exist">
                             <items>
-                                <item id="fieldset:Server:baseinfo">
-                                    <rank>10</rank>
+                                <item id="fieldset:Server:moreinfo" _delta="must_exist">
                                     <items>
-                                        <item id="name">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="org_id">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="status">
-                                            <rank>30</rank>
-                                        </item>
-                                        <item id="business_criticity">
-                                            <rank>40</rank>
-                                        </item>
-                                        <item id="location_id">
-                                            <rank>50</rank>
-                                        </item>
-                                    </items>
-                                </item>
-                                <item id="fieldset:Server:moreinfo">
-                                    <rank>20</rank>
-                                    <items>
-                                        <item id="brand_id">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="model_id">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="serialnumber">
-                                            <rank>50</rank>
-                                        </item>
-                                        <item id="asset_number">
-                                            <rank>60</rank>
-                                        </item>
-                                    </items>
-                                </item>
-                                <item id="fieldset:Server:otherinfo">
-                                    <rank>30</rank>
-                                    <items>
-                                        <item id="description">
-                                            <rank>10</rank>
-                                        </item>
+                                        <item id="powerstart_id" _delta="delete" />
                                     </items>
                                 </item>
                             </items>
                         </item>
-                        <item id="col:col2" _delta="define">
-                            <rank>20</rank>
+                        <item id="col:col2" _delta="must_exist">
                             <items>
-                                <item id="fieldset:PDU:rackinfo">
-                                    <rank>10</rank>
+                                <item id="fieldset:ConfigMgmt:dates" _delta="must_exist">
                                     <items>
-                                        <item id="rack_id">
-                                            <rank>10</rank>
+                                        <item id="last_maintenance_date" _delta="define">
+                                            <rank>50</rank>
                                         </item>
-                                        <!-- id:  enclosure_id - rank: 20 - source: datacenter-view -->
-                                        <!-- id:  position_p - rank: 30 - source: datacenter-view-extended -->
-                                        <!-- id:  zero_u - rank: 40 - source: datacenter-view-extended -->
-                                        <!-- id:  position_v - rank: 50 - source: datacenter-view -->
-                                        <!-- id:  position_h - rank: 60 - source: datacenter-view-extended -->
-                                        <!-- id:  nb_u - rank: 70 - source: datacenter-view -->
-                                        <!-- id:  nb_cols - rank: 80 - source: datacenter-view-extended -->
+                                        <item id="next_maintenance_date" _delta="define">
+                                            <rank>60</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:PowerSource:electrical" _delta="define">
-                                    <rank>20</rank>
+                                    <rank>30</rank>
                                     <items>
                                         <item id="phase_type">
                                             <rank>10</rank>
@@ -911,8 +767,8 @@
                                         </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:Server:power">
-                                    <rank>30</rank>
+                                <item id="fieldset:Server:power" _delta="define">
+                                    <rank>40</rank>
                                     <items>
                                         <item id="powerstart_id">
                                             <rank>10</rank>
@@ -922,35 +778,15 @@
                                         </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:Server:Date">
-                                    <rank>40</rank>
-                                    <items>
-                                        <item id="move2production">
-                                            <rank>10</rank>
-                                        </item>
-                                        <item id="purchase_date">
-                                            <rank>20</rank>
-                                        </item>
-                                        <item id="end_of_warranty">
-                                            <rank>30</rank>
-                                        </item>
-                                        <item id="last_maintenance_date">
-                                            <rank>40</rank>
-                                        </item>
-                                        <item id="next_maintenance_date">
-                                            <rank>50</rank>
-                                        </item>
-                                    </items>
-                                </item>
                             </items>
                         </item>
                         <item id="powersocket_list" _delta="define">
                             <rank>110</rank>
                         </item>
-                        <item id="outgoing_powerconnection_links">
+                        <item id="outgoing_powerconnection_links" _delta="define">
                             <rank>120</rank>
                         </item>
-                        <item id="incoming_powerconnection_links">
+                        <item id="incoming_powerconnection_links" _delta="define">
                             <rank>130</rank>
                         </item>
                     </items>
@@ -1155,7 +991,6 @@
 
         // Slot A changed?
         if (array_key_exists('powerAsocket_id', $aChanges)) {
-            $this->bPowerSocketAChanged = true;
 
             $oldAId = (int) $this->GetOriginal('powerAsocket_id');
             if ($oldAId !== 0) {
@@ -1164,7 +999,6 @@
         }
         // Slot B changed?
         if (array_key_exists('powerBsocket_id', $aChanges)) {
-            $this->bPowerSocketBChanged = true;
 
             $oldBId = (int) $this->GetOriginal('powerBsocket_id');
             if ($oldBId !== 0) {
@@ -1181,39 +1015,17 @@
                     <code><![CDATA[
     public function OnDatacenterDeviceAfterWritePowerSocket(Combodo\iTop\Service\Events\EventData $oEventData): void
     {
-        // AfterInsert: connect any already selected sockets
-        if ($oEventData->Get('is_new') === true) {
-            $powerAId = (int) $this->Get('powerAsocket_id');
-            if ($powerAId !== 0) {
-                $this->ConnectPowerSocket($powerAId);
+        $bIsNew = $oEventData->Get('is_new') === true;
+        // iTop supplies the saved changes after it resets ListChanges().
+        $aChanges = $oEventData->Get('changes');
+        foreach (['powerAsocket_id', 'powerBsocket_id'] as $sSocketAttribute) {
+            if (!$bIsNew && !array_key_exists($sSocketAttribute, $aChanges)) {
+                continue;
             }
-
-            $powerBId = (int) $this->Get('powerBsocket_id');
-            if ($powerBId !== 0) {
-                $this->ConnectPowerSocket($powerBId);
+            $iSocketId = (int) $this->Get($sSocketAttribute);
+            if ($iSocketId !== 0) {
+                $this->ConnectPowerSocket($iSocketId);
             }
-
-            // Ensure flags are clean (not strictly needed on insert, but safe)
-            $this->bPowerSocketAChanged = false;
-            $this->bPowerSocketBChanged = false;
-            return;
-        }
-
-        // AfterUpdate: connect only if the corresponding slot changed in BEFORE_WRITE
-        if ($this->bPowerSocketAChanged) {
-            $powerAId = (int) $this->Get('powerAsocket_id');
-            if ($powerAId !== 0) {
-                $this->ConnectPowerSocket($powerAId);
-            }
-            $this->bPowerSocketAChanged = false;
-        }
-
-        if ($this->bPowerSocketBChanged) {
-            $powerBId = (int) $this->Get('powerBsocket_id');
-            if ($powerBId !== 0) {
-                $this->ConnectPowerSocket($powerBId);
-            }
-            $this->bPowerSocketBChanged = false;
         }
     }
   ]]></code>

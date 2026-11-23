@@ -10,7 +10,7 @@
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-power-infrastructure-bridge-for-teemip-ip-mgmt/3.2.4',
+    'br-power-infrastructure-bridge-for-teemip-ip-mgmt/3.3.0',
     array(
         // Identification
         'label' => 'Links between TeemIp IP Management and power socket',
@@ -18,15 +18,15 @@ SetupWebPage::AddModule(
 
         // Setup
         'dependencies' => array(
-            'itop-datacenter-mgmt/3.1.0',
-            'teemip-ip-mgmt/3.2.0',
-            'teemip-config-mgmt-adaptor/3.2.0',
-            'br-power-infrastructure/3.2.4',
-            'teemip-datacenter-mgmt-adaptor/3.2.2||br-power-infrastructure/3.2.4',
+            'itop-datacenter-mgmt/3.3.0',
+            'teemip-ip-mgmt/3.3.1 || !(teemip-ip-mgmt/0.0.0)',
+            'teemip-config-mgmt-adaptor/3.3.0 || !(teemip-config-mgmt-adaptor/0.0.0)',
+            'br-power-infrastructure/3.3.0',
+            'teemip-datacenter-mgmt-adaptor/3.2.3 || !(teemip-datacenter-mgmt-adaptor/0.0.0)',
         ),
         'mandatory' => false,
         'visible' => true,
-        'auto_select' => 'SetupInfo::ModuleIsSelected("br-power-infrastructure") && SetupInfo::ModuleIsSelected("teemip-datacenter-mgmt-adaptor")',
+        'auto_select' => 'SetupInfo::ModuleIsSelected("br-power-infrastructure") && SetupInfo::ModuleIsSelected("teemip-ip-mgmt") && SetupInfo::ModuleIsSelected("teemip-config-mgmt-adaptor") && SetupInfo::ModuleIsSelected("teemip-datacenter-mgmt-adaptor")',
 
         // Components
         'datamodel' => array(),
